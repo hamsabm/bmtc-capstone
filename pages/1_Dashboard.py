@@ -12,15 +12,15 @@ if kpi.empty:
 k = kpi.iloc[0]
 
 r1 = st.columns(4)
-r1[0].metric("Total buses", num(k.TOTAL_BUSES), f"{num(k.ACTIVE_BUSES)} active", delta_color="off")
+r1[0].metric("Total buses", num(k.TOTAL_BUSES), f"{num(k.ACTIVE_BUSES)} active", delta_color="off", delta_arrow="off")
 r1[1].metric("Total routes", num(k.TOTAL_ROUTES))
-r1[2].metric("Total trips", num(k.TOTAL_TRIPS), f"{k.ON_TIME_PCT}% on time", delta_color="off")
-r1[3].metric("Total tickets", num(k.TOTAL_TICKETS), money(k.TICKET_REVENUE), delta_color="off")
+r1[2].metric("Total trips", num(k.TOTAL_TRIPS), f"{k.ON_TIME_PCT}% on time", delta_color="off", delta_arrow="off")
+r1[3].metric("Total tickets", num(k.TOTAL_TICKETS), money(k.TICKET_REVENUE), delta_color="off", delta_arrow="off")
 r2 = st.columns(4)
-r2[0].metric("Passenger passes", num(k.TOTAL_PASSES), f"{num(k.ACTIVE_PASSES)} active", delta_color="off")
-r2[1].metric("Complaints", num(k.TOTAL_COMPLAINTS), f"{num(k.OPEN_COMPLAINTS)} open", delta_color="off")
-r2[2].metric("Fuel records", num(k.TOTAL_FUEL_RECORDS), money(k.FUEL_COST), delta_color="off")
-r2[3].metric("Maintenance records", num(k.TOTAL_MAINTENANCE_RECORDS), money(k.MAINTENANCE_COST), delta_color="off")
+r2[0].metric("Passenger passes", num(k.TOTAL_PASSES), f"{num(k.ACTIVE_PASSES)} active", delta_color="off", delta_arrow="off")
+r2[1].metric("Complaints", num(k.TOTAL_COMPLAINTS), f"{num(k.OPEN_COMPLAINTS)} open", delta_color="off", delta_arrow="off")
+r2[2].metric("Fuel records", num(k.TOTAL_FUEL_RECORDS), money(k.FUEL_COST), delta_color="off", delta_arrow="off")
+r2[3].metric("Maintenance records", num(k.TOTAL_MAINTENANCE_RECORDS), money(k.MAINTENANCE_COST), delta_color="off", delta_arrow="off")
 
 st.divider()
 c1, c2 = st.columns(2)

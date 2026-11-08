@@ -9,20 +9,20 @@ st.set_page_config(page_title="BMTC Analytics", page_icon=":material/directions_
 nav = st.navigation({
     "Overview": [
         st.Page("home.py", title="Home", icon=":material/home:", default=True),
-        st.Page("pages/1_Dashboard.py", title="Dashboard", icon=":material/dashboard:"),
+        st.Page("pages/1_Dashboard.py", url_path="dashboard", title="Dashboard", icon=":material/dashboard:"),
     ],
     "Operations": [
-        st.Page("pages/2_Bus_Management.py", title="Bus Management", icon=":material/directions_bus:"),
-        st.Page("pages/3_Routes_Trips.py", title="Routes & Trips", icon=":material/route:"),
-        st.Page("pages/4_Ticket_Analytics.py", title="Ticket Analytics", icon=":material/confirmation_number:"),
-        st.Page("pages/5_Fuel_Maintenance.py", title="Fuel & Maintenance", icon=":material/build:"),
+        st.Page("pages/2_Bus_Management.py", url_path="bus-management", title="Bus Management", icon=":material/directions_bus:"),
+        st.Page("pages/3_Routes_Trips.py", url_path="routes-trips", title="Routes & Trips", icon=":material/route:"),
+        st.Page("pages/4_Ticket_Analytics.py", url_path="ticket-analytics", title="Ticket Analytics", icon=":material/confirmation_number:"),
+        st.Page("pages/5_Fuel_Maintenance.py", url_path="fuel-maintenance", title="Fuel & Maintenance", icon=":material/build:"),
     ],
     "Passengers": [
-        st.Page("pages/6_Passenger_Complaints.py", title="Passengers & Complaints", icon=":material/groups:"),
+        st.Page("pages/6_Passenger_Complaints.py", url_path="passengers-complaints", title="Passengers & Complaints", icon=":material/groups:"),
     ],
     "Analytics & Platform": [
-        st.Page("pages/7_Advanced_Analytics.py", title="Advanced Analytics", icon=":material/query_stats:"),
-        st.Page("pages/8_Data_Management.py", title="Data Management", icon=":material/database:"),
+        st.Page("pages/7_Advanced_Analytics.py", url_path="advanced-analytics", title="Advanced Analytics", icon=":material/query_stats:"),
+        st.Page("pages/8_Data_Management.py", url_path="data-management", title="Data Management", icon=":material/database:"),
     ],
 })
 nav.run()

@@ -6,7 +6,7 @@ import streamlit as st
 from utils.db import execute, query
 from utils.ui import chart, num, page, show_table
 
-page("Passenger & Complaints",
+page("Passengers & Complaints",
      "Passes via secure view PASSENGER.SV_PASS_HOLDERS; complaints from JSON (VARIANT) documents")
 
 pass_tab, comp_tab, new_tab = st.tabs(["Passenger passes", "Complaints", "Register a complaint"])

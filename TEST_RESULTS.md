@@ -57,7 +57,7 @@ procedures, 4 roles, 4 users, masking + row access policies, share, no duplicate
 | Python syntax check, all project files | PASS |
 | `tests/test_app.py`: every page runs headless with live data, no exception / no `st.error` | 9/9 PASS (40 charts rendered) |
 | `tests/test_interactions.py`: search, filters, SQL-injection text, empty results, all 11 advanced queries, 3 write forms verified in Snowflake then cleaned up | 24/24 PASS |
-| `streamlit run app.py` server start, `/_stcore/health` = ok, pages HTTP 200 | PASS |
+| `streamlit run app.py` server start, `/_stcore/health` = ok | PASS |
 
 ### Finalization re-test (after navigation / error-handling polish)
 
@@ -67,7 +67,8 @@ procedures, 4 roles, 4 users, masking + row access policies, share, no duplicate
 | `tests/test_app.py` | 9/9 PASS |
 | `tests/test_navigation_errors.py`: Home + all 8 pages through `st.navigation`; unreachable Snowflake gives one clean message, no traceback, no KPI values | 10/10 PASS |
 | `tests/test_interactions.py` (forms write to Snowflake, verified, cleaned up) | 24/24 PASS |
-| Local site `http://localhost:8501`: health `ok`; `/`, `/dashboard`, `/bus_management`, `/routes_trips`, `/ticket_analytics`, `/fuel_maintenance`, `/passengers_complaints`, `/advanced_analytics`, `/data_management` | HTTP 200 |
+| Local site `http://localhost:8501`: health `ok` | PASS |
+| *Correction:* the earlier per-path HTTP 200 check proved nothing. Streamlit returns 200 for any path, and `/dashboard` actually fell back to Home. Pages now have explicit URLs and are verified in a real browser (below) | - |
 | Key-pair connection config (offline, throwaway key): builds `SNOWFLAKE_JWT` config, no password used | PASS |
 | Key-pair login against Snowflake as `BMTC_STREAMLIT_APP` | see deployment check below |
 
@@ -100,7 +101,17 @@ it showed an empty table for the limited role.
 ## Not tested / not possible here
 
 - Power BI dashboard: no `.pbix` created (manual GUI step).
-- Visual inspection of charts in a browser: charts were verified to render via Streamlit's test runner and the
-  server returned HTTP 200. No screenshot was taken.
+- (Resolved) Visual inspection: see the visual re-design check below.
 - Share consumption: no second Snowflake account is available.
 - Public deployment: not performed (requires your GitHub / Streamlit Cloud login). The app is local only.
+
+## Visual re-design check
+
+The theme, gradient hero with live KPI chips, module tiles, colour-coded KPI cards, carded charts and readable axis
+titles were added. Each page was rendered in a real browser (Microsoft Edge, headless, via Playwright) at its own URL:
+`/`, `/dashboard`, `/bus-management`, `/routes-trips`, `/ticket-analytics`, `/fuel-maintenance`,
+`/passengers-complaints`, `/advanced-analytics`, `/data-management`. All 9 rendered with data and none showed
+"Page not found". Screenshots are in `docs/screenshots/`.
+
+Regression after the redesign: `tests/test_app.py` 9/9 · `tests/test_navigation_errors.py` 10/10 ·
+`tests/test_interactions.py` 24/24.

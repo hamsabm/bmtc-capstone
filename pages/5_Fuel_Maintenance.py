@@ -44,7 +44,9 @@ with fuel_tab:
         with b:
             cls = fuel.groupby(["BUS_TYPE", "EFFICIENCY_CLASS"], as_index=False).size().rename(columns={"size": "FILLS"})
             chart(cls, "bar", "BUS_TYPE", "FILLS", "Python UDF efficiency class per bus type",
-                  color="EFFICIENCY_CLASS", category_orders={"EFFICIENCY_CLASS": ["EXCELLENT", "GOOD", "AVERAGE", "POOR"]})
+                  color="EFFICIENCY_CLASS", category_orders={"EFFICIENCY_CLASS": ["EXCELLENT", "GOOD", "AVERAGE", "POOR"]},
+                  color_discrete_map={"EXCELLENT": "#104281", "GOOD": "#2a78d6", "AVERAGE": "#5598e7",
+                                      "POOR": "#86b6ef", "UNKNOWN": "#c3c2b7"})
 
         st.markdown("**Bus-wise fuel efficiency** (lowest first)")
         buswise = (fuel.groupby(["REGISTRATION_NO", "BUS_TYPE", "DEPOT_NAME", "UNIT"], as_index=False)
