@@ -37,14 +37,14 @@ st.success(f"Connected to Snowflake - {info}", icon=":material/check_circle:")
 # ---------------------------------------------------------------- module tiles
 st.subheader("Explore the system")
 TILES = [
-    ("pages/1_Dashboard.py", "Dashboard", "📊", "Live KPIs and headline charts", ":material/dashboard:", "#2a78d6"),
-    ("pages/2_Bus_Management.py", "Bus Management", "🚌", "Fleet search, depots, change bus status", ":material/directions_bus:", "#eb6834"),
-    ("pages/3_Routes_Trips.py", "Routes & Trips", "🗺️", "Route detail, top/bottom routes, trip log", ":material/route:", "#1baf7a"),
-    ("pages/4_Ticket_Analytics.py", "Ticket Analytics", "🎟️", "Revenue, payment mix, hourly trends", ":material/confirmation_number:", "#eda100"),
-    ("pages/5_Fuel_Maintenance.py", "Fuel & Maintenance", "⛽", "Efficiency (Python UDF), workshop jobs", ":material/build:", "#e87ba4"),
-    ("pages/6_Passenger_Complaints.py", "Passengers & Complaints", "👥", "Passes, JSON complaints, triage", ":material/groups:", "#008300"),
-    ("pages/7_Advanced_Analytics.py", "Advanced Analytics", "📈", "CTEs, window functions, subqueries", ":material/query_stats:", "#6250d6"),
-    ("pages/8_Data_Management.py", "Data Management", "🗄️", "Time Travel, clone, stream & task", ":material/database:", "#e34948"),
+    ("app_pages/1_Dashboard.py", "Dashboard", "📊", "Live KPIs and headline charts", ":material/dashboard:", "#2a78d6"),
+    ("app_pages/2_Bus_Management.py", "Bus Management", "🚌", "Fleet search, depots, change bus status", ":material/directions_bus:", "#eb6834"),
+    ("app_pages/3_Routes_Trips.py", "Routes & Trips", "🗺️", "Route detail, top/bottom routes, trip log", ":material/route:", "#1baf7a"),
+    ("app_pages/4_Ticket_Analytics.py", "Ticket Analytics", "🎟️", "Revenue, payment mix, hourly trends", ":material/confirmation_number:", "#eda100"),
+    ("app_pages/5_Fuel_Maintenance.py", "Fuel & Maintenance", "⛽", "Efficiency (Python UDF), workshop jobs", ":material/build:", "#e87ba4"),
+    ("app_pages/6_Passenger_Complaints.py", "Passengers & Complaints", "👥", "Passes, JSON complaints, triage", ":material/groups:", "#008300"),
+    ("app_pages/7_Advanced_Analytics.py", "Advanced Analytics", "📈", "CTEs, window functions, subqueries", ":material/query_stats:", "#6250d6"),
+    ("app_pages/8_Data_Management.py", "Data Management", "🗄️", "Time Travel, clone, stream & task", ":material/database:", "#e34948"),
 ]
 for row in range(0, len(TILES), 4):
     cols = st.columns(4)

@@ -89,6 +89,7 @@ if not all_buses.empty:
                      {"new": new_status, "id": int(row.BUS_ID)}),
                 ])
                 st.success(f"{reg}: {row.STATUS} -> {new_status} (committed).")
+                st.toast(f"{reg} is now {new_status}", icon=":material/check_circle:")
             except Exception as exc:  # noqa: BLE001
                 st.error(f"Update rolled back: {exc}")
 

@@ -28,7 +28,7 @@ NS = uuid.UUID("6f1c2a4e-1b0d-4c55-9a77-0b6d1c0f5a10")
 
 # model table -> (schema, view)
 TABLES = {
-    "KPI": ("TRIP", "V_DASHBOARD_KPIS"),
+    "HeadlineKPIs": ("TRIP", "V_DASHBOARD_KPIS"),
     "DimDate": ("TRIP", "V_PBI_DIM_DATE"),
     "RouteDay": ("TRIP", "V_PBI_ROUTE_DAY_FACT"),
     "Routes": ("TRIP", "V_ROUTE_PERFORMANCE"),
@@ -41,7 +41,7 @@ MEASURES = {
     "RouteDay": [("Total Revenue", "SUM(RouteDay[REVENUE])", "#,0"),
                  ("Total Passengers", "SUM(RouteDay[PASSENGERS])", "#,0"),
                  ("Total Trips", "SUM(RouteDay[TRIPS])", "#,0"),
-                 ("On-time %", "DIVIDE(SUM(RouteDay[ON_TIME_TRIPS]), SUM(RouteDay[TRIPS]))", "0.0%"),
+                 ("On-time %", "DIVIDE(SUM(RouteDay[ON_TIME_TRIPS]), SUM(RouteDay[RUN_TRIPS]))", "0.0%"),
                  ("Revenue per km", "DIVIDE(SUM(RouteDay[REVENUE]), SUM(RouteDay[KM]))", "#,0.00")],
     "Complaints": [("Complaint Count", "COUNTROWS(Complaints)", "#,0"),
                    ("Open Complaints", 'CALCULATE(COUNTROWS(Complaints), Complaints[RESOLUTION_STATUS] IN {"Open", "In Progress"})', "#,0")],
@@ -51,8 +51,8 @@ MEASURES = {
              ("Avg km per unit", "AVERAGE(Fuel[KM_PER_UNIT])", "0.00"),
              ("Fill Count", "COUNTROWS(Fuel)", "#,0")],
     "Routes": [("Route Revenue", "SUM(Routes[REVENUE])", "#,0")],
-    "KPI": [("Active Passes", "SUM(KPI[ACTIVE_PASSES])", "#,0"),
-            ("Fleet Size", "SUM(KPI[TOTAL_BUSES])", "#,0")],
+    "HeadlineKPIs": [("Active Passes", "SUM(HeadlineKPIs[ACTIVE_PASSES])", "#,0")],
+    "Buses": [("Bus Count", "COUNTROWS(Buses)", "#,0")],
 }
 RELATIONSHIPS = [("RouteDay", "DATE_KEY", "DimDate", "DATE_KEY"), ("RouteDay", "ROUTE_ID", "Routes", "ROUTE_ID")]
 PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
@@ -208,7 +208,7 @@ def build_report() -> None:
                    "Route ranking - top to bottom", sort=(col("Routes", "REVENUE_RANK"), "Ascending")),
         ]),
         "fleet": ("Fleet, Fuel & Maintenance", [
-            visual("c5", "card", (10, 10, 300, 110), {"Values": [proj(mea("KPI", "Fleet Size"))]}, "Buses"),
+            visual("c5", "card", (10, 10, 300, 110), {"Values": [proj(mea("Buses", "Bus Count"))]}, "Buses"),
             visual("c6", "card", (320, 10, 300, 110), {"Values": [proj(mea("Fuel", "Fuel Cost"))]}, "Fuel / charging cost (Rs)"),
             visual("c7", "card", (630, 10, 300, 110), {"Values": [proj(mea("Maintenance", "Maintenance Cost"))]}, "Maintenance cost (Rs)"),
             visual("c8", "card", (940, 10, 330, 110), {"Values": [proj(mea("Complaints", "Open Complaints"))]}, "Open complaints"),
@@ -218,7 +218,7 @@ def build_report() -> None:
             visual("k1", "clusteredColumnChart", (640, 130, 630, 285),
                    {"Category": [proj(col("Maintenance", "MAINTENANCE_TYPE"), "Type")], "Y": [proj(mea("Maintenance", "Maintenance Cost"))]},
                    "Maintenance cost by type", sort=(mea("Maintenance", "Maintenance Cost"), "Descending")),
-            visual("k2", "stackedColumnChart", (10, 425, 620, 285),
+            visual("k2", "columnChart", (10, 425, 620, 285),
                    {"Category": [proj(col("Fuel", "BUS_TYPE"), "Bus type")], "Series": [proj(col("Fuel", "EFFICIENCY_CLASS"), "Class")],
                     "Y": [proj(mea("Fuel", "Fill Count"))]},
                    "Python UDF efficiency class by bus type"),

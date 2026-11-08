@@ -6,7 +6,7 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-ref table KPI
+ref table HeadlineKPIs
 ref table DimDate
 ref table RouteDay
 ref table Routes

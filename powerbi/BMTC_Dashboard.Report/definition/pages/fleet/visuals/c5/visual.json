@@ -19,14 +19,14 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "KPI"
+                      "Entity": "Buses"
                     }
                   },
-                  "Property": "Fleet Size"
+                  "Property": "Bus Count"
                 }
               },
-              "queryRef": "KPI.Fleet Size",
-              "nativeQueryRef": "Fleet Size"
+              "queryRef": "Buses.Bus Count",
+              "nativeQueryRef": "Bus Count"
             }
           ]
         }

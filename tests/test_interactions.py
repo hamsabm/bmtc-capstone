@@ -38,7 +38,7 @@ def check(name, cond, detail=""):
 
 
 def page(p):
-    at = AppTest.from_file(str(ROOT / "pages" / p), default_timeout=180)
+    at = AppTest.from_file(str(ROOT / "app_pages" / p), default_timeout=180)
     at.run()
     return at
 

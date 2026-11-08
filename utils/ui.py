@@ -1,6 +1,8 @@
 """Shared page chrome and chart helpers (validated categorical palette, fixed order)."""
 from __future__ import annotations
 
+import html
+
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -65,6 +67,28 @@ h2, h3 {color: #1e3a8a !important; font-weight: 700 !important;}
 .tile-icon {width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
     font-size: 1.3rem; color: #fff;}
 .tile-desc {color: #64748b; font-size: .86rem; min-height: 2.6em;}
+/* ---- motion & interaction ---- */
+@keyframes heroShift {0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;}}
+@keyframes fadeUp {from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: none;}}
+.hero {background-size: 220% 220% !important; animation: heroShift 16s ease infinite;}
+[data-testid="stMainBlockContainer"] {animation: fadeUp .45s ease-out;}
+[data-testid="stMetric"], [data-testid="stVerticalBlockBorderWrapper"] {transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
+[data-testid="stMetric"]:hover {transform: translateY(-3px); box-shadow: 0 14px 28px rgba(30,58,138,.15);}
+[data-testid="stVerticalBlockBorderWrapper"]:has(> div > [data-testid="stVerticalBlock"]):hover {
+    box-shadow: 0 14px 30px rgba(30,58,138,.12); border-color: #b9cdf0 !important;}
+[data-testid="stMain"] .stButton button, [data-testid="stMain"] [data-testid="stFormSubmitButton"] button {
+    background: linear-gradient(90deg, #2a78d6, #1baf7a); color: #fff !important; border: 0; border-radius: 10px;
+    font-weight: 600; box-shadow: 0 6px 14px rgba(42,120,214,.25); transition: filter .15s ease, transform .15s ease;}
+[data-testid="stMain"] .stButton button:hover, [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:hover {
+    filter: brightness(1.08); transform: translateY(-1px);}
+[data-testid="stPageLink"] a {border-radius: 10px; background: #eef4fd; font-weight: 600;}
+[data-testid="stPageLink"] a:hover {background: #dce9fb;}
+.subtitle {display: inline-block; background: #ffffff; border: 1px solid #dbe5f4; color: #334155; border-radius: 999px;
+    padding: 5px 14px; font-size: .88rem; margin: -6px 0 12px; box-shadow: 0 2px 8px rgba(30,58,138,.05);}
+.subtitle b {color: #1d4fb3;}
+[data-testid="stDataFrame"] {border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(30,58,138,.06);}
+@media (prefers-reduced-motion: reduce) {.hero, [data-testid="stMainBlockContainer"] {animation: none;}
+    [data-testid="stMetric"]:hover {transform: none;}}
 </style>
 """
 
@@ -77,7 +101,7 @@ def page(title: str, caption: str = "") -> None:
     st.markdown(_CSS, unsafe_allow_html=True)
     st.title(title)
     if caption:
-        st.caption(caption)
+        st.markdown(f'<div class="subtitle"><b>&#9679;</b>&nbsp; {html.escape(caption)}</div>', unsafe_allow_html=True)
     with st.sidebar:
         st.caption("BMTC Data Warehouse · Snowflake BMTC_DW")
         st.caption("Synthetic academic dataset - not official BMTC operational data.")

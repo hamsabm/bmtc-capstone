@@ -150,6 +150,7 @@ with new_tab:
                                  SELECT %(id)s, %(ts)s, PARSE_JSON(%(doc)s), 'APP'""",
                               {"id": cid, "ts": now, "doc": json.dumps(doc)})])
                     st.success(f"Complaint {cid} registered.")
+                    st.toast(f"Complaint {cid} registered", icon=":material/check_circle:")
                     st.json(doc)
                 except Exception as exc:  # noqa: BLE001
                     st.error(f"Could not register complaint: {exc}")

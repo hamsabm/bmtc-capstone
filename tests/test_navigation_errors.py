@@ -8,9 +8,9 @@ from pathlib import Path
 from streamlit.testing.v1 import AppTest
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ["pages/1_Dashboard.py", "pages/2_Bus_Management.py", "pages/3_Routes_Trips.py",
-         "pages/4_Ticket_Analytics.py", "pages/5_Fuel_Maintenance.py", "pages/6_Passenger_Complaints.py",
-         "pages/7_Advanced_Analytics.py", "pages/8_Data_Management.py"]
+PAGES = ["app_pages/1_Dashboard.py", "app_pages/2_Bus_Management.py", "app_pages/3_Routes_Trips.py",
+         "app_pages/4_Ticket_Analytics.py", "app_pages/5_Fuel_Maintenance.py", "app_pages/6_Passenger_Complaints.py",
+         "app_pages/7_Advanced_Analytics.py", "app_pages/8_Data_Management.py"]
 
 if len(sys.argv) > 1 and sys.argv[1] == "--broken":
     # child process: environment points at a non-existent account

@@ -1,6 +1,10 @@
 table Buses
 	lineageTag: 184f3058-e452-52eb-83b6-e495fa55ca05
 
+	measure 'Bus Count' = COUNTROWS(Buses)
+		formatString: #,0
+		lineageTag: c0a0e57b-454d-5f39-b7d3-8d47c8d0c5da
+
 	column BUS_ID
 		dataType: int64
 		formatString: 0

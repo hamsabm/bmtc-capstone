@@ -6,7 +6,7 @@ import sys
 from streamlit.testing.v1 import AppTest
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ["app.py"] + sorted(str(p.relative_to(ROOT)) for p in (ROOT / "pages").glob("*.py"))
+PAGES = ["app.py"] + sorted(str(p.relative_to(ROOT)) for p in (ROOT / "app_pages").glob("*.py"))
 
 
 def run_page(path: str):

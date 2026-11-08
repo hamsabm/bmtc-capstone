@@ -13,7 +13,7 @@ table RouteDay
 		formatString: #,0
 		lineageTag: e946250b-9ac3-5758-b038-ad5f72361f38
 
-	measure 'On-time %' = DIVIDE(SUM(RouteDay[ON_TIME_TRIPS]), SUM(RouteDay[TRIPS]))
+	measure 'On-time %' = DIVIDE(SUM(RouteDay[ON_TIME_TRIPS]), SUM(RouteDay[RUN_TRIPS]))
 		formatString: 0.0%
 		lineageTag: 4c5b637f-1272-571d-8ca6-ad6b3a6a72c0
 
@@ -121,6 +121,15 @@ table RouteDay
 		lineageTag: e15178b8-d9b6-5e32-a59a-57606650bb29
 		summarizeBy: sum
 		sourceColumn: FAILED_TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column RUN_TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: ae14e7c5-e549-5e9c-8b96-1f1e02fb8801
+		summarizeBy: sum
+		sourceColumn: RUN_TRIPS
 
 		annotation SummarizationSetBy = Automatic
 

@@ -1,4 +1,4 @@
-# Execution log for dashboard_queries.sql (2026-11-08 20:51:15)
+# Execution log for dashboard_queries.sql (2026-11-08 23:01:23)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -69,18 +69,18 @@
    | Sat | 6 | 178
    | Sun | 7 | 173
 
-> SELECT DEPOT_NAME, SUM(REVENUE) AS REVENUE, SUM(PASSENGERS) AS PASSENGERS, ROUND(100 * SUM(ON_TIME_TRIPS) / SUM(TRIPS), 1) AS ON_TIME_PCT FR
+> SELECT DEPOT_NAME, SUM(REVENUE) AS REVENUE, SUM(PASSENGERS) AS PASSENGERS, ROUND(100 * SUM(ON_TIME_TRIPS) / SUM(RUN_TRIPS), 1) AS ON_TIME_PC
    | DEPOT_NAME | REVENUE | PASSENGERS | ON_TIME_PCT
-   | Koramangala Depot | 276909.00 | 12375 | 55.8
-   | Yelahanka Depot | 245790.00 | 12470 | 56.1
-   | Whitefield Depot | 241094.00 | 18159 | 55.0
-   | Kengeri Depot | 206579.00 | 9532 | 59.9
-   | Hebbal Depot | 202570.00 | 24041 | 54.0
-   | Shanthinagar Depot | 165795.00 | 13184 | 59.9
-   | Yeshwanthpur Depot | 113874.00 | 10832 | 50.7
-   | Peenya Depot | 99481.00 | 5393 | 53.7
-   | Banashankari Depot | 79015.00 | 5916 | 55.9
-   | Electronic City Depot | 62512.00 | 8816 | 53.8
+   | Koramangala Depot | 276909.00 | 12375 | 57.1
+   | Yelahanka Depot | 245790.00 | 12470 | 57.7
+   | Whitefield Depot | 241094.00 | 18159 | 55.5
+   | Kengeri Depot | 206579.00 | 9532 | 61.3
+   | Hebbal Depot | 202570.00 | 24041 | 55.6
+   | Shanthinagar Depot | 165795.00 | 13184 | 62.4
+   | Yeshwanthpur Depot | 113874.00 | 10832 | 52.2
+   | Peenya Depot | 99481.00 | 5393 | 56.4
+   | Banashankari Depot | 79015.00 | 5916 | 57.7
+   | Electronic City Depot | 62512.00 | 8816 | 55.1
 
 > SELECT BUS_TYPE, ROUND(AVG(KM_PER_UNIT), 2) AS AVG_KM_PER_UNIT, ROUND(AVG(COST_PER_KM), 2) AS AVG_COST_PER_KM FROM TRIP.V_FUEL_EFFICIENCY_CL
    | BUS_TYPE | AVG_KM_PER_UNIT | AVG_COST_PER_KM
@@ -110,14 +110,14 @@
    | AC Not Working | Medium | 10
    | Bus Condition | High | 8
    | Staff Behaviour | High | 7
-   | Overcrowding | High | 7
-   | Staff Behaviour | Low | 7
    | Delay | High | 7
+   | Staff Behaviour | Low | 7
+   | Overcrowding | High | 7
    | Delay | Low | 6
    | Ticketing | Medium | 6
    | Bus Condition | Medium | 5
-   | Safety | Low | 4
    | Cleanliness | High | 4
+   | Safety | Low | 4
    | Safety | Medium | 3
    | Cleanliness | Medium | 3
    | Ticketing | High | 2

@@ -137,5 +137,6 @@ with maint_tab:
                           {"bus": bus_id, "d": mdate, "t": mtype, "desc": desc.strip() or mtype, "p": parts,
                            "l": labour, "h": down, "sev": severity})])
                 st.success(f"Job saved for {reg}.")
+                st.toast(f"Workshop job saved for {reg}", icon=":material/check_circle:")
             except Exception as exc:  # noqa: BLE001
                 st.error(f"Could not save: {exc}")

@@ -1,18 +1,14 @@
-table KPI
-	lineageTag: 0356a445-34ee-5281-b935-7a0855b0f928
+table HeadlineKPIs
+	lineageTag: f415f0f9-967d-5b81-82ff-e10cfe696bd3
 
-	measure 'Active Passes' = SUM(KPI[ACTIVE_PASSES])
+	measure 'Active Passes' = SUM(HeadlineKPIs[ACTIVE_PASSES])
 		formatString: #,0
-		lineageTag: 22cd2fd5-d165-5b71-8b6c-6a4bb75734b6
-
-	measure 'Fleet Size' = SUM(KPI[TOTAL_BUSES])
-		formatString: #,0
-		lineageTag: c3dc63c8-b90f-5781-8865-e98a96bbb612
+		lineageTag: 20b1ead8-831f-5c08-9399-c5c04e9d0dba
 
 	column TOTAL_BUSES
 		dataType: int64
 		formatString: 0
-		lineageTag: 2bb92c8b-a1a4-5a33-81e1-1f7754c5f5bb
+		lineageTag: 5b32e1e0-159f-5d7c-acb7-7a8cc01d176a
 		summarizeBy: sum
 		sourceColumn: TOTAL_BUSES
 
@@ -21,7 +17,7 @@ table KPI
 	column ACTIVE_BUSES
 		dataType: int64
 		formatString: 0
-		lineageTag: a567113c-ba2a-5ed3-81e0-d16275e99018
+		lineageTag: 3edf0414-5519-5314-8872-0f9ff269c6c3
 		summarizeBy: sum
 		sourceColumn: ACTIVE_BUSES
 
@@ -30,7 +26,7 @@ table KPI
 	column TOTAL_DEPOTS
 		dataType: int64
 		formatString: 0
-		lineageTag: 48daac22-e0ae-55ec-b11a-16fede59e0f7
+		lineageTag: a6677148-4eaf-5c3c-b5b4-a7e650e69516
 		summarizeBy: sum
 		sourceColumn: TOTAL_DEPOTS
 
@@ -39,7 +35,7 @@ table KPI
 	column TOTAL_EMPLOYEES
 		dataType: int64
 		formatString: 0
-		lineageTag: 79817b74-f3bf-5644-9962-a9316eea9045
+		lineageTag: e4a9f7ef-246c-5792-a524-f4c5e3f268da
 		summarizeBy: sum
 		sourceColumn: TOTAL_EMPLOYEES
 
@@ -48,7 +44,7 @@ table KPI
 	column TOTAL_ROUTES
 		dataType: int64
 		formatString: 0
-		lineageTag: 592a9676-c72f-533b-a372-17d85b67dc31
+		lineageTag: a5ad29d0-6b7e-570a-88f9-7a8b13d42f85
 		summarizeBy: sum
 		sourceColumn: TOTAL_ROUTES
 
@@ -57,7 +53,7 @@ table KPI
 	column TOTAL_TRIPS
 		dataType: int64
 		formatString: 0
-		lineageTag: b8b094a3-8645-5517-848e-cf387a05b4e8
+		lineageTag: 8037cf62-b1bb-53d2-bbfd-ffb74a105cb7
 		summarizeBy: sum
 		sourceColumn: TOTAL_TRIPS
 
@@ -66,7 +62,7 @@ table KPI
 	column TOTAL_TICKETS
 		dataType: int64
 		formatString: 0
-		lineageTag: c12cda10-cca2-57cf-add0-e5039788cd2c
+		lineageTag: acfff25b-23a7-5bd5-a75c-3e0c3773b884
 		summarizeBy: sum
 		sourceColumn: TOTAL_TICKETS
 
@@ -74,7 +70,7 @@ table KPI
 
 	column TICKET_REVENUE
 		dataType: double
-		lineageTag: 5820dca4-4fcf-52d7-922c-0aace4627457
+		lineageTag: e3cedd53-e9d5-57fa-a31a-f1325a12d830
 		summarizeBy: sum
 		sourceColumn: TICKET_REVENUE
 
@@ -83,7 +79,7 @@ table KPI
 	column TOTAL_PASSES
 		dataType: int64
 		formatString: 0
-		lineageTag: 0465e38f-11cc-57b0-bded-903ca308cd2e
+		lineageTag: 2635a2bd-b755-57b4-b5a7-eb2827652608
 		summarizeBy: sum
 		sourceColumn: TOTAL_PASSES
 
@@ -92,7 +88,7 @@ table KPI
 	column ACTIVE_PASSES
 		dataType: int64
 		formatString: 0
-		lineageTag: 89a35039-7c1d-51bd-86e7-57e3dd6864a7
+		lineageTag: 19eb1f58-a996-54c2-bc66-c5f0bcc6cd38
 		summarizeBy: sum
 		sourceColumn: ACTIVE_PASSES
 
@@ -101,7 +97,7 @@ table KPI
 	column TOTAL_COMPLAINTS
 		dataType: int64
 		formatString: 0
-		lineageTag: 405abd66-f170-576b-b98d-85b5fffcfee7
+		lineageTag: 446a3191-b1b7-5b0a-afea-d66a82132e0f
 		summarizeBy: sum
 		sourceColumn: TOTAL_COMPLAINTS
 
@@ -110,7 +106,7 @@ table KPI
 	column OPEN_COMPLAINTS
 		dataType: int64
 		formatString: 0
-		lineageTag: 0a02e5b2-2cee-5fe0-9ec2-25d53a75463a
+		lineageTag: e70e9f31-ccc2-5c8f-a91d-536169f6e9d1
 		summarizeBy: sum
 		sourceColumn: OPEN_COMPLAINTS
 
@@ -119,7 +115,7 @@ table KPI
 	column TOTAL_FUEL_RECORDS
 		dataType: int64
 		formatString: 0
-		lineageTag: 9a5d42df-c9c0-55f5-8b9d-9f62b7e3a86a
+		lineageTag: 6a49d008-c53b-5f8f-a123-84a0f7780e73
 		summarizeBy: sum
 		sourceColumn: TOTAL_FUEL_RECORDS
 
@@ -127,7 +123,7 @@ table KPI
 
 	column FUEL_COST
 		dataType: double
-		lineageTag: 393d1b1a-e830-56d4-8f6b-0b3c051bfaf4
+		lineageTag: 72717e04-9d62-5507-8fdb-8510eef4f3f8
 		summarizeBy: sum
 		sourceColumn: FUEL_COST
 
@@ -136,7 +132,7 @@ table KPI
 	column TOTAL_MAINTENANCE_RECORDS
 		dataType: int64
 		formatString: 0
-		lineageTag: 300e8dcb-527a-56a1-8e14-cdd7ea032127
+		lineageTag: fd775ba3-4d83-52b2-ae7a-4fba91ccd3f2
 		summarizeBy: sum
 		sourceColumn: TOTAL_MAINTENANCE_RECORDS
 
@@ -144,7 +140,7 @@ table KPI
 
 	column MAINTENANCE_COST
 		dataType: double
-		lineageTag: 0e36039d-10a7-5f4e-83a7-863ba5c4fa7a
+		lineageTag: f4efd940-602b-5479-a14d-8c117d006f6b
 		summarizeBy: sum
 		sourceColumn: MAINTENANCE_COST
 
@@ -152,13 +148,13 @@ table KPI
 
 	column ON_TIME_PCT
 		dataType: double
-		lineageTag: 8e24854a-0604-55e3-bd0f-36aaf1e3d045
+		lineageTag: fa043512-f5e6-517c-b348-4515c8f811ec
 		summarizeBy: sum
 		sourceColumn: ON_TIME_PCT
 
 		annotation SummarizationSetBy = Automatic
 
-	partition KPI = m
+	partition HeadlineKPIs = m
 		mode: import
 		source =
 				let
