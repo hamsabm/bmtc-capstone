@@ -103,7 +103,7 @@ it showed an empty table for the limited role.
 - Power BI dashboard: no `.pbix` created (manual GUI step).
 - (Resolved) Visual inspection: see the visual re-design check below.
 - Share consumption: no second Snowflake account is available.
-- Public deployment: not performed (requires your GitHub / Streamlit Cloud login). The app is local only.
+- (Resolved) Public deployment: see the deployment section below.
 
 ## Visual re-design check
 
@@ -115,3 +115,13 @@ titles were added. Each page was rendered in a real browser (Microsoft Edge, hea
 
 Regression after the redesign: `tests/test_app.py` 9/9 · `tests/test_navigation_errors.py` 10/10 ·
 `tests/test_interactions.py` 24/24.
+
+## Public deployment and Power BI
+
+| Check | Result |
+|---|---|
+| Live app https://bmtc-capstone-khikgndfeza5wceasi6uzc.streamlit.app | Loads the new design; the Home page content renders only after a successful Snowflake connection, so the deployed secrets work |
+| Deployed identity | `BMTC_STREAMLIT_APP` / role `BMTC_APP` via Streamlit secrets (least-privilege checks 18/18 earlier) |
+| Power BI project opens in Power BI Desktop 2.159 without errors | PASS |
+| Power BI refresh against Snowflake | PASS. Trips 3,945, route revenue total 1,693,619, on-time 57.0% (matches the app and `V_DASHBOARD_KPIS`) |
+| Dashboard period switch and deep links (browser test) | PASS: no "Page not found" on `/dashboard`; switching to "Last 3 months" redraws the trends |

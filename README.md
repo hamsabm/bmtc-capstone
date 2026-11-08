@@ -84,13 +84,20 @@ SNOWFLAKE_ROLE=ACCOUNTADMIN
 Key-pair login is also supported: set `SNOWFLAKE_PRIVATE_KEY` (PEM text) or `SNOWFLAKE_PRIVATE_KEY_FILE`
 instead of a password. When deployed, the same keys can be supplied as Streamlit secrets.
 
-## Run
+## Live application
+
+**https://bmtc-capstone-khikgndfeza5wceasi6uzc.streamlit.app** (Streamlit Community Cloud). It connects to Snowflake as the least-privilege service user
+`BMTC_STREAMLIT_APP` (role `BMTC_APP`, key-pair authentication). Credentials are kept only in Streamlit secrets.
+
+## Run locally
 
 ```powershell
 .\venv\Scripts\python.exe -m streamlit run app.py
 ```
 
 Then open http://localhost:8501.
+
+Power BI: open `powerbi/BMTC_Dashboard.pbip` in Power BI Desktop (regenerate with `scripts/build_powerbi_project.py`).
 
 Rebuild the Snowflake backend from zero (optional; takes about 4 minutes on an XSMALL warehouse):
 
@@ -113,7 +120,7 @@ Tests:
 
 | Area | Where |
 |---|---|
-| Dashboard: live KPIs and 6 charts | app → Dashboard |
+| Dashboard: live KPIs with monthly sparklines, a period switch (3/6/12 months) and 6 charts | app → Dashboard |
 | Fleet search/filters, depot & type analysis, **change bus status** (transaction + audit) | Bus Management |
 | Route search and detail, top/bottom routes, trip log | Routes & Trips |
 | Ticket volume, revenue, payment mix, hourly/weekday and route trends | Ticket Analytics |
