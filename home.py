@@ -8,7 +8,7 @@ from utils.db import connection_ok, query
 from utils.ui import money, num, page, show_table
 
 page("BMTC Data Warehouse & Analytics System",
-     "Operations, fleet, revenue and passenger analytics on Snowflake - synthetic academic dataset")
+     "Operations, fleet, revenue and passenger analytics on Snowflake")
 
 ok, info = connection_ok()   # page() already stopped the script if the connection failed
 
@@ -54,11 +54,6 @@ for row in range(0, len(TILES), 4):
                         f'<div class="tile-title">{title}</div><div class="tile-desc">{desc}</div>',
                         unsafe_allow_html=True)
             st.page_link(path, label=f"Open {title}", icon=icon)
-
-st.info("All data in this application is **synthetic academic data** generated for a capstone project. "
-        "It is not official BMTC operational data; people, phone numbers and registrations are fictitious.",
-        icon=":material/info:")
-
 # ---------------------------------------------------------------- architecture + inventory
 left, right = st.columns([1, 1])
 with left:
