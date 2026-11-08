@@ -38,6 +38,8 @@ def page(title: str, caption: str = "") -> None:
     if not ok:
         st.error("Cannot reach Snowflake, so live data cannot be shown.", icon=":material/cloud_off:")
         st.caption(f"Details: {info}")
+        from utils.snowflake_connection import config_sources
+        st.caption(f"Settings found: {config_sources()}")
         st.markdown("Check the Snowflake settings in `.env` (or the deployment secrets) and that warehouse "
                     "`BMTC_WH` and database `BMTC_DW` exist, then press **Refresh data**.")
         st.stop()

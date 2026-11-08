@@ -48,6 +48,22 @@ def _get(key: str, default: str | None = None) -> str | None:
     return default
 
 
+def config_sources() -> str:
+    """Where Snowflake settings were found - key NAMES only, never values (for troubleshooting)."""
+    env_keys = [k for k in KEYS if os.getenv(k)]
+    try:
+        import streamlit as st
+
+        if st.secrets.load_if_toml_exists():
+            sec = [k for k in st.secrets.keys() if str(k).startswith("SNOWFLAKE_")]
+            secrets_txt = f"loaded, Snowflake keys: {', '.join(sorted(sec)) or 'none'}"
+        else:
+            secrets_txt = "not found"
+    except Exception:  # noqa: BLE001
+        secrets_txt = "unavailable"
+    return f"Environment keys: {', '.join(env_keys) or 'none'} | Streamlit secrets: {secrets_txt}"
+
+
 def _private_key_der() -> bytes | None:
     pem = _get("SNOWFLAKE_PRIVATE_KEY")
     path = _get("SNOWFLAKE_PRIVATE_KEY_FILE")
