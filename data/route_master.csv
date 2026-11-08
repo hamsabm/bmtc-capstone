@@ -1,0 +1,41 @@
+ROUTE_ID,ROUTE_CODE,ROUTE_NAME,SOURCE_STOP,DESTINATION_STOP,DISTANCE_KM,NUM_STOPS,ROUTE_CATEGORY,BASE_FARE,DEPOT_ID,ACTIVE_FLAG
+1,V-114A,Koramangala - Kengeri TTMC,Koramangala,Kengeri TTMC,24.9,33,AC Vajra,55,1,TRUE
+2,MF-106B,Silk Board - Kempegowda Bus Station,Silk Board,Kempegowda Bus Station,15.5,21,Metro Feeder,15,1,TRUE
+3,MF-167B,Malleshwaram - Vijayanagar,Malleshwaram,Vijayanagar,21.5,31,Metro Feeder,20,1,TRUE
+4,146B,HSR Layout - ITPL,HSR Layout,ITPL,18.5,23,City Ordinary,20,1,TRUE
+5,251A,Yeshwanthpur TTMC - Bannerghatta,Yeshwanthpur TTMC,Bannerghatta,19.9,29,City Ordinary,20,2,TRUE
+6,295D,Yeshwanthpur TTMC - HSR Layout,Yeshwanthpur TTMC,HSR Layout,20.1,24,City Ordinary,20,2,TRUE
+7,MF-123E,Yeshwanthpur TTMC - KR Puram,Yeshwanthpur TTMC,KR Puram,21.0,29,Metro Feeder,20,2,TRUE
+8,V-585E,Yeshwanthpur TTMC - Attibele,Yeshwanthpur TTMC,Attibele,24.3,38,AC Vajra,55,2,TRUE
+9,KIA-423D,Kengeri TTMC - Kempegowda International Airport,Kengeri TTMC,Kempegowda International Airport,43.6,68,Airport Vayu Vajra,325,3,TRUE
+10,502,Kengeri TTMC - Peenya,Kengeri TTMC,Peenya,14.9,15,City Ordinary,15,3,TRUE
+11,MF-189A,Kengeri TTMC - Koramangala,Kengeri TTMC,Koramangala,8.6,10,Metro Feeder,10,3,TRUE
+12,117A,Kengeri TTMC - Whitefield TTMC,Kengeri TTMC,Whitefield TTMC,35.0,43,Suburban,35,3,TRUE
+13,233B,Hebbal - Bannerghatta,Hebbal,Bannerghatta,33.9,46,Suburban,35,4,TRUE
+14,458D,Hebbal - JP Nagar,Hebbal,JP Nagar,9.6,11,City Ordinary,10,4,TRUE
+15,127A,Hebbal - Rajajinagar,Hebbal,Rajajinagar,21.6,24,City Ordinary,25,4,TRUE
+16,595A,Hebbal - Yeshwanthpur TTMC,Hebbal,Yeshwanthpur TTMC,17.3,26,City Ordinary,20,4,TRUE
+17,KIA-445C,Banashankari TTMC - Kempegowda International Airport,Banashankari TTMC,Kempegowda International Airport,39.0,55,Airport Vayu Vajra,290,5,FALSE
+18,421A,Banashankari TTMC - HSR Layout,Banashankari TTMC,HSR Layout,28.7,36,Suburban,30,5,TRUE
+19,V-283A,Banashankari TTMC - Kengeri TTMC,Banashankari TTMC,Kengeri TTMC,19.9,21,AC Vajra,45,5,TRUE
+20,296E,Banashankari TTMC - Nagawara,Banashankari TTMC,Nagawara,25.0,28,Suburban,25,5,TRUE
+21,V-268E,Whitefield TTMC - Rajajinagar,Whitefield TTMC,Rajajinagar,17.4,22,AC Vajra,40,6,TRUE
+22,384D,Whitefield TTMC - KR Market,Whitefield TTMC,KR Market,12.4,18,City Ordinary,15,6,TRUE
+23,189E,Whitefield TTMC - Koramangala,Whitefield TTMC,Koramangala,14.4,21,City Ordinary,15,6,TRUE
+24,V-340,Whitefield TTMC - BTM Layout,Whitefield TTMC,BTM Layout,21.4,27,AC Vajra,45,6,TRUE
+25,V-501A,Electronic City - Kengeri TTMC,Electronic City,Kengeri TTMC,16.3,24,AC Vajra,35,7,TRUE
+26,442A,Electronic City - Indiranagar,Electronic City,Indiranagar,8.5,9,City Ordinary,10,7,TRUE
+27,564C,Electronic City - Jayanagar 4th Block,Electronic City,Jayanagar 4th Block,17.1,24,City Ordinary,20,7,TRUE
+28,MF-473,Electronic City - Attibele,Electronic City,Attibele,14.4,17,Metro Feeder,15,7,TRUE
+29,244C,Peenya - Banashankari TTMC,Peenya,Banashankari TTMC,25.7,29,Suburban,25,8,TRUE
+30,KIA-454,Peenya - Kempegowda International Airport,Peenya,Kempegowda International Airport,46.3,64,Airport Vayu Vajra,345,8,TRUE
+31,MF-470C,Peenya - JP Nagar,Peenya,JP Nagar,10.3,11,Metro Feeder,10,8,TRUE
+32,421D,Peenya - Whitefield TTMC,Peenya,Whitefield TTMC,11.0,17,City Ordinary,10,8,TRUE
+33,V-155C,Koramangala - JP Nagar,Koramangala,JP Nagar,26.6,28,AC Vajra,60,9,FALSE
+34,KIA-480B,Koramangala - Kempegowda International Airport,Koramangala,Kempegowda International Airport,38.8,45,Airport Vayu Vajra,290,9,TRUE
+35,195,Koramangala - Indiranagar,Koramangala,Indiranagar,18.0,26,City Ordinary,20,9,TRUE
+36,MF-398,Koramangala - Kengeri TTMC,Koramangala,Kengeri TTMC,18.4,25,Metro Feeder,15,9,TRUE
+37,145A,Yelahanka - Shivajinagar,Yelahanka,Shivajinagar,31.3,37,Suburban,30,10,TRUE
+38,264,Yelahanka - ITPL,Yelahanka,ITPL,15.7,22,City Ordinary,15,10,TRUE
+39,MF-182D,Yelahanka - Marathahalli,Yelahanka,Marathahalli,19.8,27,Metro Feeder,20,10,TRUE
+40,V-468E,Yelahanka - Hoskote,Yelahanka,Hoskote,37.2,53,AC Vajra,80,10,TRUE

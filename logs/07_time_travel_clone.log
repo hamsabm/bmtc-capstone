@@ -1,0 +1,132 @@
+# Execution log for 07_time_travel_clone.sql (2026-11-08 20:48:23)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> SHOW TABLES LIKE 'ROUTE_MASTER' IN SCHEMA TRIP; -- retention_time column = Time Travel window (days)
+   | created_on | name | database_name | schema_name | kind | comment | cluster_by | rows | bytes | owner | retention_time | automatic_clustering | change_tracking | search_optimization | search_optimization_progress | search_optimization_bytes | is_external | enable_schema_evolution | owner_role_type | is_event | is_hybrid | is_iceberg | is_dynamic | is_immutable | is_interactive | row_timestamp | error_logging
+   | 2026-11-08 07:13:11.518000-08:00 | ROUTE_MASTER | BMTC_DW | TRIP | TABLE | Route network (synthetic codes) |  | 40 | 3584 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+
+> SELECT ROUTE_ID, ROUTE_CODE, ROUTE_CATEGORY, BASE_FARE FROM TRIP.ROUTE_MASTER WHERE ROUTE_CATEGORY = 'AC Vajra' ORDER BY ROUTE_ID
+   | ROUTE_ID | ROUTE_CODE | ROUTE_CATEGORY | BASE_FARE
+   | 1 | V-114A | AC Vajra | 55.00
+   | 8 | V-585E | AC Vajra | 55.00
+   | 19 | V-283A | AC Vajra | 45.00
+   | 21 | V-268E | AC Vajra | 40.00
+   | 24 | V-340 | AC Vajra | 45.00
+   | 25 | V-501A | AC Vajra | 35.00
+   | 33 | V-155C | AC Vajra | 60.00
+   | 40 | V-468E | AC Vajra | 80.00
+
+> SET fare_checksum_before = (SELECT SUM(BASE_FARE) FROM TRIP.ROUTE_MASTER)
+   | status
+   | Statement executed successfully.
+
+> UPDATE TRIP.ROUTE_MASTER SET BASE_FARE = BASE_FARE * 10 WHERE ROUTE_CATEGORY = 'AC Vajra'
+   | number of rows updated | number of multi-joined rows updated
+   | 8 | 0
+
+> SET bad_update_qid = LAST_QUERY_ID()
+   | status
+   | Statement executed successfully.
+
+> SELECT ROUTE_ID, ROUTE_CODE, BASE_FARE AS FARE_AFTER_ERROR FROM TRIP.ROUTE_MASTER WHERE ROUTE_CATEGORY = 'AC Vajra' ORDER BY ROUTE_ID
+   | ROUTE_ID | ROUTE_CODE | FARE_AFTER_ERROR
+   | 1 | V-114A | 550.00
+   | 8 | V-585E | 550.00
+   | 19 | V-283A | 450.00
+   | 21 | V-268E | 400.00
+   | 24 | V-340 | 450.00
+   | 25 | V-501A | 350.00
+   | 33 | V-155C | 600.00
+   | 40 | V-468E | 800.00
+
+> SELECT cur.ROUTE_CODE, old.BASE_FARE AS FARE_BEFORE, cur.BASE_FARE AS FARE_NOW FROM TRIP.ROUTE_MASTER cur JOIN TRIP.ROUTE_MASTER BEFORE (STA
+   | ROUTE_CODE | FARE_BEFORE | FARE_NOW
+   | V-114A | 55.00 | 550.00
+   | V-585E | 55.00 | 550.00
+   | V-283A | 45.00 | 450.00
+   | V-268E | 40.00 | 400.00
+   | V-340 | 45.00 | 450.00
+   | V-501A | 35.00 | 350.00
+   | V-155C | 60.00 | 600.00
+   | V-468E | 80.00 | 800.00
+
+> CREATE OR REPLACE TABLE TRIP.ROUTE_MASTER_PRE_FARE_ERROR CLONE TRIP.ROUTE_MASTER BEFORE (STATEMENT => $bad_update_qid)
+   | status
+   | Table ROUTE_MASTER_PRE_FARE_ERROR successfully created.
+
+> UPDATE TRIP.ROUTE_MASTER r SET BASE_FARE = h.BASE_FARE FROM (SELECT ROUTE_ID, BASE_FARE FROM TRIP.ROUTE_MASTER BEFORE (STATEMENT => $bad_upd
+   | number of rows updated | number of multi-joined rows updated
+   | 8 | 0
+
+> SELECT $fare_checksum_before AS CHECKSUM_BEFORE, SUM(BASE_FARE) AS CHECKSUM_AFTER_RECOVERY, IFF($fare_checksum_before = SUM(BASE_FARE), 'REC
+   | CHECKSUM_BEFORE | CHECKSUM_AFTER_RECOVERY | RESULT
+   | 2205 | 2205.00 | RECOVERED
+
+> CREATE OR REPLACE TABLE BUS.BUS_MASTER_CLONE CLONE BUS.BUS_MASTER
+   | status
+   | Table BUS_MASTER_CLONE successfully created.
+
+> SELECT (SELECT COUNT(*) FROM BUS.BUS_MASTER) AS PROD_ROWS, (SELECT COUNT(*) FROM BUS.BUS_MASTER_CLONE) AS CLONE_ROWS
+   | PROD_ROWS | CLONE_ROWS
+   | 120 | 120
+
+> UPDATE BUS.BUS_MASTER_CLONE SET STATUS = 'RETIRED' WHERE FUEL_TYPE = 'Diesel' AND MANUFACTURE_YEAR < 2018
+   | number of rows updated | number of multi-joined rows updated
+   | 11 | 0
+
+> SELECT 'PRODUCTION' AS COPY, STATUS, COUNT(*) AS BUSES FROM BUS.BUS_MASTER GROUP BY STATUS UNION ALL SELECT 'CLONE (renewal test)', STATUS, 
+   | COPY | STATUS | BUSES
+   | CLONE (renewal test) | ACTIVE | 105
+   | CLONE (renewal test) | RETIRED | 11
+   | CLONE (renewal test) | UNDER_MAINTENANCE | 4
+   | PRODUCTION | ACTIVE | 115
+   | PRODUCTION | UNDER_MAINTENANCE | 5
+
+> SELECT d.DEPOT_NAME, SUM(c.SEATING_CAPACITY) AS SEATS_TO_REPLACE, COUNT(*) AS BUSES_TO_REPLACE FROM BUS.BUS_MASTER_CLONE c JOIN BUS.DEPOT_MA
+   | DEPOT_NAME | SEATS_TO_REPLACE | BUSES_TO_REPLACE
+   | Banashankari Depot | 82 | 2
+   | Peenya Depot | 77 | 2
+   | Yeshwanthpur Depot | 73 | 2
+   | Electronic City Depot | 45 | 1
+   | Yelahanka Depot | 44 | 1
+   | Shanthinagar Depot | 43 | 1
+   | Hebbal Depot | 42 | 1
+   | Kengeri Depot | 32 | 1
+
+> SELECT TABLE_NAME, CLONE_GROUP_ID, ACTIVE_BYTES FROM INFORMATION_SCHEMA.TABLE_STORAGE_METRICS WHERE TABLE_SCHEMA = 'BUS' AND TABLE_NAME IN (
+   | TABLE_NAME | CLONE_GROUP_ID | ACTIVE_BYTES
+   | BUS_MASTER | 2199 | 0
+   | BUS_MASTER | 3074 | 0
+   | BUS_MASTER | 3084 | 0
+   | BUS_MASTER | 3103 | 0
+   | BUS_MASTER | 3123 | 0
+   | BUS_MASTER_CLONE | 3123 | 0
+   | BUS_MASTER_CLONE | 2199 | 0
+
+> DROP TABLE BUS.BUS_MASTER_CLONE
+   | status
+   | BUS_MASTER_CLONE successfully dropped.
+
+> SHOW TABLES HISTORY LIKE 'BUS_MASTER_CLONE' IN SCHEMA BUS
+   | created_on | name | database_name | schema_name | kind | comment | cluster_by | rows | bytes | owner | retention_time | dropped_on | automatic_clustering | change_tracking | search_optimization | search_optimization_progress | search_optimization_bytes | is_external | enable_schema_evolution | owner_role_type | is_event | is_hybrid | is_iceberg | is_dynamic | is_immutable | is_interactive | row_timestamp | error_logging
+   | 2026-11-08 06:56:33.819000-08:00 | BUS_MASTER_CLONE | BMTC_DW | BUS | TABLE | Fleet register (synthetic) |  | 120 | 4096 | ACCOUNTADMIN | 1 | 2026-11-08 07:18:29.894000-08:00 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:18:28.849000-08:00 | BUS_MASTER_CLONE | BMTC_DW | BUS | TABLE | Fleet register (synthetic) |  | 120 | 4096 | ACCOUNTADMIN | 1 | 2026-11-08 07:18:32.491000-08:00 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+
+> UNDROP TABLE BUS.BUS_MASTER_CLONE
+   | status
+   | Table BUS_MASTER_CLONE successfully restored.
+
+> SELECT COUNT(*) AS CLONE_ROWS_AFTER_UNDROP FROM BUS.BUS_MASTER_CLONE
+   | CLONE_ROWS_AFTER_UNDROP
+   | 120

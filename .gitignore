@@ -1,0 +1,24 @@
+# Secrets and credentials - never commit
+.env
+.env.*
+!.env.example
+secrets/
+.streamlit/secrets.toml
+*credentials*
+*.p8
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python / tooling caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store

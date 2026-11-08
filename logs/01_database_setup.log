@@ -1,0 +1,59 @@
+# Execution log for 01_database_setup.sql (2026-11-08 20:43:05)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> CREATE WAREHOUSE IF NOT EXISTS BMTC_WH WAREHOUSE_SIZE = 'XSMALL' AUTO_SUSPEND = 60 AUTO_RESUME = TRUE INITIALLY_SUSPENDED = TRUE COMMENT = '
+   | status
+   | BMTC_WH already exists, statement succeeded.
+
+> CREATE DATABASE IF NOT EXISTS BMTC_DW DATA_RETENTION_TIME_IN_DAYS = 1 COMMENT = 'BMTC Data Warehouse (synthetic academic dataset)'
+   | status
+   | BMTC_DW already exists, statement succeeded.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> CREATE SCHEMA IF NOT EXISTS BMTC_DW.BUS COMMENT = 'Fleet, depot and workforce master data'
+   | status
+   | BUS already exists, statement succeeded.
+
+> CREATE SCHEMA IF NOT EXISTS BMTC_DW.TRIP COMMENT = 'Operations: routes, trips, ticketing, fuel, maintenance'
+   | status
+   | TRIP already exists, statement succeeded.
+
+> CREATE SCHEMA IF NOT EXISTS BMTC_DW.PASSENGER COMMENT = 'Passenger passes and complaint documents (JSON)'
+   | status
+   | PASSENGER already exists, statement succeeded.
+
+> CREATE SCHEMA IF NOT EXISTS BMTC_DW.STAGING COMMENT = 'Landing zone: stage, file formats, transient load tables, pipe'
+   | status
+   | STAGING already exists, statement succeeded.
+
+> CREATE SCHEMA IF NOT EXISTS BMTC_DW.GOVERNANCE COMMENT = 'Masking and row access policies, access mapping'
+   | status
+   | GOVERNANCE already exists, statement succeeded.
+
+> SHOW WAREHOUSES LIKE 'BMTC_WH'
+   | name | state | type | size | min_cluster_count | max_cluster_count | started_clusters | running | queued | is_default | is_current | auto_suspend | auto_resume | available | provisioning | quiescing | other | created_on | resumed_on | updated_on | owner | comment | enable_query_acceleration | query_acceleration_max_scale_factor | resource_monitor | actives | pendings | failed | suspended | uuid | scaling_policy | owner_role_type | resource_constraint | generation | query_throughput_multiplier | max_query_performance_level | disabled_reasons | tables
+   | BMTC_WH | STARTED | STANDARD | X-Small | 1 | 1 | 1 | 0 | 0 | N | Y | 60 | true |  100 | 0 | 0 | 0 | 2026-11-08 06:41:47.982000-08:00 | 2026-11-08 06:41:47.987000-08:00 | 2026-11-08 07:02:21.323000-08:00 | ACCOUNTADMIN | BMTC capstone compute - XSMALL, auto-suspend 60s | true | 8 | BMTC_RM | 1 | 0 | 0 | 0 | 51120724 | STANDARD | ROLE | STANDARD_GEN_2 | 2 | NULL | NULL | NULL | NULL
+
+> SHOW SCHEMAS IN DATABASE BMTC_DW
+   | created_on | name | is_default | is_current | database_name | owner | comment | options | retention_time | owner_role_type | classification_profile_database | classification_profile_schema | classification_profile | object_visibility | is_nested
+   | 2026-11-08 06:41:48.880000-08:00 | BUS | N | N | BMTC_DW | ACCOUNTADMIN | Fleet, depot and workforce master data |  | 1 | ROLE | NULL | NULL | NULL | NULL | false
+   | 2026-11-08 06:41:49.899000-08:00 | GOVERNANCE | N | N | BMTC_DW | ACCOUNTADMIN | Masking and row access policies, access mapping |  | 1 | ROLE | NULL | NULL | NULL | NULL | false
+   | 2026-11-08 07:13:09.112000-08:00 | INFORMATION_SCHEMA | N | N | BMTC_DW |  | Views describing the contents of schemas in this database |  | 1 |  | NULL | NULL | NULL | NULL | false
+   | 2026-11-08 06:41:49.427000-08:00 | PASSENGER | N | N | BMTC_DW | ACCOUNTADMIN | Passenger passes and complaint documents (JSON) |  | 1 | ROLE | NULL | NULL | NULL | NULL | false
+   | 2026-11-08 06:41:48.210000-08:00 | PUBLIC | N | Y | BMTC_DW | ACCOUNTADMIN |  |  | 1 | ROLE | NULL | NULL | NULL | NULL | false
+   | 2026-11-08 06:41:49.629000-08:00 | STAGING | N | N | BMTC_DW | ACCOUNTADMIN | Landing zone: stage, file formats, transient load tables, pi |  | 1 | ROLE | NULL | NULL | NULL | NULL | false
+   | 2026-11-08 06:41:49.146000-08:00 | TRIP | N | N | BMTC_DW | ACCOUNTADMIN | Operations: routes, trips, ticketing, fuel, maintenance |  | 1 | ROLE | NULL | NULL | NULL | NULL | false
+
+> SELECT CURRENT_ACCOUNT() AS ACCOUNT, CURRENT_ROLE() AS ROLE, CURRENT_WAREHOUSE() AS WAREHOUSE, CURRENT_DATABASE() AS DATABASE_NAME
+   | ACCOUNT | ROLE | WAREHOUSE | DATABASE_NAME
+   | SF70746 | ACCOUNTADMIN | BMTC_WH | BMTC_DW

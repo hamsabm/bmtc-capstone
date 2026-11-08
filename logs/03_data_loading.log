@@ -1,0 +1,277 @@
+# Execution log for 03_data_loading.sql (2026-11-08 20:46:05)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> USE SCHEMA STAGING
+   | status
+   | Statement executed successfully.
+
+> CREATE OR REPLACE FILE FORMAT STAGING.FF_CSV TYPE = CSV PARSE_HEADER = TRUE -- read column names from the header row FIELD_DELIMITER = ',' F
+   | status
+   | File format FF_CSV successfully created.
+
+> CREATE OR REPLACE FILE FORMAT STAGING.FF_CSV_PREVIEW TYPE = CSV SKIP_HEADER = 1 FIELD_OPTIONALLY_ENCLOSED_BY = '"' EMPTY_FIELD_AS_NULL = TRU
+   | status
+   | File format FF_CSV_PREVIEW successfully created.
+
+> CREATE OR REPLACE FILE FORMAT STAGING.FF_JSON TYPE = JSON STRIP_OUTER_ARRAY = FALSE -- files are newline-delimited JSON STRIP_NULL_VALUES = 
+   | status
+   | File format FF_JSON successfully created.
+
+> CREATE OR REPLACE STAGE STAGING.BMTC_INTERNAL_STAGE DIRECTORY = (ENABLE = TRUE) COMMENT = 'Internal named stage for BMTC source files'
+   | status
+   | Stage area BMTC_INTERNAL_STAGE successfully created.
+
+> PUT 'file://C:/Users/HamsaBM/Desktop/BMTC_CAPSTONE/data/*.csv' @STAGING.BMTC_INTERNAL_STAGE/csv/ AUTO_COMPRESS = TRUE OVERWRITE = TRUE
+   | source | target | source_size | target_size | source_compression | target_compression | status | message
+   | bus_master.csv | bus_master.csv.gz | 8929 | 2128 | NONE | GZIP | UPLOADED | 
+   | depot_master.csv | depot_master.csv.gz | 861 | 448 | NONE | GZIP | UPLOADED | 
+   | employee_master.csv | employee_master.csv.gz | 32225 | 9216 | NONE | GZIP | UPLOADED | 
+   | fuel_log.csv | fuel_log.csv.gz | 37436 | 10032 | NONE | GZIP | UPLOADED | 
+   | maintenance_log.csv | maintenance_log.csv.gz | 88527 | 13808 | NONE | GZIP | UPLOADED | 
+   | pass_data.csv | pass_data.csv.gz | 215362 | 44256 | NONE | GZIP | UPLOADED | 
+   | route_master.csv | route_master.csv.gz | 3991 | 1264 | NONE | GZIP | UPLOADED | 
+   | ticket_data.csv | ticket_data.csv.gz | 11248300 | 1576592 | NONE | GZIP | UPLOADED | 
+   | trip_data.csv | trip_data.csv.gz | 429844 | 86192 | NONE | GZIP | UPLOADED | 
+
+> PUT 'file://C:/Users/HamsaBM/Desktop/BMTC_CAPSTONE/data/complaints.json' @STAGING.BMTC_INTERNAL_STAGE/json/ AUTO_COMPRESS = TRUE OVERWRITE =
+   | source | target | source_size | target_size | source_compression | target_compression | status | message
+   | complaints.json | complaints.json.gz | 341039 | 29568 | NONE | GZIP | UPLOADED | 
+
+> LIST @STAGING.BMTC_INTERNAL_STAGE
+   | name | size | md5 | last_modified
+   | bmtc_internal_stage/csv/bus_master.csv.gz | 2128 | 66bb7c71abef59225b39f9b797f759e3 | Sun, 8 Nov 2026 15:16:09 GMT
+   | bmtc_internal_stage/csv/depot_master.csv.gz | 448 | 98d715375da7509c80c2cc0f1a092b0a | Sun, 8 Nov 2026 15:16:09 GMT
+   | bmtc_internal_stage/csv/employee_master.csv.gz | 9216 | d548618171545c98998ac11c6cd26418 | Sun, 8 Nov 2026 15:16:09 GMT
+   | bmtc_internal_stage/csv/fuel_log.csv.gz | 10032 | 4b55e2d6bd1b8e652b2583cee2e73a32 | Sun, 8 Nov 2026 15:16:09 GMT
+   | bmtc_internal_stage/csv/maintenance_log.csv.gz | 13808 | 8baafa70fbe5db6616fd8019bc2354c9 | Sun, 8 Nov 2026 15:16:09 GMT
+   | bmtc_internal_stage/csv/pass_data.csv.gz | 44256 | 93b57c790c095fc89ea980d637a86171 | Sun, 8 Nov 2026 15:16:09 GMT
+   | bmtc_internal_stage/csv/route_master.csv.gz | 1264 | dad04d82455056935470bcbe2c0d966f | Sun, 8 Nov 2026 15:16:09 GMT
+   | bmtc_internal_stage/csv/ticket_data.csv.gz | 1576592 | 66f84ddfeb553774a67687e1e83ff346 | Sun, 8 Nov 2026 15:16:17 GMT
+   | bmtc_internal_stage/csv/trip_data.csv.gz | 86192 | 84b7306657fc2bc4d961cd15726f247b | Sun, 8 Nov 2026 15:16:10 GMT
+   | bmtc_internal_stage/json/complaints.json.gz | 29568 | 05e08f988b323d2887731084e933016e | Sun, 8 Nov 2026 15:16:18 GMT
+
+> SELECT $1 AS BUS_ID, $2 AS REGISTRATION_NO, $3 AS BUS_TYPE, $4 AS DEPOT_ID FROM @STAGING.BMTC_INTERNAL_STAGE/csv/bus_master.csv.gz (FILE_FOR
+   | BUS_ID | REGISTRATION_NO | BUS_TYPE | DEPOT_ID
+   | 1 | KA-41-F-6188 | Ordinary | 1
+   | 2 | KA-57-F-2053 | Ordinary | 1
+   | 3 | KA-53-F-3397 | Ordinary | 1
+   | 4 | KA-02-F-4257 | Ordinary | 1
+   | 5 | KA-57-F-3209 | Ordinary | 1
+
+> SELECT $1:complaint_id::VARCHAR AS COMPLAINT_ID, $1:category::VARCHAR AS CATEGORY, $1:service.route_code::VARCHAR AS ROUTE FROM @STAGING.BMT
+   | COMPLAINT_ID | CATEGORY | ROUTE
+   | CMP-000001 | Staff Behaviour | 421A
+   | CMP-000002 | Overcrowding | 189E
+   | CMP-000003 | Ticketing | V-468E
+   | CMP-000004 | Staff Behaviour | 189E
+   | CMP-000005 | Staff Behaviour | MF-470C
+
+> SELECT * FROM TABLE(INFER_SCHEMA(LOCATION => '@STAGING.BMTC_INTERNAL_STAGE/csv/fuel_log.csv.gz', FILE_FORMAT => 'STAGING.FF_CSV'))
+   | COLUMN_NAME | TYPE | NULLABLE | EXPRESSION | FILENAMES | ORDER_ID
+   | FUEL_ID | NUMBER(3, 0) | True | $1::NUMBER(3, 0) | csv/fuel_log.csv.gz | 0
+   | BUS_ID | NUMBER(3, 0) | True | $2::NUMBER(3, 0) | csv/fuel_log.csv.gz | 1
+   | DEPOT_ID | NUMBER(2, 0) | True | $3::NUMBER(2, 0) | csv/fuel_log.csv.gz | 2
+   | FUEL_DATE | DATE | True | $4::DATE | csv/fuel_log.csv.gz | 3
+   | FUEL_TYPE | TEXT | True | $5::TEXT | csv/fuel_log.csv.gz | 4
+   | UNIT | TEXT | True | $6::TEXT | csv/fuel_log.csv.gz | 5
+   | QUANTITY | TEXT | True | $7::TEXT | csv/fuel_log.csv.gz | 6
+   | UNIT_PRICE | NUMBER(4, 2) | True | $8::NUMBER(4, 2) | csv/fuel_log.csv.gz | 7
+   | TOTAL_COST | NUMBER(7, 2) | True | $9::NUMBER(7, 2) | csv/fuel_log.csv.gz | 8
+   | ODOMETER_KM | NUMBER(7, 1) | True | $10::NUMBER(7, 1) | csv/fuel_log.csv.gz | 9
+   | KM_SINCE_LAST_FILL | NUMBER(4, 1) | True | $11::NUMBER(4, 1) | csv/fuel_log.csv.gz | 10
+   | STATION | TEXT | True | $12::TEXT | csv/fuel_log.csv.gz | 11
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_DEPOT_MASTER LIKE BUS.DEPOT_MASTER
+   | status
+   | Table STG_DEPOT_MASTER successfully created.
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_BUS_MASTER LIKE BUS.BUS_MASTER
+   | status
+   | Table STG_BUS_MASTER successfully created.
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_EMPLOYEE_MASTER LIKE BUS.EMPLOYEE_MASTER
+   | status
+   | Table STG_EMPLOYEE_MASTER successfully created.
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_ROUTE_MASTER LIKE TRIP.ROUTE_MASTER
+   | status
+   | Table STG_ROUTE_MASTER successfully created.
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_TRIP_DATA LIKE TRIP.TRIP_DATA
+   | status
+   | Table STG_TRIP_DATA successfully created.
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_TICKET_DATA LIKE TRIP.TICKET_DATA
+   | status
+   | Table STG_TICKET_DATA successfully created.
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_FUEL_LOG LIKE TRIP.FUEL_LOG
+   | status
+   | Table STG_FUEL_LOG successfully created.
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_MAINTENANCE_LOG LIKE TRIP.MAINTENANCE_LOG
+   | status
+   | Table STG_MAINTENANCE_LOG successfully created.
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.STG_PASS_DATA LIKE PASSENGER.PASS_DATA
+   | status
+   | Table STG_PASS_DATA successfully created.
+
+> COPY INTO STAGING.STG_DEPOT_MASTER FROM @STAGING.BMTC_INTERNAL_STAGE/csv/depot_master.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_CSV') 
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/depot_master.csv.gz | LOADED | 10 | 10 | 10 | 0 | NULL | NULL | NULL | NULL
+
+> COPY INTO STAGING.STG_BUS_MASTER FROM @STAGING.BMTC_INTERNAL_STAGE/csv/bus_master.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_CSV') MATC
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/bus_master.csv.gz | LOADED | 120 | 120 | 120 | 0 | NULL | NULL | NULL | NULL
+
+> COPY INTO STAGING.STG_EMPLOYEE_MASTER FROM @STAGING.BMTC_INTERNAL_STAGE/csv/employee_master.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/employee_master.csv.gz | LOADED | 300 | 300 | 300 | 0 | NULL | NULL | NULL | NULL
+
+> COPY INTO STAGING.STG_ROUTE_MASTER FROM @STAGING.BMTC_INTERNAL_STAGE/csv/route_master.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_CSV') 
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/route_master.csv.gz | LOADED | 40 | 40 | 40 | 0 | NULL | NULL | NULL | NULL
+
+> COPY INTO STAGING.STG_TRIP_DATA FROM @STAGING.BMTC_INTERNAL_STAGE/csv/trip_data.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_CSV') MATCH_
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/trip_data.csv.gz | LOADED | 3950 | 3950 | 3950 | 0 | NULL | NULL | NULL | NULL
+
+> COPY INTO STAGING.STG_TICKET_DATA FROM @STAGING.BMTC_INTERNAL_STAGE/csv/ticket_data.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_CSV') MA
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/ticket_data.csv.gz | LOADED | 120731 | 120731 | 120731 | 0 | NULL | NULL | NULL | NULL
+
+> COPY INTO STAGING.STG_FUEL_LOG FROM @STAGING.BMTC_INTERNAL_STAGE/csv/fuel_log.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_CSV') MATCH_BY
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/fuel_log.csv.gz | PARTIALLY_LOADED | 384 | 383 | 384 | 1 | Numeric value 'twelve' is not recognized | 385 | 34 | "STG_FUEL_LOG"["QUANTITY":7]
+
+> CREATE OR REPLACE TRANSIENT TABLE STAGING.LOAD_REJECTS AS SELECT 'FUEL_LOG' AS SOURCE_TABLE, METADATA$FILE_ROW_NUMBER + 1 AS FILE_LINE, 'QUA
+   | status
+   | Table LOAD_REJECTS successfully created.
+
+> SELECT * FROM STAGING.LOAD_REJECTS
+   | SOURCE_TABLE | FILE_LINE | COLUMN_NAME | BAD_VALUE | ERROR | FUEL_ID | BUS_ID | FUEL_DATE
+   | FUEL_LOG | 385 | QUANTITY | twelve | Non-numeric QUANTITY | 384 | 69 | 2026-04-24
+
+> COPY INTO STAGING.STG_MAINTENANCE_LOG FROM @STAGING.BMTC_INTERNAL_STAGE/csv/maintenance_log.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/maintenance_log.csv.gz | LOADED | 713 | 713 | 713 | 0 | NULL | NULL | NULL | NULL
+
+> COPY INTO STAGING.STG_PASS_DATA FROM @STAGING.BMTC_INTERNAL_STAGE/csv/pass_data.csv.gz FILE_FORMAT = (FORMAT_NAME = 'STAGING.FF_CSV') MATCH_
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/csv/pass_data.csv.gz | LOADED | 1500 | 1500 | 1500 | 0 | NULL | NULL | NULL | NULL
+
+> COPY INTO PASSENGER.COMPLAINTS_JSON (COMPLAINT_ID, SUBMITTED_AT, PAYLOAD, SOURCE_FILE) FROM (SELECT $1:complaint_id::VARCHAR, $1:submitted_a
+   | file | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name
+   | bmtc_internal_stage/json/complaints.json.gz | LOADED | 460 | 460 | 1 | 0 | NULL | NULL | NULL | NULL
+
+> SELECT TABLE_NAME, FILE_NAME, ROW_PARSED, ROW_COUNT AS ROWS_LOADED, ERROR_COUNT, FIRST_ERROR_MESSAGE FROM TABLE(INFORMATION_SCHEMA.COPY_HIST
+   | TABLE_NAME | FILE_NAME | ROW_PARSED | ROWS_LOADED | ERROR_COUNT | FIRST_ERROR_MESSAGE
+   | STG_FUEL_LOG | csv/fuel_log.csv.gz | 384 | 383 | 1 | Numeric value 'twelve' is not recognized
+
+> CREATE OR REPLACE TEMPORARY TABLE STAGING.DQ_ISSUES ( PHASE VARCHAR, TABLE_NAME VARCHAR, CHECK_NAME VARCHAR, ISSUE_COUNT NUMBER)
+   | status
+   | Table DQ_ISSUES successfully created.
+
+> INSERT INTO STAGING.DQ_ISSUES SELECT 'BEFORE', 'TRIP_DATA', 'Duplicate TRIP_ID rows', COUNT(*) - COUNT(DISTINCT TRIP_ID) FROM STAGING.STG_TR
+   | number of rows inserted
+   | 11
+
+> SELECT * FROM STAGING.DQ_ISSUES ORDER BY TABLE_NAME, CHECK_NAME
+   | PHASE | TABLE_NAME | CHECK_NAME | ISSUE_COUNT
+   | BEFORE | BUS_MASTER | Bus with unknown DEPOT_ID | 0
+   | BEFORE | FUEL_LOG | Missing QUANTITY | 4
+   | BEFORE | FUEL_LOG | Rows rejected by COPY (invalid data type) | 1
+   | BEFORE | MAINTENANCE_LOG | Negative PARTS_COST | 3
+   | BEFORE | PASS_DATA | Missing EMAIL (optional, reported only) | 234
+   | BEFORE | PASS_DATA | Missing VALID_TO | 4
+   | BEFORE | PASS_DATA | Non-standard STATUS (case/whitespace) | 8
+   | BEFORE | TICKET_DATA | Duplicate TICKET_ID rows | 10
+   | BEFORE | TICKET_DATA | Orphan tickets (TRIP_ID not in trips) | 3
+   | BEFORE | TRIP_DATA | Duplicate TRIP_ID rows | 5
+   | BEFORE | TRIP_DATA | Negative PASSENGER_COUNT | 3
+
+> INSERT INTO BUS.DEPOT_MASTER SELECT * FROM STAGING.STG_DEPOT_MASTER QUALIFY ROW_NUMBER() OVER (PARTITION BY DEPOT_ID ORDER BY DEPOT_ID) = 1
+   | number of rows inserted
+   | 10
+
+> INSERT INTO BUS.BUS_MASTER (BUS_ID, REGISTRATION_NO, BUS_TYPE, DEPOT_ID, MANUFACTURER, MANUFACTURE_YEAR, SEATING_CAPACITY, FUEL_TYPE, STATUS
+   | number of rows inserted
+   | 120
+
+> INSERT INTO BUS.EMPLOYEE_MASTER SELECT * FROM STAGING.STG_EMPLOYEE_MASTER QUALIFY ROW_NUMBER() OVER (PARTITION BY EMPLOYEE_ID ORDER BY EMPLO
+   | number of rows inserted
+   | 300
+
+> INSERT INTO TRIP.ROUTE_MASTER SELECT * FROM STAGING.STG_ROUTE_MASTER QUALIFY ROW_NUMBER() OVER (PARTITION BY ROUTE_ID ORDER BY ROUTE_ID) = 1
+   | number of rows inserted
+   | 40
+
+> INSERT INTO TRIP.TRIP_DATA SELECT TRIP_ID, BUS_ID, ROUTE_ID, DRIVER_ID, CONDUCTOR_ID, TRIP_DATE, SCHEDULED_START, ACTUAL_START, ACTUAL_END, 
+   | number of rows inserted
+   | 3945
+
+> INSERT INTO TRIP.TICKET_DATA SELECT t.* FROM STAGING.STG_TICKET_DATA t WHERE EXISTS (SELECT 1 FROM TRIP.TRIP_DATA x WHERE x.TRIP_ID = t.TRIP
+   | number of rows inserted
+   | 120718
+
+> INSERT INTO TRIP.FUEL_LOG SELECT FUEL_ID, BUS_ID, DEPOT_ID, FUEL_DATE, FUEL_TYPE, UNIT, COALESCE(QUANTITY, ROUND(TOTAL_COST / NULLIF(UNIT_PR
+   | number of rows inserted
+   | 383
+
+> INSERT INTO TRIP.MAINTENANCE_LOG SELECT MAINTENANCE_ID, BUS_ID, MAINTENANCE_DATE, MAINTENANCE_TYPE, DESCRIPTION, ABS(PARTS_COST), LABOUR_COS
+   | number of rows inserted
+   | 713
+
+> INSERT INTO PASSENGER.PASS_DATA SELECT PASS_ID, PASS_NUMBER, PASSENGER_NAME, PHONE, EMAIL, PASS_TYPE, PASSENGER_CATEGORY, ISSUE_DATE, VALID_
+   | number of rows inserted
+   | 1500
+
+> INSERT INTO STAGING.DQ_ISSUES SELECT 'AFTER', 'TRIP_DATA', 'Duplicate TRIP_ID rows', COUNT(*) - COUNT(DISTINCT TRIP_ID) FROM TRIP.TRIP_DATA 
+   | number of rows inserted
+   | 12
+
+> SELECT TABLE_NAME, CHECK_NAME, MAX(IFF(PHASE = 'BEFORE', ISSUE_COUNT, NULL)) AS BEFORE_FIX, MAX(IFF(PHASE = 'AFTER', ISSUE_COUNT, NULL)) AS 
+   | TABLE_NAME | CHECK_NAME | BEFORE_FIX | AFTER_FIX
+   | BUS_MASTER | Bus with unknown DEPOT_ID | 0 | NULL
+   | COMPLAINTS_JSON | Complaints referencing unknown trip | NULL | 0
+   | FUEL_LOG | Missing QUANTITY | 4 | 0
+   | FUEL_LOG | Rows rejected by COPY (invalid data type) | 1 | NULL
+   | MAINTENANCE_LOG | Negative PARTS_COST | 3 | 0
+   | PASS_DATA | Missing EMAIL (optional, reported only) | 234 | 234
+   | PASS_DATA | Missing VALID_TO | 4 | 0
+   | PASS_DATA | Non-standard STATUS (case/whitespace) | 8 | 0
+   | TICKET_DATA | Duplicate TICKET_ID rows | 10 | 0
+   | TICKET_DATA | Orphan tickets (TRIP_ID not in trips) | 3 | 0
+   | TRIP_DATA | Duplicate TRIP_ID rows | 5 | 0
+   | TRIP_DATA | Negative PASSENGER_COUNT | 3 | 0
+   | TRIP_DATA | PASSENGER_COUNT <> tickets issued | NULL | 0
+   | TRIP_DATA | Trips with unknown BUS/ROUTE | NULL | 0
+
+> SELECT 'DEPOT_MASTER' AS TABLE_NAME, (SELECT COUNT(*) FROM STAGING.STG_DEPOT_MASTER) AS STAGED, (SELECT COUNT(*) FROM BUS.DEPOT_MASTER) AS L
+   | TABLE_NAME | STAGED | LOADED
+   | DEPOT_MASTER | 10 | 10
+   | BUS_MASTER | 120 | 120
+   | EMPLOYEE_MASTER | 300 | 300
+   | ROUTE_MASTER | 40 | 40
+   | TRIP_DATA | 3950 | 3945
+   | TICKET_DATA | 120731 | 120718
+   | FUEL_LOG | 383 | 383
+   | MAINTENANCE_LOG | 713 | 713
+   | PASS_DATA | 1500 | 1500
+   | COMPLAINTS_JSON | NULL | 460
+
+> SELECT COUNT_IF(BUS_ID IS NULL OR ROUTE_ID IS NULL OR TRIP_DATE IS NULL) AS TRIP_KEY_NULLS, (SELECT COUNT_IF(FARE IS NULL OR TRIP_ID IS NULL
+   | TRIP_KEY_NULLS | TICKET_KEY_NULLS | COMPLAINT_NULLS
+   | 0 | 0 | 0

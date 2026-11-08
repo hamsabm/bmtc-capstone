@@ -1,0 +1,477 @@
+# Execution log for 09_security.sql (2026-11-08 20:50:06)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> CREATE ROLE IF NOT EXISTS BMTC_VIEWER COMMENT = 'Dashboard consumers (depot staff, management dashboards)'
+   | status
+   | BMTC_VIEWER already exists, statement succeeded.
+
+> CREATE ROLE IF NOT EXISTS BMTC_ANALYST COMMENT = 'Planning / MIS analysts'
+   | status
+   | BMTC_ANALYST already exists, statement succeeded.
+
+> CREATE ROLE IF NOT EXISTS BMTC_MANAGER COMMENT = 'Depot / zone managers'
+   | status
+   | BMTC_MANAGER already exists, statement succeeded.
+
+> CREATE ROLE IF NOT EXISTS BMTC_ADMIN COMMENT = 'BMTC data platform administrators'
+   | status
+   | BMTC_ADMIN already exists, statement succeeded.
+
+> GRANT ROLE BMTC_VIEWER TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_ANALYST TO ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_MANAGER TO ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_ADMIN TO ROLE SYSADMIN
+   | status
+   | Statement executed successfully.
+
+> CREATE USER IF NOT EXISTS BMTC_PLATFORM_ADMIN DEFAULT_ROLE = BMTC_ADMIN DEFAULT_WAREHOUSE = BMTC_WH COMMENT = 'Demo user: platform admin (no
+   | status
+   | BMTC_PLATFORM_ADMIN already exists, statement succeeded.
+
+> CREATE USER IF NOT EXISTS BMTC_DEPOT_MANAGER DEFAULT_ROLE = BMTC_MANAGER DEFAULT_WAREHOUSE = BMTC_WH COMMENT = 'Demo user: depot manager'
+   | status
+   | BMTC_DEPOT_MANAGER already exists, statement succeeded.
+
+> CREATE USER IF NOT EXISTS BMTC_MIS_ANALYST DEFAULT_ROLE = BMTC_ANALYST DEFAULT_WAREHOUSE = BMTC_WH COMMENT = 'Demo user: analyst'
+   | status
+   | BMTC_MIS_ANALYST already exists, statement succeeded.
+
+> CREATE USER IF NOT EXISTS BMTC_POWERBI_VIEWER DEFAULT_ROLE = BMTC_VIEWER DEFAULT_WAREHOUSE = BMTC_WH COMMENT = 'Demo user: BI dashboard serv
+   | status
+   | BMTC_POWERBI_VIEWER already exists, statement succeeded.
+
+> GRANT ROLE BMTC_ADMIN TO USER BMTC_PLATFORM_ADMIN
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_MANAGER TO USER BMTC_DEPOT_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_ANALYST TO USER BMTC_MIS_ANALYST
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_VIEWER TO USER BMTC_POWERBI_VIEWER
+   | status
+   | Statement executed successfully.
+
+> SET me = '"' || CURRENT_USER() || '"'; -- quoted: user names can be lower-case
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_ADMIN TO USER IDENTIFIER($me)
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_MANAGER TO USER IDENTIFIER($me)
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_ANALYST TO USER IDENTIFIER($me)
+   | status
+   | Statement executed successfully.
+
+> GRANT ROLE BMTC_VIEWER TO USER IDENTIFIER($me)
+   | status
+   | Statement executed successfully.
+
+> GRANT USAGE ON WAREHOUSE BMTC_WH TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT OPERATE ON WAREHOUSE BMTC_WH TO ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT MODIFY, MONITOR ON WAREHOUSE BMTC_WH TO ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully.
+
+> GRANT USAGE ON DATABASE BMTC_DW TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT USAGE ON SCHEMA BMTC_DW.BUS TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT USAGE ON SCHEMA BMTC_DW.TRIP TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT USAGE ON SCHEMA BMTC_DW.PASSENGER TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT ALL PRIVILEGES ON DATABASE BMTC_DW TO ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully.
+
+> GRANT ALL PRIVILEGES ON ALL SCHEMAS IN DATABASE BMTC_DW TO ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully. 6 objects affected.
+
+> CREATE OR REPLACE SECURE VIEW PASSENGER.SV_PASS_HOLDERS COMMENT = 'Pass data without personal identifiers (secure view)' AS SELECT PASS_ID, 
+   | status
+   | View SV_PASS_HOLDERS successfully created.
+
+> CREATE OR REPLACE SECURE VIEW BUS.SV_EMPLOYEE_DIRECTORY COMMENT = 'Workforce directory without contact details or salary (secure view)' AS S
+   | status
+   | View SV_EMPLOYEE_DIRECTORY successfully created.
+
+> CREATE OR REPLACE SECURE VIEW BUS.SV_DEPOT_PAYROLL_SUMMARY COMMENT = 'Aggregated payroll per depot and role - no individual salaries' AS SEL
+   | status
+   | View SV_DEPOT_PAYROLL_SUMMARY successfully created.
+
+> GRANT SELECT ON VIEW TRIP.V_DASHBOARD_KPIS TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW TRIP.V_ROUTE_PERFORMANCE TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW TRIP.V_DAILY_OPERATIONS TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW PASSENGER.V_PASS_SUMMARY TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW PASSENGER.V_COMPLAINT_ANALYTICS TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW PASSENGER.SV_PASS_HOLDERS TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW BUS.SV_EMPLOYEE_DIRECTORY TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW BUS.SV_DEPOT_PAYROLL_SUMMARY TO ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON ALL TABLES IN SCHEMA BMTC_DW.BUS TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully. 5 objects affected.
+
+> GRANT SELECT ON ALL TABLES IN SCHEMA BMTC_DW.TRIP TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully. 9 objects affected.
+
+> GRANT SELECT ON ALL TABLES IN SCHEMA BMTC_DW.PASSENGER TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully. 2 objects affected.
+
+> GRANT SELECT ON ALL VIEWS IN SCHEMA BMTC_DW.BUS TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully. 3 objects affected.
+
+> GRANT SELECT ON ALL VIEWS IN SCHEMA BMTC_DW.TRIP TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully. 11 objects affected.
+
+> GRANT SELECT ON ALL VIEWS IN SCHEMA BMTC_DW.PASSENGER TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully. 3 objects affected.
+
+> GRANT SELECT ON ALL MATERIALIZED VIEWS IN SCHEMA BMTC_DW.TRIP TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully. 1 objects affected.
+
+> GRANT SELECT ON FUTURE TABLES IN SCHEMA BMTC_DW.TRIP TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON FUTURE VIEWS IN SCHEMA BMTC_DW.TRIP TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully.
+
+> REVOKE SELECT ON VIEW BUS.SV_DEPOT_PAYROLL_SUMMARY FROM ROLE BMTC_ANALYST; -- payroll stays with managers
+   | status
+   | Statement executed successfully. 1 objects affected.
+
+> GRANT INSERT, UPDATE ON TABLE TRIP.MAINTENANCE_LOG TO ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT INSERT ON TABLE PASSENGER.COMPLAINTS_JSON TO ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT UPDATE ON TABLE BUS.BUS_MASTER TO ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT INSERT ON TABLE BUS.BUS_STATUS_AUDIT TO ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT MONITOR, OPERATE ON TASK TRIP.TASK_REFRESH_TRIP_SUMMARY TO ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA BMTC_DW.BUS TO ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully. 5 objects affected.
+
+> GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA BMTC_DW.TRIP TO ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully. 9 objects affected.
+
+> GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA BMTC_DW.PASSENGER TO ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully. 2 objects affected.
+
+> GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA BMTC_DW.STAGING TO ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully. 10 objects affected.
+
+> GRANT SELECT ON TABLE TRIP.TICKET_DATA TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> REVOKE SELECT ON TABLE TRIP.TICKET_DATA FROM ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully. 1 objects affected.
+
+> ALTER TABLE PASSENGER.PASS_DATA MODIFY COLUMN PHONE UNSET MASKING POLICY; -- @optional
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE PASSENGER.PASS_DATA MODIFY COLUMN EMAIL UNSET MASKING POLICY; -- @optional
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE PASSENGER.PASS_DATA MODIFY COLUMN PASSENGER_NAME UNSET MASKING POLICY; -- @optional
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.EMPLOYEE_MASTER MODIFY COLUMN PHONE UNSET MASKING POLICY; -- @optional
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.EMPLOYEE_MASTER MODIFY COLUMN EMAIL UNSET MASKING POLICY; -- @optional
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.EMPLOYEE_MASTER MODIFY COLUMN MONTHLY_SALARY UNSET MASKING POLICY; -- @optional
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.EMPLOYEE_MASTER DROP ROW ACCESS POLICY GOVERNANCE.RAP_EMPLOYEE_DEPOT; -- @optional
+   -> LIMITATION (optional statement failed): 003548 (55000): Policy RAP_EMPLOYEE_DEPOT is not attached to TABLE EMPLOYEE_MASTER.
+
+> CREATE OR REPLACE MASKING POLICY GOVERNANCE.MASK_PHONE AS (val VARCHAR) RETURNS VARCHAR -> CASE WHEN CURRENT_ROLE() IN ('ACCOUNTADMIN', 'BMT
+   | status
+   | Masking policy MASK_PHONE successfully created.
+
+> CREATE OR REPLACE MASKING POLICY GOVERNANCE.MASK_EMAIL AS (val VARCHAR) RETURNS VARCHAR -> CASE WHEN CURRENT_ROLE() IN ('ACCOUNTADMIN', 'BMT
+   | status
+   | Masking policy MASK_EMAIL successfully created.
+
+> CREATE OR REPLACE MASKING POLICY GOVERNANCE.MASK_NAME AS (val VARCHAR) RETURNS VARCHAR -> CASE WHEN CURRENT_ROLE() IN ('ACCOUNTADMIN', 'BMTC
+   | status
+   | Masking policy MASK_NAME successfully created.
+
+> CREATE OR REPLACE MASKING POLICY GOVERNANCE.MASK_SALARY AS (val NUMBER(10,2)) RETURNS NUMBER(10,2) -> CASE WHEN CURRENT_ROLE() IN ('ACCOUNTA
+   | status
+   | Masking policy MASK_SALARY successfully created.
+
+> ALTER TABLE PASSENGER.PASS_DATA MODIFY COLUMN PHONE SET MASKING POLICY GOVERNANCE.MASK_PHONE
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE PASSENGER.PASS_DATA MODIFY COLUMN EMAIL SET MASKING POLICY GOVERNANCE.MASK_EMAIL
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE PASSENGER.PASS_DATA MODIFY COLUMN PASSENGER_NAME SET MASKING POLICY GOVERNANCE.MASK_NAME
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.EMPLOYEE_MASTER MODIFY COLUMN PHONE SET MASKING POLICY GOVERNANCE.MASK_PHONE
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.EMPLOYEE_MASTER MODIFY COLUMN EMAIL SET MASKING POLICY GOVERNANCE.MASK_EMAIL
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.EMPLOYEE_MASTER MODIFY COLUMN MONTHLY_SALARY SET MASKING POLICY GOVERNANCE.MASK_SALARY
+   | status
+   | Statement executed successfully.
+
+> CREATE OR REPLACE TABLE GOVERNANCE.DEPOT_ACCESS_MAP (ROLE_NAME VARCHAR, DEPOT_ID NUMBER) COMMENT = 'Which role may see which depot rows; DEP
+   | status
+   | Table DEPOT_ACCESS_MAP successfully created.
+
+> INSERT INTO GOVERNANCE.DEPOT_ACCESS_MAP VALUES ('BMTC_MANAGER', 1), ('BMTC_MANAGER', 2), -- demo zone manager: Shanthinagar + Yeshwanthpur (
+   | number of rows inserted
+   | 4
+
+> CREATE OR REPLACE ROW ACCESS POLICY GOVERNANCE.RAP_EMPLOYEE_DEPOT AS (depot NUMBER) RETURNS BOOLEAN -> CURRENT_ROLE() IN ('ACCOUNTADMIN', 'B
+   | status
+   | Row access policy 'RAP_EMPLOYEE_DEPOT' is successfully creat
+
+> ALTER TABLE BUS.EMPLOYEE_MASTER ADD ROW ACCESS POLICY GOVERNANCE.RAP_EMPLOYEE_DEPOT ON (DEPOT_ID)
+   | status
+   | Statement executed successfully.
+
+> SHOW GRANTS TO ROLE BMTC_VIEWER
+   | created_on | privilege | granted_on | name | granted_to | grantee_name | grant_option | granted_by
+   | 2026-11-08 06:59:28.679000-08:00 | USAGE | DATABASE | BMTC_DW | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 06:59:28.934000-08:00 | USAGE | SCHEMA | BMTC_DW.BUS | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 06:59:29.381000-08:00 | USAGE | SCHEMA | BMTC_DW.PASSENGER | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 06:59:29.146000-08:00 | USAGE | SCHEMA | BMTC_DW.TRIP | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:20:18.046000-08:00 | SELECT | VIEW | BMTC_DW.BUS.SV_EMPLOYEE_DIRECTORY | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:20:17.792000-08:00 | SELECT | VIEW | BMTC_DW.PASSENGER.SV_PASS_HOLDERS | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:20:17.564000-08:00 | SELECT | VIEW | BMTC_DW.PASSENGER.V_COMPLAINT_ANALYTICS | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:20:17.353000-08:00 | SELECT | VIEW | BMTC_DW.PASSENGER.V_PASS_SUMMARY | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:20:17.111000-08:00 | SELECT | VIEW | BMTC_DW.TRIP.V_DAILY_OPERATIONS | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:20:16.595000-08:00 | SELECT | VIEW | BMTC_DW.TRIP.V_DASHBOARD_KPIS | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:11:46.914000-08:00 | SELECT | VIEW | BMTC_DW.TRIP.V_FUEL_EFFICIENCY_CLASSIFIED | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:15:45.952000-08:00 | SELECT | VIEW | BMTC_DW.TRIP.V_PBI_DIM_DATE | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:15:46.124000-08:00 | SELECT | VIEW | BMTC_DW.TRIP.V_PBI_ROUTE_DAY_FACT | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 07:20:16.860000-08:00 | SELECT | VIEW | BMTC_DW.TRIP.V_ROUTE_PERFORMANCE | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+   | 2026-11-08 06:59:28.018000-08:00 | USAGE | WAREHOUSE | BMTC_WH | ROLE | BMTC_VIEWER | false | ACCOUNTADMIN
+
+> SHOW GRANTS OF ROLE BMTC_ANALYST
+   | created_on | role | granted_to | grantee_name | granted_by | expires_on
+   | 2026-11-08 06:59:24.442000-08:00 | BMTC_ANALYST | ROLE | BMTC_MANAGER | ACCOUNTADMIN | NULL
+   | 2026-11-08 06:59:26.608000-08:00 | BMTC_ANALYST | USER | BMTC_MIS_ANALYST | ACCOUNTADMIN | NULL
+   | 2026-11-08 07:00:25.547000-08:00 | BMTC_ANALYST | USER | hamsabm2005 | ACCOUNTADMIN | NULL
+
+> SELECT * FROM TABLE(INFORMATION_SCHEMA.POLICY_REFERENCES(REF_ENTITY_NAME => 'BMTC_DW.PASSENGER.PASS_DATA', REF_ENTITY_DOMAIN => 'table'))
+   | POLICY_DB | POLICY_SCHEMA | POLICY_NAME | POLICY_KIND | REF_DATABASE_NAME | REF_SCHEMA_NAME | REF_ENTITY_NAME | REF_ENTITY_DOMAIN | REF_COLUMN_NAME | REF_ARG_COLUMN_NAMES | TAG_DATABASE | TAG_SCHEMA | TAG_NAME | POLICY_STATUS
+   | BMTC_DW | GOVERNANCE | MASK_EMAIL | MASKING_POLICY | BMTC_DW | PASSENGER | PASS_DATA | TABLE | EMAIL | NULL | NULL | NULL | NULL | ACTIVE
+   | BMTC_DW | GOVERNANCE | MASK_NAME | MASKING_POLICY | BMTC_DW | PASSENGER | PASS_DATA | TABLE | PASSENGER_NAME | NULL | NULL | NULL | NULL | ACTIVE
+   | BMTC_DW | GOVERNANCE | MASK_PHONE | MASKING_POLICY | BMTC_DW | PASSENGER | PASS_DATA | TABLE | PHONE | NULL | NULL | NULL | NULL | ACTIVE
+
+> USE SECONDARY ROLES NONE
+   | status
+   | Statement executed successfully.
+
+> USE ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> SELECT TOTAL_BUSES, TOTAL_TRIPS, TOTAL_COMPLAINTS FROM BMTC_DW.TRIP.V_DASHBOARD_KPIS
+   | TOTAL_BUSES | TOTAL_TRIPS | TOTAL_COMPLAINTS
+   | 120 | 3945 | 485
+
+> SELECT PASS_NUMBER, PASS_TYPE, STATUS, HAS_EMAIL_ON_FILE FROM BMTC_DW.PASSENGER.SV_PASS_HOLDERS LIMIT 3
+   | PASS_NUMBER | PASS_TYPE | STATUS | HAS_EMAIL_ON_FILE
+   | BMTC-P-000780 | Senior Citizen Pass | ACTIVE | YES
+   | BMTC-P-000581 | Daily Pass | EXPIRED | YES
+   | BMTC-P-000554 | Daily Pass | EXPIRED | NO
+
+> SELECT * FROM BMTC_DW.PASSENGER.PASS_DATA LIMIT 1; -- @expect_error (no table access)
+   -> expected error (PASS): 002003 (42S02): SQL compilation error: Object 'BMTC_DW.PASSENGER.PASS_DATA' does not exist or not authorized. Your primary role BMTC_VIEWER must have at least one privilege granted on TABLE BMTC_DW.PASSENGER.PASS_DATA.
+
+> SELECT * FROM BMTC_DW.TRIP.TICKET_DATA LIMIT 1; -- @expect_error (grant was revoked)
+   -> expected error (PASS): 002003 (42S02): SQL compilation error: Object 'BMTC_DW.TRIP.TICKET_DATA' does not exist or not authorized. Your primary role BMTC_VIEWER must have at least one privilege granted on TABLE BMTC_DW.TRIP.TICKET_DATA.
+
+> SELECT GET_DDL('VIEW', 'BMTC_DW.PASSENGER.SV_PASS_HOLDERS'); -- @expect_error (secure view definition hidden)
+   -> expected error (PASS): 002043 (02000): SQL compilation error: Object does not exist, or operation cannot be performed.
+
+> USE ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully.
+
+> SELECT PASSENGER_NAME, PHONE, EMAIL FROM BMTC_DW.PASSENGER.PASS_DATA WHERE EMAIL IS NOT NULL ORDER BY PASS_ID LIMIT 3
+   | PASSENGER_NAME | PHONE | EMAIL
+   | V***** | XXXXXX5846 | *****@mail-demo.example
+   | G***** | XXXXXX3214 | *****@mail-demo.example
+   | S***** | XXXXXX1211 | *****@mail-demo.example
+
+> SELECT EMPLOYEE_NAME, PHONE, MONTHLY_SALARY FROM BMTC_DW.BUS.EMPLOYEE_MASTER ORDER BY EMPLOYEE_ID LIMIT 3
+   | EMPLOYEE_NAME | PHONE | MONTHLY_SALARY
+   | Rekha Reddy | XXXXXX3972 | NULL
+   | Mohan Bhat | XXXXXX3995 | NULL
+   | Anitha Iyer | XXXXXX1567 | NULL
+
+> SELECT COUNT(DISTINCT DEPOT_ID) AS DEPOTS_VISIBLE_TO_ANALYST FROM BMTC_DW.BUS.EMPLOYEE_MASTER
+   | DEPOTS_VISIBLE_TO_ANALYST
+   | 10
+
+> DELETE FROM BMTC_DW.TRIP.MAINTENANCE_LOG WHERE 1 = 0; -- @expect_error (read-only role)
+   -> expected error (PASS): 003001 (42501): SQL access control error: Insufficient privileges to operate on table 'MAINTENANCE_LOG'. Your primary role BMTC_ANALYST must have DELETE granted on TABLE BMTC_DW.TRIP.MAINTENANCE_LOG.
+
+> USE ROLE BMTC_MANAGER
+   | status
+   | Statement executed successfully.
+
+> SELECT EMPLOYEE_NAME, PHONE, MONTHLY_SALARY FROM BMTC_DW.BUS.EMPLOYEE_MASTER ORDER BY EMPLOYEE_ID LIMIT 3
+   | EMPLOYEE_NAME | PHONE | MONTHLY_SALARY
+   | Rekha Reddy | 9874643972 | NULL
+   | Mohan Bhat | 9419303995 | NULL
+   | Anitha Iyer | 9697961567 | NULL
+
+> SELECT DEPOT_ID, COUNT(*) AS EMPLOYEES_VISIBLE FROM BMTC_DW.BUS.EMPLOYEE_MASTER GROUP BY DEPOT_ID ORDER BY DEPOT_ID
+   | DEPOT_ID | EMPLOYEES_VISIBLE
+   | 1 | 30
+   | 2 | 30
+
+> UPDATE BMTC_DW.TRIP.MAINTENANCE_LOG SET STATUS = STATUS WHERE 1 = 0; -- allowed (no-op)
+   | number of rows updated | number of multi-joined rows updated
+   | 0 | 0
+
+> SELECT * FROM BMTC_DW.BUS.SV_DEPOT_PAYROLL_SUMMARY ORDER BY DEPOT_NAME, ROLE LIMIT 5
+   | DEPOT_NAME | ROLE | HEADCOUNT | MONTHLY_PAYROLL
+   | Shanthinagar Depot | Conductor | 11 | 314300.00
+   | Shanthinagar Depot | Depot Manager | 1 | 68900.00
+   | Shanthinagar Depot | Driver | 12 | 398000.00
+   | Shanthinagar Depot | Mechanic | 3 | 92500.00
+   | Shanthinagar Depot | Supervisor | 3 | 133200.00
+
+> USE ROLE BMTC_ADMIN
+   | status
+   | Statement executed successfully.
+
+> SELECT EMPLOYEE_NAME, PHONE, MONTHLY_SALARY FROM BMTC_DW.BUS.EMPLOYEE_MASTER ORDER BY EMPLOYEE_ID LIMIT 3
+   | EMPLOYEE_NAME | PHONE | MONTHLY_SALARY
+   | Rekha Reddy | 9874643972 | 33000.00
+   | Mohan Bhat | 9419303995 | 37800.00
+   | Anitha Iyer | 9697961567 | 36200.00
+
+> SELECT COUNT(DISTINCT DEPOT_ID) AS DEPOTS_VISIBLE_TO_ADMIN FROM BMTC_DW.BUS.EMPLOYEE_MASTER
+   | DEPOTS_VISIBLE_TO_ADMIN
+   | 10
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE SECONDARY ROLES ALL
+   | status
+   | Statement executed successfully.

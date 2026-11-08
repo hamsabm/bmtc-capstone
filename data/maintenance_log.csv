@@ -1,0 +1,714 @@
+MAINTENANCE_ID,BUS_ID,MAINTENANCE_DATE,MAINTENANCE_TYPE,DESCRIPTION,PARTS_COST,LABOUR_COST,TOTAL_COST,DOWNTIME_HOURS,SEVERITY,MECHANIC_ID,STATUS
+1,8,2025-11-01,Preventive Service,"Scheduled service: oil, filters, inspection",2990.0,1040.0,4030.0,5.5,LOW,26,COMPLETED
+2,54,2025-11-01,Preventive Service,"Scheduled service: oil, filters, inspection",2330.0,1770.0,4100.0,3.2,LOW,144,COMPLETED
+3,62,2025-11-01,Body Work,Panel and seat repair,14830.0,7100.0,21930.0,16.3,LOW,176,COMPLETED
+4,72,2025-11-01,Tyre Replacement,Rear tyre set replaced,22900.0,8180.0,31080.0,5.3,MEDIUM,174,COMPLETED
+5,96,2025-11-01,Preventive Service,"Scheduled service: oil, filters, inspection",3580.0,1360.0,4940.0,3.1,LOW,236,COMPLETED
+6,99,2025-11-01,Preventive Service,"Scheduled service: oil, filters, inspection",4750.0,850.0,5600.0,5.9,LOW,265,COMPLETED
+7,16,2025-11-02,Preventive Service,"Scheduled service: oil, filters, inspection",4100.0,850.0,4950.0,3.3,LOW,54,COMPLETED
+8,51,2025-11-02,Preventive Service,"Scheduled service: oil, filters, inspection",4460.0,1210.0,5670.0,4.3,LOW,144,COMPLETED
+9,77,2025-11-02,Preventive Service,"Scheduled service: oil, filters, inspection",2910.0,760.0,3670.0,3.7,LOW,204,COMPLETED
+10,81,2025-11-02,Preventive Service,"Scheduled service: oil, filters, inspection",2660.0,1370.0,4030.0,5.8,LOW,204,COMPLETED
+11,36,2025-11-03,Preventive Service,"Scheduled service: oil, filters, inspection",5330.0,1070.0,6400.0,2.8,LOW,86,COMPLETED
+12,39,2025-11-03,Preventive Service,"Scheduled service: oil, filters, inspection",4680.0,1560.0,6240.0,5.3,LOW,116,COMPLETED
+13,39,2025-11-04,Electrical Fault,Wiring and lighting fault rectified,4710.0,2210.0,6920.0,6.2,HIGH,115,COMPLETED
+14,15,2025-11-06,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,49610.0,8740.0,58350.0,41.2,CRITICAL,55,COMPLETED
+15,17,2025-11-06,Preventive Service,"Scheduled service: oil, filters, inspection",4270.0,1060.0,5330.0,2.7,LOW,56,COMPLETED
+16,82,2025-11-06,Preventive Service,"Scheduled service: oil, filters, inspection",4840.0,1350.0,6190.0,6.4,LOW,206,COMPLETED
+17,48,2025-11-07,Preventive Service,"Scheduled service: oil, filters, inspection",2880.0,1730.0,4610.0,5.6,LOW,115,COMPLETED
+18,106,2025-11-07,Electrical Fault,Wiring and lighting fault rectified,10190.0,2740.0,12930.0,14.6,MEDIUM,264,COMPLETED
+19,119,2025-11-07,Brake Repair,Brake pads/liners replaced after inspection,4060.0,1730.0,5790.0,10.0,HIGH,295,COMPLETED
+20,42,2025-11-08,Body Work,Panel and seat repair,13170.0,2080.0,15250.0,24.8,LOW,116,COMPLETED
+21,49,2025-11-08,Preventive Service,"Scheduled service: oil, filters, inspection",4860.0,950.0,5810.0,4.1,LOW,144,COMPLETED
+22,58,2025-11-08,Body Work,Panel and seat repair,6230.0,5400.0,11630.0,14.7,LOW,146,COMPLETED
+23,65,2025-11-10,Preventive Service,"Scheduled service: oil, filters, inspection",2210.0,970.0,3180.0,4.0,LOW,175,COMPLETED
+24,29,2025-11-11,Preventive Service,"Scheduled service: oil, filters, inspection",2510.0,950.0,3460.0,4.1,LOW,84,COMPLETED
+25,3,2025-11-12,Preventive Service,"Scheduled service: oil, filters, inspection",2300.0,1520.0,3820.0,2.9,LOW,25,COMPLETED
+26,30,2025-11-12,Preventive Service,"Scheduled service: oil, filters, inspection",2660.0,1390.0,4050.0,6.0,LOW,86,COMPLETED
+27,36,2025-11-12,Body Work,Panel and seat repair,15490.0,2190.0,17680.0,24.9,LOW,85,COMPLETED
+28,47,2025-11-12,Tyre Replacement,Rear tyre set replaced,19670.0,6200.0,25870.0,4.9,MEDIUM,114,COMPLETED
+29,62,2025-11-12,Preventive Service,"Scheduled service: oil, filters, inspection",3960.0,1770.0,5730.0,4.5,LOW,176,COMPLETED
+30,88,2025-11-12,Preventive Service,"Scheduled service: oil, filters, inspection",4510.0,1670.0,6180.0,5.7,LOW,234,COMPLETED
+31,90,2025-11-12,Preventive Service,"Scheduled service: oil, filters, inspection",3150.0,940.0,4090.0,2.9,LOW,234,COMPLETED
+32,47,2025-11-13,Brake Repair,Brake pads/liners replaced after inspection,3680.0,2480.0,6160.0,11.9,HIGH,116,COMPLETED
+33,87,2025-11-13,Preventive Service,"Scheduled service: oil, filters, inspection",4950.0,1390.0,6340.0,5.8,LOW,234,COMPLETED
+34,102,2025-11-13,Preventive Service,"Scheduled service: oil, filters, inspection",3440.0,1580.0,5020.0,3.8,LOW,266,COMPLETED
+35,35,2025-11-14,Preventive Service,"Scheduled service: oil, filters, inspection",3370.0,850.0,4220.0,4.9,LOW,85,COMPLETED
+36,46,2025-11-14,Preventive Service,"Scheduled service: oil, filters, inspection",2190.0,1580.0,3770.0,2.7,LOW,116,COMPLETED
+37,60,2025-11-14,Preventive Service,"Scheduled service: oil, filters, inspection",3320.0,820.0,4140.0,5.4,LOW,144,COMPLETED
+38,103,2025-11-14,Preventive Service,"Scheduled service: oil, filters, inspection",2600.0,1070.0,3670.0,3.5,LOW,266,COMPLETED
+39,105,2025-11-14,Preventive Service,"Scheduled service: oil, filters, inspection",2400.0,1050.0,3450.0,5.2,LOW,264,COMPLETED
+40,34,2025-11-15,Preventive Service,"Scheduled service: oil, filters, inspection",2200.0,1250.0,3450.0,2.6,LOW,84,COMPLETED
+41,14,2025-11-16,Preventive Service,"Scheduled service: oil, filters, inspection",3710.0,1520.0,5230.0,2.5,LOW,55,COMPLETED
+42,58,2025-11-16,Preventive Service,"Scheduled service: oil, filters, inspection",2700.0,1180.0,3880.0,4.1,LOW,145,COMPLETED
+43,74,2025-11-17,Preventive Service,"Scheduled service: oil, filters, inspection",2810.0,1220.0,4030.0,3.3,LOW,204,COMPLETED
+44,9,2025-11-19,Preventive Service,"Scheduled service: oil, filters, inspection",3580.0,1050.0,4630.0,3.5,LOW,25,COMPLETED
+45,73,2025-11-20,Preventive Service,"Scheduled service: oil, filters, inspection",2310.0,980.0,3290.0,5.4,LOW,205,COMPLETED
+46,110,2025-11-20,Preventive Service,"Scheduled service: oil, filters, inspection",4320.0,1670.0,5990.0,2.4,LOW,294,COMPLETED
+47,11,2025-11-21,Preventive Service,"Scheduled service: oil, filters, inspection",3320.0,1320.0,4640.0,5.1,LOW,24,COMPLETED
+48,22,2025-11-22,Preventive Service,"Scheduled service: oil, filters, inspection",4300.0,950.0,5250.0,2.5,LOW,55,COMPLETED
+49,85,2025-11-22,Preventive Service,"Scheduled service: oil, filters, inspection",3500.0,1340.0,4840.0,5.8,LOW,235,COMPLETED
+50,101,2025-11-22,Preventive Service,"Scheduled service: oil, filters, inspection",3630.0,1730.0,5360.0,2.9,LOW,265,COMPLETED
+51,18,2025-11-24,Preventive Service,"Scheduled service: oil, filters, inspection",5190.0,1710.0,6900.0,3.4,LOW,56,COMPLETED
+52,118,2025-11-24,Preventive Service,"Scheduled service: oil, filters, inspection",2090.0,1020.0,3110.0,4.0,LOW,296,COMPLETED
+53,31,2025-11-25,Preventive Service,"Scheduled service: oil, filters, inspection",4350.0,1500.0,5850.0,3.4,LOW,85,COMPLETED
+54,76,2025-11-25,Preventive Service,"Scheduled service: oil, filters, inspection",4640.0,1410.0,6050.0,5.3,LOW,204,COMPLETED
+55,21,2025-11-26,Preventive Service,"Scheduled service: oil, filters, inspection",2880.0,920.0,3800.0,2.8,LOW,54,COMPLETED
+56,69,2025-11-26,Preventive Service,"Scheduled service: oil, filters, inspection",3240.0,1590.0,4830.0,5.6,LOW,175,COMPLETED
+57,1,2025-11-27,Preventive Service,"Scheduled service: oil, filters, inspection",2620.0,1030.0,3650.0,6.4,LOW,25,COMPLETED
+58,7,2025-11-27,Preventive Service,"Scheduled service: oil, filters, inspection",3650.0,750.0,4400.0,3.7,LOW,24,COMPLETED
+59,32,2025-11-27,Preventive Service,"Scheduled service: oil, filters, inspection",5020.0,1460.0,6480.0,6.1,LOW,85,COMPLETED
+60,112,2025-11-27,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,4580.0,4130.0,8710.0,8.7,CRITICAL,294,COMPLETED
+61,26,2025-11-28,Preventive Service,"Scheduled service: oil, filters, inspection",4650.0,1550.0,6200.0,5.5,LOW,86,COMPLETED
+62,33,2025-11-28,Body Work,Panel and seat repair,5440.0,3580.0,9020.0,26.9,LOW,84,COMPLETED
+63,72,2025-11-28,Tyre Replacement,Rear tyre set replaced,24690.0,6950.0,31640.0,6.9,MEDIUM,174,COMPLETED
+64,95,2025-11-28,Preventive Service,"Scheduled service: oil, filters, inspection",5470.0,1130.0,6600.0,3.0,LOW,234,COMPLETED
+65,5,2025-11-29,Tyre Replacement,Rear tyre set replaced,20340.0,6480.0,26820.0,6.3,MEDIUM,26,COMPLETED
+66,6,2025-11-29,Preventive Service,"Scheduled service: oil, filters, inspection",5020.0,1730.0,6750.0,3.9,LOW,24,COMPLETED
+67,23,2025-11-30,Preventive Service,"Scheduled service: oil, filters, inspection",3130.0,1020.0,4150.0,3.8,LOW,55,COMPLETED
+68,44,2025-11-30,Preventive Service,"Scheduled service: oil, filters, inspection",4520.0,830.0,5350.0,2.8,LOW,115,COMPLETED
+69,106,2025-11-30,Preventive Service,"Scheduled service: oil, filters, inspection",2260.0,1600.0,3860.0,5.9,LOW,266,COMPLETED
+70,116,2025-11-30,Preventive Service,"Scheduled service: oil, filters, inspection",3960.0,910.0,4870.0,3.9,LOW,295,COMPLETED
+71,12,2025-12-01,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,4480.0,3570.0,8050.0,11.1,CRITICAL,26,COMPLETED
+72,38,2025-12-02,Preventive Service,"Scheduled service: oil, filters, inspection",3590.0,1030.0,4620.0,5.4,LOW,116,COMPLETED
+73,56,2025-12-02,Preventive Service,"Scheduled service: oil, filters, inspection",3760.0,1300.0,5060.0,3.3,LOW,144,COMPLETED
+74,93,2025-12-02,Preventive Service,"Scheduled service: oil, filters, inspection",3710.0,930.0,4640.0,5.7,LOW,236,COMPLETED
+75,55,2025-12-03,Preventive Service,"Scheduled service: oil, filters, inspection",4720.0,1090.0,5810.0,3.5,LOW,145,COMPLETED
+76,102,2025-12-03,Tyre Replacement,Rear tyre set replaced,20000.0,8540.0,28540.0,7.5,MEDIUM,264,COMPLETED
+77,98,2025-12-04,Preventive Service,"Scheduled service: oil, filters, inspection",2560.0,1680.0,4240.0,3.0,LOW,265,COMPLETED
+78,114,2025-12-04,Preventive Service,"Scheduled service: oil, filters, inspection",2400.0,1040.0,3440.0,2.7,LOW,295,COMPLETED
+79,95,2025-12-05,Brake Repair,Brake pads/liners replaced after inspection,6640.0,2060.0,8700.0,9.1,HIGH,236,COMPLETED
+80,33,2025-12-06,Preventive Service,"Scheduled service: oil, filters, inspection",2690.0,1430.0,4120.0,4.2,LOW,84,COMPLETED
+81,39,2025-12-06,Tyre Replacement,Rear tyre set replaced,22710.0,5990.0,28700.0,3.5,HIGH,115,COMPLETED
+82,15,2025-12-07,Engine Repair,Engine overheating / power loss repaired,71440.0,23420.0,94860.0,33.0,HIGH,54,COMPLETED
+83,64,2025-12-08,Preventive Service,"Scheduled service: oil, filters, inspection",1880.0,1400.0,3280.0,3.6,LOW,174,COMPLETED
+84,72,2025-12-08,Tyre Replacement,Rear tyre set replaced,18580.0,6670.0,25250.0,5.2,HIGH,175,COMPLETED
+85,100,2025-12-09,Engine Repair,Engine overheating / power loss repaired,55350.0,14260.0,69610.0,30.9,HIGH,266,COMPLETED
+86,19,2025-12-10,Preventive Service,"Scheduled service: oil, filters, inspection",2720.0,1770.0,4490.0,5.5,LOW,56,COMPLETED
+87,25,2025-12-10,Preventive Service,"Scheduled service: oil, filters, inspection",4410.0,1560.0,5970.0,3.6,LOW,86,COMPLETED
+88,39,2025-12-10,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,3640.0,4430.0,8070.0,15.5,CRITICAL,114,COMPLETED
+89,71,2025-12-10,Preventive Service,"Scheduled service: oil, filters, inspection",3940.0,760.0,4700.0,5.5,LOW,175,COMPLETED
+90,4,2025-12-11,Preventive Service,"Scheduled service: oil, filters, inspection",3670.0,870.0,4540.0,5.9,LOW,25,COMPLETED
+91,32,2025-12-11,Engine Repair,Engine overheating / power loss repaired,63020.0,20130.0,83150.0,44.7,HIGH,84,COMPLETED
+92,13,2025-12-12,Preventive Service,"Scheduled service: oil, filters, inspection",4350.0,1440.0,5790.0,6.3,LOW,54,COMPLETED
+93,27,2025-12-12,Preventive Service,"Scheduled service: oil, filters, inspection",2360.0,900.0,3260.0,2.4,LOW,85,COMPLETED
+94,83,2025-12-12,Brake Repair,Brake pads/liners replaced after inspection,5450.0,1340.0,6790.0,5.3,HIGH,204,COMPLETED
+95,16,2025-12-13,Tyre Replacement,Rear tyre set replaced,25840.0,5840.0,31680.0,5.7,MEDIUM,56,COMPLETED
+96,67,2025-12-13,Preventive Service,"Scheduled service: oil, filters, inspection",2380.0,770.0,3150.0,5.4,LOW,174,COMPLETED
+97,109,2025-12-13,Preventive Service,"Scheduled service: oil, filters, inspection",2700.0,890.0,3590.0,5.6,LOW,294,COMPLETED
+98,110,2025-12-13,Electrical Fault,Wiring and lighting fault rectified,11330.0,1770.0,13100.0,13.2,HIGH,295,COMPLETED
+99,37,2025-12-14,Body Work,Panel and seat repair,10750.0,4260.0,15010.0,28.0,LOW,116,COMPLETED
+100,40,2025-12-14,Preventive Service,"Scheduled service: oil, filters, inspection",4690.0,860.0,5550.0,4.2,LOW,116,COMPLETED
+101,83,2025-12-14,Brake Repair,Brake pads/liners replaced after inspection,5400.0,1610.0,7010.0,11.6,HIGH,206,COMPLETED
+102,12,2025-12-16,Preventive Service,"Scheduled service: oil, filters, inspection",3620.0,1590.0,5210.0,3.3,LOW,25,COMPLETED
+103,13,2025-12-16,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,9870.0,2650.0,12520.0,6.9,CRITICAL,56,COMPLETED
+104,61,2025-12-16,Preventive Service,"Scheduled service: oil, filters, inspection",3550.0,1470.0,5020.0,3.2,LOW,176,COMPLETED
+105,84,2025-12-17,Preventive Service,"Scheduled service: oil, filters, inspection",5180.0,980.0,6160.0,5.5,LOW,205,COMPLETED
+106,109,2025-12-17,Brake Repair,Brake pads/liners replaced after inspection,9600.0,2450.0,12050.0,9.5,MEDIUM,295,COMPLETED
+107,1,2025-12-18,Electrical Fault,Wiring and lighting fault rectified,4180.0,1010.0,5190.0,13.9,MEDIUM,25,COMPLETED
+108,92,2025-12-18,Preventive Service,"Scheduled service: oil, filters, inspection",5260.0,1520.0,6780.0,5.8,LOW,236,COMPLETED
+109,112,2025-12-18,Preventive Service,"Scheduled service: oil, filters, inspection",4140.0,780.0,4920.0,4.8,LOW,296,COMPLETED
+110,113,2025-12-18,Preventive Service,"Scheduled service: oil, filters, inspection",2940.0,1130.0,4070.0,3.2,LOW,296,COMPLETED
+111,83,2025-12-20,Preventive Service,"Scheduled service: oil, filters, inspection",2260.0,780.0,3040.0,2.8,LOW,206,COMPLETED
+112,94,2025-12-20,Preventive Service,"Scheduled service: oil, filters, inspection",4290.0,830.0,5120.0,3.1,LOW,235,COMPLETED
+113,118,2025-12-21,Electrical Fault,Wiring and lighting fault rectified,8540.0,1140.0,9680.0,7.3,MEDIUM,295,COMPLETED
+114,24,2025-12-22,Preventive Service,"Scheduled service: oil, filters, inspection",4850.0,940.0,5790.0,4.7,LOW,54,COMPLETED
+115,25,2025-12-22,Engine Repair,Engine overheating / power loss repaired,70100.0,7560.0,77660.0,52.5,HIGH,85,COMPLETED
+116,42,2025-12-22,Preventive Service,"Scheduled service: oil, filters, inspection",3190.0,1160.0,4350.0,4.8,LOW,114,COMPLETED
+117,80,2025-12-24,Engine Repair,Engine overheating / power loss repaired,53470.0,8730.0,62200.0,32.2,HIGH,205,COMPLETED
+118,104,2025-12-24,Preventive Service,"Scheduled service: oil, filters, inspection",2270.0,1150.0,3420.0,4.6,LOW,266,COMPLETED
+119,91,2025-12-25,Preventive Service,"Scheduled service: oil, filters, inspection",2440.0,1180.0,3620.0,5.5,LOW,234,COMPLETED
+120,108,2025-12-25,Preventive Service,"Scheduled service: oil, filters, inspection",4790.0,920.0,5710.0,2.8,LOW,265,COMPLETED
+121,28,2025-12-26,Preventive Service,"Scheduled service: oil, filters, inspection",3430.0,1650.0,5080.0,3.3,LOW,86,COMPLETED
+122,41,2025-12-26,Preventive Service,"Scheduled service: oil, filters, inspection",3980.0,810.0,4790.0,5.0,LOW,114,COMPLETED
+123,50,2025-12-26,Preventive Service,"Scheduled service: oil, filters, inspection",4180.0,1100.0,5280.0,4.7,LOW,146,COMPLETED
+124,45,2025-12-27,Preventive Service,"Scheduled service: oil, filters, inspection",4040.0,1710.0,5750.0,3.7,LOW,114,COMPLETED
+125,86,2025-12-27,Preventive Service,"Scheduled service: oil, filters, inspection",4090.0,1710.0,5800.0,5.6,LOW,234,COMPLETED
+126,75,2025-12-28,Preventive Service,"Scheduled service: oil, filters, inspection",2930.0,1460.0,4390.0,6.4,LOW,205,COMPLETED
+127,2,2025-12-29,Preventive Service,"Scheduled service: oil, filters, inspection",2690.0,980.0,3670.0,5.4,LOW,24,COMPLETED
+128,68,2025-12-29,Preventive Service,"Scheduled service: oil, filters, inspection",2580.0,1550.0,4130.0,4.9,LOW,174,COMPLETED
+129,117,2025-12-29,Preventive Service,"Scheduled service: oil, filters, inspection",2420.0,1650.0,4070.0,3.7,LOW,294,COMPLETED
+130,110,2025-12-30,Tyre Replacement,Rear tyre set replaced,17650.0,6380.0,24030.0,4.1,HIGH,295,COMPLETED
+131,10,2025-12-31,Preventive Service,"Scheduled service: oil, filters, inspection",4220.0,1500.0,5720.0,5.1,LOW,25,COMPLETED
+132,78,2025-12-31,Preventive Service,"Scheduled service: oil, filters, inspection",2470.0,880.0,3350.0,2.7,LOW,204,COMPLETED
+133,100,2026-01-01,Preventive Service,"Scheduled service: oil, filters, inspection",3080.0,1570.0,4650.0,4.6,LOW,265,COMPLETED
+134,115,2026-01-01,Preventive Service,"Scheduled service: oil, filters, inspection",3550.0,1620.0,5170.0,3.6,LOW,294,COMPLETED
+135,53,2026-01-02,Preventive Service,"Scheduled service: oil, filters, inspection",4260.0,1790.0,6050.0,3.6,LOW,144,COMPLETED
+136,38,2026-01-03,Tyre Replacement,Rear tyre set replaced,25150.0,9010.0,34160.0,3.0,MEDIUM,114,COMPLETED
+137,43,2026-01-03,Preventive Service,"Scheduled service: oil, filters, inspection",3430.0,1100.0,4530.0,3.1,LOW,116,COMPLETED
+138,63,2026-01-05,Preventive Service,"Scheduled service: oil, filters, inspection",2460.0,1240.0,3700.0,2.8,LOW,174,COMPLETED
+139,69,2026-01-05,AC Repair,AC compressor/gas service,8110.0,3280.0,11390.0,13.2,HIGH,174,COMPLETED
+140,97,2026-01-05,Preventive Service,"Scheduled service: oil, filters, inspection",3120.0,1250.0,4370.0,2.8,LOW,266,COMPLETED
+141,37,2026-01-08,Preventive Service,"Scheduled service: oil, filters, inspection",3660.0,870.0,4530.0,4.6,LOW,114,COMPLETED
+142,89,2026-01-08,Preventive Service,"Scheduled service: oil, filters, inspection",3930.0,760.0,4690.0,6.0,LOW,234,COMPLETED
+143,57,2026-01-09,Preventive Service,"Scheduled service: oil, filters, inspection",2630.0,1050.0,3680.0,6.2,LOW,145,COMPLETED
+144,94,2026-01-09,Electrical Fault,Wiring and lighting fault rectified,7520.0,3940.0,11460.0,9.6,MEDIUM,234,COMPLETED
+145,79,2026-01-10,Preventive Service,"Scheduled service: oil, filters, inspection",3870.0,1210.0,5080.0,5.6,LOW,206,COMPLETED
+146,97,2026-01-10,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,65830.0,18850.0,84680.0,54.9,CRITICAL,264,COMPLETED
+147,120,2026-01-10,Preventive Service,"Scheduled service: oil, filters, inspection",3710.0,870.0,4580.0,5.8,LOW,294,COMPLETED
+148,77,2026-01-11,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,69930.0,19150.0,89080.0,49.1,CRITICAL,205,COMPLETED
+149,80,2026-01-12,Preventive Service,"Scheduled service: oil, filters, inspection",5490.0,1600.0,7090.0,3.7,LOW,204,COMPLETED
+150,10,2026-01-13,AC Repair,AC compressor/gas service,11330.0,2320.0,13650.0,8.4,MEDIUM,26,COMPLETED
+151,15,2026-01-14,Preventive Service,"Scheduled service: oil, filters, inspection",3930.0,790.0,4720.0,6.3,LOW,55,COMPLETED
+152,70,2026-01-15,Preventive Service,"Scheduled service: oil, filters, inspection",3070.0,1730.0,4800.0,5.2,LOW,174,COMPLETED
+153,5,2026-01-16,Preventive Service,"Scheduled service: oil, filters, inspection",4110.0,960.0,5070.0,5.2,LOW,24,COMPLETED
+154,20,2026-01-16,Preventive Service,"Scheduled service: oil, filters, inspection",3400.0,920.0,4320.0,5.9,LOW,56,COMPLETED
+155,79,2026-01-16,Body Work,Panel and seat repair,6690.0,2140.0,8830.0,31.3,LOW,204,COMPLETED
+156,107,2026-01-16,Preventive Service,"Scheduled service: oil, filters, inspection",2940.0,970.0,3910.0,3.2,LOW,264,COMPLETED
+157,111,2026-01-16,Preventive Service,"Scheduled service: oil, filters, inspection",5400.0,1230.0,6630.0,2.7,LOW,294,COMPLETED
+158,2,2026-01-18,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,5820.0,4100.0,9920.0,9.1,CRITICAL,25,COMPLETED
+159,47,2026-01-18,Preventive Service,"Scheduled service: oil, filters, inspection",2620.0,1350.0,3970.0,3.5,LOW,116,COMPLETED
+160,52,2026-01-18,Preventive Service,"Scheduled service: oil, filters, inspection",4100.0,860.0,4960.0,4.1,LOW,144,COMPLETED
+161,66,2026-01-18,Preventive Service,"Scheduled service: oil, filters, inspection",3620.0,1050.0,4670.0,4.0,LOW,176,COMPLETED
+162,2,2026-01-19,Body Work,Panel and seat repair,6200.0,6430.0,12630.0,22.9,LOW,25,COMPLETED
+163,119,2026-01-19,Preventive Service,"Scheduled service: oil, filters, inspection",2480.0,1730.0,4210.0,5.1,LOW,296,COMPLETED
+164,59,2026-01-20,Preventive Service,"Scheduled service: oil, filters, inspection",2650.0,1280.0,3930.0,5.6,LOW,145,COMPLETED
+165,72,2026-01-20,Preventive Service,"Scheduled service: oil, filters, inspection",5320.0,1540.0,6860.0,4.7,LOW,176,COMPLETED
+166,36,2026-01-21,Tyre Replacement,Rear tyre set replaced,24520.0,8440.0,32960.0,6.6,MEDIUM,86,COMPLETED
+167,51,2026-01-21,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,5770.0,2100.0,7870.0,5.5,CRITICAL,144,COMPLETED
+168,16,2026-01-25,Preventive Service,"Scheduled service: oil, filters, inspection",3050.0,1150.0,4200.0,5.8,LOW,55,COMPLETED
+169,99,2026-01-26,Preventive Service,"Scheduled service: oil, filters, inspection",2380.0,1450.0,3830.0,5.2,LOW,265,COMPLETED
+170,9,2026-01-27,Electrical Fault,Wiring and lighting fault rectified,3480.0,1480.0,4960.0,12.0,MEDIUM,26,COMPLETED
+171,54,2026-01-27,Preventive Service,"Scheduled service: oil, filters, inspection",4220.0,1740.0,5960.0,2.4,LOW,145,COMPLETED
+172,17,2026-01-28,Preventive Service,"Scheduled service: oil, filters, inspection",4180.0,930.0,5110.0,4.1,LOW,54,COMPLETED
+173,39,2026-01-28,Preventive Service,"Scheduled service: oil, filters, inspection",4010.0,1730.0,5740.0,4.7,LOW,114,COMPLETED
+174,113,2026-01-28,Body Work,Panel and seat repair,17710.0,6120.0,23830.0,22.1,LOW,296,COMPLETED
+175,84,2026-02-01,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,52960.0,14750.0,67710.0,52.4,CRITICAL,205,COMPLETED
+176,96,2026-02-01,Preventive Service,"Scheduled service: oil, filters, inspection",2380.0,1480.0,3860.0,3.5,LOW,235,COMPLETED
+177,51,2026-02-02,Preventive Service,"Scheduled service: oil, filters, inspection",4630.0,1700.0,6330.0,2.4,LOW,145,COMPLETED
+178,51,2026-02-02,Engine Repair,Engine overheating / power loss repaired,34750.0,25260.0,60010.0,54.1,HIGH,144,COMPLETED
+179,102,2026-02-02,Preventive Service,"Scheduled service: oil, filters, inspection",4400.0,1460.0,5860.0,5.0,LOW,266,COMPLETED
+180,29,2026-02-03,Preventive Service,"Scheduled service: oil, filters, inspection",3440.0,1250.0,4690.0,3.1,LOW,86,COMPLETED
+181,35,2026-02-03,Preventive Service,"Scheduled service: oil, filters, inspection",2770.0,1580.0,4350.0,5.2,LOW,85,COMPLETED
+182,60,2026-02-03,Preventive Service,"Scheduled service: oil, filters, inspection",4390.0,1590.0,5980.0,3.0,LOW,144,COMPLETED
+183,65,2026-02-04,Preventive Service,"Scheduled service: oil, filters, inspection",4880.0,1670.0,6550.0,5.0,LOW,175,COMPLETED
+184,77,2026-02-04,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,23990.0,9730.0,33720.0,56.9,CRITICAL,205,COMPLETED
+185,82,2026-02-04,Preventive Service,"Scheduled service: oil, filters, inspection",3270.0,1580.0,4850.0,3.7,LOW,204,COMPLETED
+186,77,2026-02-05,Preventive Service,"Scheduled service: oil, filters, inspection",4170.0,1590.0,5760.0,2.4,LOW,205,COMPLETED
+187,90,2026-02-05,Preventive Service,"Scheduled service: oil, filters, inspection",3420.0,1460.0,4880.0,5.9,LOW,235,COMPLETED
+188,41,2026-02-06,Tyre Replacement,Rear tyre set replaced,20560.0,6110.0,26670.0,8.0,MEDIUM,116,COMPLETED
+189,46,2026-02-06,Preventive Service,"Scheduled service: oil, filters, inspection",4300.0,990.0,5290.0,2.9,LOW,114,COMPLETED
+190,48,2026-02-07,Preventive Service,"Scheduled service: oil, filters, inspection",4270.0,1580.0,5850.0,2.6,LOW,114,COMPLETED
+191,49,2026-02-07,Preventive Service,"Scheduled service: oil, filters, inspection",2930.0,960.0,3890.0,3.6,LOW,145,COMPLETED
+192,8,2026-02-08,Preventive Service,"Scheduled service: oil, filters, inspection",3700.0,1490.0,5190.0,6.3,LOW,26,COMPLETED
+193,45,2026-02-08,Tyre Replacement,Rear tyre set replaced,19950.0,6270.0,26220.0,5.9,MEDIUM,115,COMPLETED
+194,58,2026-02-08,Preventive Service,"Scheduled service: oil, filters, inspection",2140.0,1410.0,3550.0,3.1,LOW,146,COMPLETED
+195,103,2026-02-08,Preventive Service,"Scheduled service: oil, filters, inspection",2240.0,1680.0,3920.0,3.5,LOW,266,COMPLETED
+196,36,2026-02-09,Preventive Service,"Scheduled service: oil, filters, inspection",5320.0,1140.0,6460.0,3.4,LOW,85,COMPLETED
+197,73,2026-02-09,Preventive Service,"Scheduled service: oil, filters, inspection",4700.0,1320.0,6020.0,4.2,LOW,205,COMPLETED
+198,81,2026-02-09,Preventive Service,"Scheduled service: oil, filters, inspection",3060.0,1640.0,4700.0,4.2,LOW,206,COMPLETED
+199,87,2026-02-09,Preventive Service,"Scheduled service: oil, filters, inspection",2610.0,1370.0,3980.0,2.4,LOW,234,COMPLETED
+200,22,2026-02-10,Preventive Service,"Scheduled service: oil, filters, inspection",2890.0,880.0,3770.0,5.2,LOW,54,COMPLETED
+201,110,2026-02-11,Preventive Service,"Scheduled service: oil, filters, inspection",3420.0,780.0,4200.0,2.5,LOW,295,COMPLETED
+202,116,2026-02-11,Engine Repair,Engine overheating / power loss repaired,31410.0,14420.0,45830.0,35.9,HIGH,296,COMPLETED
+203,14,2026-02-12,Preventive Service,"Scheduled service: oil, filters, inspection",2950.0,830.0,3780.0,5.7,LOW,56,COMPLETED
+204,34,2026-02-13,Preventive Service,"Scheduled service: oil, filters, inspection",4040.0,1600.0,5640.0,5.2,LOW,86,COMPLETED
+205,111,2026-02-13,Body Work,Panel and seat repair,22910.0,2140.0,25050.0,29.0,LOW,294,COMPLETED
+206,62,2026-02-14,Preventive Service,"Scheduled service: oil, filters, inspection",3120.0,1610.0,4730.0,2.5,LOW,176,COMPLETED
+207,92,2026-02-14,AC Repair,AC compressor/gas service,21160.0,1930.0,23090.0,11.7,MEDIUM,234,COMPLETED
+208,74,2026-02-15,Preventive Service,"Scheduled service: oil, filters, inspection",4200.0,790.0,4990.0,3.8,LOW,204,COMPLETED
+209,118,2026-02-16,Preventive Service,"Scheduled service: oil, filters, inspection",2410.0,1440.0,3850.0,3.3,LOW,296,COMPLETED
+210,69,2026-02-17,Preventive Service,"Scheduled service: oil, filters, inspection",3430.0,1640.0,5070.0,3.8,LOW,176,COMPLETED
+211,88,2026-02-17,Preventive Service,"Scheduled service: oil, filters, inspection",2390.0,1160.0,3550.0,5.9,LOW,234,COMPLETED
+212,3,2026-02-18,Preventive Service,"Scheduled service: oil, filters, inspection",2310.0,880.0,3190.0,4.2,LOW,26,COMPLETED
+213,105,2026-02-18,Preventive Service,"Scheduled service: oil, filters, inspection",2720.0,1010.0,3730.0,4.4,LOW,264,COMPLETED
+214,9,2026-02-19,Preventive Service,"Scheduled service: oil, filters, inspection",3550.0,1050.0,4600.0,6.2,LOW,26,COMPLETED
+215,11,2026-02-19,Preventive Service,"Scheduled service: oil, filters, inspection",4390.0,1010.0,5400.0,5.1,LOW,24,COMPLETED
+216,30,2026-02-19,Preventive Service,"Scheduled service: oil, filters, inspection",2900.0,1260.0,4160.0,6.1,LOW,84,COMPLETED
+217,1,2026-02-20,Preventive Service,"Scheduled service: oil, filters, inspection",2980.0,1600.0,4580.0,6.0,LOW,25,COMPLETED
+218,19,2026-02-20,Body Work,Panel and seat repair,5330.0,2260.0,7590.0,16.4,LOW,55,COMPLETED
+219,26,2026-02-20,Preventive Service,"Scheduled service: oil, filters, inspection",3680.0,1770.0,5450.0,2.9,LOW,84,COMPLETED
+220,56,2026-02-20,Preventive Service,"Scheduled service: oil, filters, inspection",3040.0,1740.0,4780.0,5.7,LOW,145,COMPLETED
+221,101,2026-02-20,Preventive Service,"Scheduled service: oil, filters, inspection",2380.0,1080.0,3460.0,4.1,LOW,265,COMPLETED
+222,76,2026-02-21,Preventive Service,"Scheduled service: oil, filters, inspection",2130.0,960.0,3090.0,6.3,LOW,204,COMPLETED
+223,85,2026-02-23,Preventive Service,"Scheduled service: oil, filters, inspection",3860.0,1310.0,5170.0,2.9,LOW,236,COMPLETED
+224,12,2026-02-24,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,2530.0,1250.0,3780.0,14.4,CRITICAL,24,COMPLETED
+225,23,2026-02-24,Preventive Service,"Scheduled service: oil, filters, inspection",4580.0,1550.0,6130.0,2.8,LOW,56,COMPLETED
+226,52,2026-02-24,Electrical Fault,Wiring and lighting fault rectified,9240.0,1860.0,11100.0,8.2,MEDIUM,146,COMPLETED
+227,7,2026-02-25,Preventive Service,"Scheduled service: oil, filters, inspection",4050.0,1800.0,5850.0,2.6,LOW,26,COMPLETED
+228,69,2026-02-25,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,2830.0,2560.0,5390.0,11.8,CRITICAL,174,COMPLETED
+229,96,2026-02-25,Tyre Replacement,Rear tyre set replaced,27290.0,8020.0,35310.0,6.9,MEDIUM,234,COMPLETED
+230,116,2026-02-25,Preventive Service,"Scheduled service: oil, filters, inspection",3480.0,1520.0,5000.0,6.1,LOW,294,COMPLETED
+231,117,2026-02-25,Brake Repair,Brake pads/liners replaced after inspection,5620.0,3580.0,9200.0,6.2,MEDIUM,294,COMPLETED
+232,6,2026-02-26,Preventive Service,"Scheduled service: oil, filters, inspection",-2490.0,1390.0,3880.0,4.3,LOW,26,COMPLETED
+233,106,2026-02-26,Preventive Service,"Scheduled service: oil, filters, inspection",4170.0,1520.0,5690.0,4.2,LOW,264,COMPLETED
+234,15,2026-02-27,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,11800.0,2330.0,14130.0,10.1,CRITICAL,54,COMPLETED
+235,21,2026-02-27,Preventive Service,"Scheduled service: oil, filters, inspection",3130.0,1320.0,4450.0,6.3,LOW,55,COMPLETED
+236,44,2026-02-27,Preventive Service,"Scheduled service: oil, filters, inspection",3930.0,1320.0,5250.0,3.2,LOW,114,COMPLETED
+237,93,2026-02-27,Preventive Service,"Scheduled service: oil, filters, inspection",2080.0,1790.0,3870.0,5.2,LOW,236,COMPLETED
+238,64,2026-02-28,Preventive Service,"Scheduled service: oil, filters, inspection",2220.0,890.0,3110.0,5.1,LOW,174,COMPLETED
+239,84,2026-02-28,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,6610.0,2160.0,8770.0,7.3,CRITICAL,204,COMPLETED
+240,89,2026-02-28,Tyre Replacement,Rear tyre set replaced,28350.0,5990.0,34340.0,6.8,MEDIUM,235,COMPLETED
+241,18,2026-03-01,Preventive Service,"Scheduled service: oil, filters, inspection",3730.0,1220.0,4950.0,5.1,LOW,55,COMPLETED
+242,32,2026-03-02,Preventive Service,"Scheduled service: oil, filters, inspection",4610.0,1730.0,6340.0,2.7,LOW,85,COMPLETED
+243,31,2026-03-03,Preventive Service,"Scheduled service: oil, filters, inspection",3910.0,1190.0,5100.0,2.7,LOW,85,COMPLETED
+244,40,2026-03-03,Brake Repair,Brake pads/liners replaced after inspection,10930.0,2110.0,13040.0,12.5,HIGH,115,COMPLETED
+245,95,2026-03-04,Preventive Service,"Scheduled service: oil, filters, inspection",4030.0,1050.0,5080.0,2.7,LOW,235,COMPLETED
+246,98,2026-03-04,Preventive Service,"Scheduled service: oil, filters, inspection",3320.0,850.0,4170.0,5.9,LOW,264,COMPLETED
+247,119,2026-03-04,Electrical Fault,Wiring and lighting fault rectified,8610.0,3630.0,12240.0,9.0,HIGH,295,COMPLETED
+248,25,2026-03-05,Preventive Service,"Scheduled service: oil, filters, inspection",5460.0,1070.0,6530.0,3.4,LOW,84,COMPLETED
+249,33,2026-03-07,Preventive Service,"Scheduled service: oil, filters, inspection",2870.0,770.0,3640.0,4.2,LOW,84,COMPLETED
+250,4,2026-03-09,Preventive Service,"Scheduled service: oil, filters, inspection",2530.0,1200.0,3730.0,3.2,LOW,26,COMPLETED
+251,40,2026-03-09,Engine Repair,Engine overheating / power loss repaired,33040.0,16880.0,49920.0,39.1,HIGH,114,COMPLETED
+252,114,2026-03-09,Preventive Service,"Scheduled service: oil, filters, inspection",2250.0,1770.0,4020.0,4.1,LOW,294,COMPLETED
+253,10,2026-03-10,AC Repair,AC compressor/gas service,5820.0,2330.0,8150.0,10.3,MEDIUM,25,COMPLETED
+254,92,2026-03-10,Preventive Service,"Scheduled service: oil, filters, inspection",3560.0,1480.0,5040.0,2.9,LOW,235,COMPLETED
+255,12,2026-03-11,Preventive Service,"Scheduled service: oil, filters, inspection",2630.0,1400.0,4030.0,5.8,LOW,26,COMPLETED
+256,27,2026-03-11,Preventive Service,"Scheduled service: oil, filters, inspection",2630.0,1350.0,3980.0,4.2,LOW,85,COMPLETED
+257,38,2026-03-11,Preventive Service,"Scheduled service: oil, filters, inspection",4240.0,1180.0,5420.0,4.5,LOW,114,COMPLETED
+258,40,2026-03-11,Preventive Service,"Scheduled service: oil, filters, inspection",3750.0,1320.0,5070.0,2.4,LOW,114,COMPLETED
+259,55,2026-03-11,Preventive Service,"Scheduled service: oil, filters, inspection",2620.0,1550.0,4170.0,2.8,LOW,144,COMPLETED
+260,67,2026-03-11,Electrical Fault,Wiring and lighting fault rectified,8710.0,4240.0,12950.0,11.2,MEDIUM,176,COMPLETED
+261,13,2026-03-14,Preventive Service,"Scheduled service: oil, filters, inspection",3740.0,1010.0,4750.0,4.6,LOW,54,COMPLETED
+262,40,2026-03-14,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,5870.0,2130.0,8000.0,10.9,CRITICAL,115,COMPLETED
+263,104,2026-03-14,Preventive Service,"Scheduled service: oil, filters, inspection",2210.0,1390.0,3600.0,5.7,LOW,266,COMPLETED
+264,19,2026-03-15,Preventive Service,"Scheduled service: oil, filters, inspection",2790.0,1410.0,4200.0,4.9,LOW,56,COMPLETED
+265,40,2026-03-15,Engine Repair,Engine overheating / power loss repaired,82320.0,13150.0,95470.0,42.8,HIGH,114,COMPLETED
+266,102,2026-03-15,Tyre Replacement,Rear tyre set replaced,18900.0,8290.0,27190.0,7.8,MEDIUM,264,COMPLETED
+267,109,2026-03-15,Preventive Service,"Scheduled service: oil, filters, inspection",4260.0,1570.0,5830.0,3.0,LOW,294,COMPLETED
+268,71,2026-03-16,Preventive Service,"Scheduled service: oil, filters, inspection",4500.0,1430.0,5930.0,4.4,LOW,174,COMPLETED
+269,108,2026-03-16,Preventive Service,"Scheduled service: oil, filters, inspection",3860.0,1380.0,5240.0,5.2,LOW,264,COMPLETED
+270,67,2026-03-19,Preventive Service,"Scheduled service: oil, filters, inspection",4470.0,1480.0,5950.0,2.8,LOW,174,COMPLETED
+271,84,2026-03-19,Preventive Service,"Scheduled service: oil, filters, inspection",3000.0,1340.0,4340.0,4.3,LOW,205,COMPLETED
+272,68,2026-03-20,Preventive Service,"Scheduled service: oil, filters, inspection",2640.0,1730.0,4370.0,2.8,LOW,175,COMPLETED
+273,78,2026-03-20,AC Repair,AC compressor/gas service,16420.0,5870.0,22290.0,18.4,MEDIUM,206,COMPLETED
+274,53,2026-03-21,Engine Repair,Engine overheating / power loss repaired,25460.0,12640.0,38100.0,31.1,HIGH,146,COMPLETED
+275,61,2026-03-21,Preventive Service,"Scheduled service: oil, filters, inspection",2460.0,770.0,3230.0,3.7,LOW,176,COMPLETED
+276,50,2026-03-22,Preventive Service,"Scheduled service: oil, filters, inspection",2820.0,770.0,3590.0,2.5,LOW,146,COMPLETED
+277,72,2026-03-22,Brake Repair,Brake pads/liners replaced after inspection,9820.0,2930.0,12750.0,8.8,MEDIUM,176,COMPLETED
+278,28,2026-03-23,Preventive Service,"Scheduled service: oil, filters, inspection",5230.0,1160.0,6390.0,6.2,LOW,86,COMPLETED
+279,112,2026-03-23,Preventive Service,"Scheduled service: oil, filters, inspection",4960.0,1280.0,6240.0,3.9,LOW,295,COMPLETED
+280,15,2026-03-24,Body Work,Panel and seat repair,6410.0,6930.0,13340.0,19.5,LOW,54,COMPLETED
+281,24,2026-03-24,Preventive Service,"Scheduled service: oil, filters, inspection",2580.0,1270.0,3850.0,4.8,LOW,55,COMPLETED
+282,41,2026-03-25,Preventive Service,"Scheduled service: oil, filters, inspection",3880.0,1330.0,5210.0,4.9,LOW,114,COMPLETED
+283,62,2026-03-25,Body Work,Panel and seat repair,9930.0,5740.0,15670.0,23.6,LOW,176,COMPLETED
+284,91,2026-03-26,Preventive Service,"Scheduled service: oil, filters, inspection",3450.0,930.0,4380.0,5.6,LOW,234,COMPLETED
+285,86,2026-03-27,Preventive Service,"Scheduled service: oil, filters, inspection",4210.0,1710.0,5920.0,3.5,LOW,236,COMPLETED
+286,113,2026-03-27,Preventive Service,"Scheduled service: oil, filters, inspection",4580.0,1400.0,5980.0,4.5,LOW,296,COMPLETED
+287,12,2026-03-28,Body Work,Panel and seat repair,12250.0,4100.0,16350.0,18.8,LOW,24,COMPLETED
+288,83,2026-03-28,Preventive Service,"Scheduled service: oil, filters, inspection",2720.0,1780.0,4500.0,2.5,LOW,204,COMPLETED
+289,94,2026-03-28,Preventive Service,"Scheduled service: oil, filters, inspection",3000.0,770.0,3770.0,4.9,LOW,235,COMPLETED
+290,117,2026-03-28,Preventive Service,"Scheduled service: oil, filters, inspection",3740.0,1500.0,5240.0,3.7,LOW,295,COMPLETED
+291,2,2026-03-29,Preventive Service,"Scheduled service: oil, filters, inspection",4030.0,930.0,4960.0,3.9,LOW,26,COMPLETED
+292,43,2026-03-29,Preventive Service,"Scheduled service: oil, filters, inspection",3030.0,760.0,3790.0,2.4,LOW,115,COMPLETED
+293,104,2026-03-29,Electrical Fault,Wiring and lighting fault rectified,4150.0,4210.0,8360.0,10.1,HIGH,266,COMPLETED
+294,17,2026-03-30,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,7990.0,1250.0,9240.0,10.8,CRITICAL,56,COMPLETED
+295,42,2026-03-30,Preventive Service,"Scheduled service: oil, filters, inspection",3560.0,1130.0,4690.0,3.4,LOW,116,COMPLETED
+296,97,2026-03-31,Preventive Service,"Scheduled service: oil, filters, inspection",4310.0,1160.0,5470.0,4.4,LOW,266,COMPLETED
+297,57,2026-04-01,Preventive Service,"Scheduled service: oil, filters, inspection",3780.0,1530.0,5310.0,3.5,LOW,145,COMPLETED
+298,88,2026-04-01,Engine Repair,Engine overheating / power loss repaired,42860.0,10950.0,53810.0,22.8,HIGH,234,COMPLETED
+299,97,2026-04-01,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,9300.0,3440.0,12740.0,15.0,CRITICAL,264,COMPLETED
+300,10,2026-04-03,Preventive Service,"Scheduled service: oil, filters, inspection",2010.0,1620.0,3630.0,3.6,LOW,24,COMPLETED
+301,63,2026-04-03,Preventive Service,"Scheduled service: oil, filters, inspection",4020.0,1150.0,5170.0,4.2,LOW,176,COMPLETED
+302,115,2026-04-03,Preventive Service,"Scheduled service: oil, filters, inspection",2870.0,1110.0,3980.0,5.9,LOW,295,COMPLETED
+303,19,2026-04-04,Electrical Fault,Wiring and lighting fault rectified,8790.0,1950.0,10740.0,10.0,MEDIUM,54,COMPLETED
+304,24,2026-04-04,Electrical Fault,Wiring and lighting fault rectified,11340.0,2750.0,14090.0,15.9,MEDIUM,55,COMPLETED
+305,45,2026-04-04,Preventive Service,"Scheduled service: oil, filters, inspection",2680.0,1270.0,3950.0,3.0,LOW,116,COMPLETED
+306,79,2026-04-04,Preventive Service,"Scheduled service: oil, filters, inspection",4450.0,1030.0,5480.0,3.0,LOW,206,COMPLETED
+307,100,2026-04-04,Preventive Service,"Scheduled service: oil, filters, inspection",4440.0,1380.0,5820.0,2.7,LOW,264,COMPLETED
+308,15,2026-04-05,Preventive Service,"Scheduled service: oil, filters, inspection",3580.0,1420.0,5000.0,3.4,LOW,54,COMPLETED
+309,75,2026-04-07,Preventive Service,"Scheduled service: oil, filters, inspection",5190.0,1160.0,6350.0,5.7,LOW,204,COMPLETED
+310,78,2026-04-09,Preventive Service,"Scheduled service: oil, filters, inspection",4000.0,810.0,4810.0,2.8,LOW,204,COMPLETED
+311,120,2026-04-09,Preventive Service,"Scheduled service: oil, filters, inspection",3990.0,1630.0,5620.0,3.4,LOW,296,COMPLETED
+312,47,2026-04-10,Preventive Service,"Scheduled service: oil, filters, inspection",2620.0,990.0,3610.0,3.5,LOW,114,COMPLETED
+313,52,2026-04-10,Preventive Service,"Scheduled service: oil, filters, inspection",5840.0,1100.0,6940.0,2.7,LOW,144,COMPLETED
+314,53,2026-04-10,Preventive Service,"Scheduled service: oil, filters, inspection",4390.0,1170.0,5560.0,2.7,LOW,146,COMPLETED
+315,66,2026-04-10,Preventive Service,"Scheduled service: oil, filters, inspection",2150.0,820.0,2970.0,4.0,LOW,175,COMPLETED
+316,89,2026-04-10,Preventive Service,"Scheduled service: oil, filters, inspection",2730.0,900.0,3630.0,2.6,LOW,235,COMPLETED
+317,119,2026-04-11,Preventive Service,"Scheduled service: oil, filters, inspection",2690.0,1350.0,4040.0,5.3,LOW,295,COMPLETED
+318,37,2026-04-12,Preventive Service,"Scheduled service: oil, filters, inspection",3190.0,780.0,3970.0,5.2,LOW,116,COMPLETED
+319,59,2026-04-12,Preventive Service,"Scheduled service: oil, filters, inspection",3920.0,980.0,4900.0,5.7,LOW,145,COMPLETED
+320,73,2026-04-13,Brake Repair,Brake pads/liners replaced after inspection,6020.0,1620.0,7640.0,11.6,HIGH,204,COMPLETED
+321,20,2026-04-15,Preventive Service,"Scheduled service: oil, filters, inspection",3030.0,1510.0,4540.0,4.5,LOW,55,COMPLETED
+322,5,2026-04-18,Preventive Service,"Scheduled service: oil, filters, inspection",2750.0,1270.0,4020.0,3.4,LOW,25,COMPLETED
+323,107,2026-04-18,Preventive Service,"Scheduled service: oil, filters, inspection",2970.0,1470.0,4440.0,6.3,LOW,266,COMPLETED
+324,39,2026-04-19,Preventive Service,"Scheduled service: oil, filters, inspection",3830.0,1370.0,5200.0,5.9,LOW,114,COMPLETED
+325,85,2026-04-19,Electrical Fault,Wiring and lighting fault rectified,4450.0,3240.0,7690.0,8.0,MEDIUM,234,COMPLETED
+326,111,2026-04-21,Preventive Service,"Scheduled service: oil, filters, inspection",2650.0,820.0,3470.0,4.9,LOW,296,COMPLETED
+327,80,2026-04-22,Preventive Service,"Scheduled service: oil, filters, inspection",2600.0,1340.0,3940.0,4.2,LOW,206,COMPLETED
+328,59,2026-04-23,Brake Repair,Brake pads/liners replaced after inspection,6100.0,1270.0,7370.0,4.9,MEDIUM,144,COMPLETED
+329,72,2026-04-23,Preventive Service,"Scheduled service: oil, filters, inspection",2400.0,1720.0,4120.0,4.3,LOW,175,COMPLETED
+330,92,2026-04-23,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,10300.0,3740.0,14040.0,11.0,CRITICAL,235,COMPLETED
+331,99,2026-04-23,Preventive Service,"Scheduled service: oil, filters, inspection",4810.0,1270.0,6080.0,4.8,LOW,264,COMPLETED
+332,37,2026-04-24,Body Work,Panel and seat repair,9810.0,5170.0,14980.0,27.0,LOW,114,COMPLETED
+333,29,2026-04-25,Preventive Service,"Scheduled service: oil, filters, inspection",3780.0,1640.0,5420.0,6.0,LOW,85,COMPLETED
+334,70,2026-04-25,Preventive Service,"Scheduled service: oil, filters, inspection",4030.0,1750.0,5780.0,6.2,LOW,174,COMPLETED
+335,82,2026-04-25,Preventive Service,"Scheduled service: oil, filters, inspection",2690.0,780.0,3470.0,2.6,LOW,206,COMPLETED
+336,99,2026-04-26,Brake Repair,Brake pads/liners replaced after inspection,5440.0,3220.0,8660.0,6.6,MEDIUM,266,COMPLETED
+337,17,2026-04-27,Preventive Service,"Scheduled service: oil, filters, inspection",4060.0,1610.0,5670.0,6.1,LOW,54,COMPLETED
+338,35,2026-04-27,Preventive Service,"Scheduled service: oil, filters, inspection",2780.0,960.0,3740.0,2.7,LOW,86,COMPLETED
+339,54,2026-04-27,Preventive Service,"Scheduled service: oil, filters, inspection",3410.0,980.0,4390.0,5.0,LOW,144,COMPLETED
+340,60,2026-04-27,Preventive Service,"Scheduled service: oil, filters, inspection",2210.0,1280.0,3490.0,6.3,LOW,145,COMPLETED
+341,96,2026-04-27,Preventive Service,"Scheduled service: oil, filters, inspection",5520.0,820.0,6340.0,3.0,LOW,236,COMPLETED
+342,27,2026-04-29,Engine Repair,Engine overheating / power loss repaired,59950.0,24630.0,84580.0,44.8,HIGH,85,COMPLETED
+343,1,2026-04-30,Electrical Fault,Wiring and lighting fault rectified,5110.0,2890.0,8000.0,9.9,MEDIUM,24,COMPLETED
+344,46,2026-04-30,Preventive Service,"Scheduled service: oil, filters, inspection",4520.0,1610.0,6130.0,4.2,LOW,114,COMPLETED
+345,58,2026-04-30,Tyre Replacement,Rear tyre set replaced,14100.0,9210.0,23310.0,7.9,MEDIUM,144,COMPLETED
+346,4,2026-05-01,Body Work,Panel and seat repair,12820.0,3080.0,15900.0,13.9,LOW,26,COMPLETED
+347,96,2026-05-01,Electrical Fault,Wiring and lighting fault rectified,11110.0,2370.0,13480.0,9.5,MEDIUM,235,COMPLETED
+348,102,2026-05-01,Preventive Service,"Scheduled service: oil, filters, inspection",2090.0,1580.0,3670.0,3.8,LOW,264,COMPLETED
+349,15,2026-05-02,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,65570.0,21420.0,86990.0,25.3,CRITICAL,54,COMPLETED
+350,51,2026-05-02,Preventive Service,"Scheduled service: oil, filters, inspection",3220.0,1260.0,4480.0,2.9,LOW,144,COMPLETED
+351,103,2026-05-02,Preventive Service,"Scheduled service: oil, filters, inspection",4130.0,1390.0,5520.0,2.6,LOW,266,COMPLETED
+352,110,2026-05-02,Preventive Service,"Scheduled service: oil, filters, inspection",3700.0,1200.0,4900.0,2.4,LOW,296,COMPLETED
+353,81,2026-05-03,Preventive Service,"Scheduled service: oil, filters, inspection",4520.0,1640.0,6160.0,6.0,LOW,205,COMPLETED
+354,90,2026-05-03,Preventive Service,"Scheduled service: oil, filters, inspection",3390.0,1200.0,4590.0,6.0,LOW,236,COMPLETED
+355,65,2026-05-04,Brake Repair,Brake pads/liners replaced after inspection,8940.0,2370.0,11310.0,7.7,HIGH,176,COMPLETED
+356,16,2026-05-05,Preventive Service,"Scheduled service: oil, filters, inspection",4240.0,1220.0,5460.0,3.9,LOW,56,COMPLETED
+357,36,2026-05-05,Preventive Service,"Scheduled service: oil, filters, inspection",2800.0,940.0,3740.0,3.6,LOW,84,COMPLETED
+358,65,2026-05-05,Preventive Service,"Scheduled service: oil, filters, inspection",3770.0,860.0,4630.0,4.6,LOW,174,COMPLETED
+359,23,2026-05-06,Tyre Replacement,Rear tyre set replaced,28510.0,7750.0,36260.0,3.5,MEDIUM,55,COMPLETED
+360,49,2026-05-07,Preventive Service,"Scheduled service: oil, filters, inspection",5030.0,920.0,5950.0,5.6,LOW,146,COMPLETED
+361,61,2026-05-07,Electrical Fault,Wiring and lighting fault rectified,7980.0,1930.0,9910.0,15.8,HIGH,176,COMPLETED
+362,8,2026-05-08,Preventive Service,"Scheduled service: oil, filters, inspection",4770.0,1630.0,6400.0,4.5,LOW,26,COMPLETED
+363,34,2026-05-08,Preventive Service,"Scheduled service: oil, filters, inspection",3740.0,1080.0,4820.0,5.6,LOW,86,COMPLETED
+364,62,2026-05-08,Preventive Service,"Scheduled service: oil, filters, inspection",4930.0,1490.0,6420.0,3.1,LOW,176,COMPLETED
+365,120,2026-05-08,Body Work,Panel and seat repair,16800.0,2800.0,19600.0,26.9,LOW,296,COMPLETED
+366,48,2026-05-09,Preventive Service,"Scheduled service: oil, filters, inspection",3720.0,1290.0,5010.0,4.5,LOW,114,COMPLETED
+367,58,2026-05-09,Preventive Service,"Scheduled service: oil, filters, inspection",2500.0,1510.0,4010.0,2.5,LOW,144,COMPLETED
+368,73,2026-05-09,Preventive Service,"Scheduled service: oil, filters, inspection",4620.0,870.0,5490.0,6.1,LOW,205,COMPLETED
+369,74,2026-05-10,Preventive Service,"Scheduled service: oil, filters, inspection",2250.0,1400.0,3650.0,5.9,LOW,204,COMPLETED
+370,107,2026-05-10,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,62330.0,23530.0,85860.0,57.4,CRITICAL,264,COMPLETED
+371,14,2026-05-12,Preventive Service,"Scheduled service: oil, filters, inspection",4580.0,1470.0,6050.0,3.4,LOW,56,COMPLETED
+372,87,2026-05-13,Preventive Service,"Scheduled service: oil, filters, inspection",2900.0,1660.0,4560.0,5.6,LOW,235,COMPLETED
+373,88,2026-05-13,Preventive Service,"Scheduled service: oil, filters, inspection",2000.0,850.0,2850.0,4.2,LOW,234,COMPLETED
+374,105,2026-05-13,Preventive Service,"Scheduled service: oil, filters, inspection",2430.0,1350.0,3780.0,4.1,LOW,264,COMPLETED
+375,23,2026-05-14,Engine Repair,Engine overheating / power loss repaired,70240.0,9940.0,80180.0,54.2,HIGH,54,COMPLETED
+376,77,2026-05-14,Preventive Service,"Scheduled service: oil, filters, inspection",3980.0,1220.0,5200.0,5.1,LOW,206,COMPLETED
+377,22,2026-05-15,Preventive Service,"Scheduled service: oil, filters, inspection",4010.0,1010.0,5020.0,5.6,LOW,56,COMPLETED
+378,3,2026-05-16,Preventive Service,"Scheduled service: oil, filters, inspection",4040.0,1420.0,5460.0,4.6,LOW,24,COMPLETED
+379,6,2026-05-17,Preventive Service,"Scheduled service: oil, filters, inspection",5600.0,1090.0,6690.0,5.9,LOW,24,COMPLETED
+380,25,2026-05-17,Brake Repair,Brake pads/liners replaced after inspection,9100.0,1620.0,10720.0,10.5,MEDIUM,86,COMPLETED
+381,30,2026-05-17,Electrical Fault,Wiring and lighting fault rectified,2510.0,3290.0,5800.0,9.2,MEDIUM,86,COMPLETED
+382,111,2026-05-17,Engine Repair,Engine overheating / power loss repaired,71420.0,12730.0,84150.0,39.2,HIGH,296,COMPLETED
+383,56,2026-05-18,Preventive Service,"Scheduled service: oil, filters, inspection",3250.0,1000.0,4250.0,2.4,LOW,146,COMPLETED
+384,76,2026-05-20,Preventive Service,"Scheduled service: oil, filters, inspection",2420.0,1140.0,3560.0,6.0,LOW,205,COMPLETED
+385,1,2026-05-21,Preventive Service,"Scheduled service: oil, filters, inspection",4450.0,760.0,5210.0,3.6,LOW,24,COMPLETED
+386,9,2026-05-21,Preventive Service,"Scheduled service: oil, filters, inspection",3980.0,850.0,4830.0,2.7,LOW,26,COMPLETED
+387,21,2026-05-21,Brake Repair,Brake pads/liners replaced after inspection,7600.0,2410.0,10010.0,7.1,MEDIUM,54,COMPLETED
+388,32,2026-05-21,Preventive Service,"Scheduled service: oil, filters, inspection",2550.0,1120.0,3670.0,4.7,LOW,85,COMPLETED
+389,63,2026-05-21,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,62270.0,22480.0,84750.0,45.1,CRITICAL,175,COMPLETED
+390,30,2026-05-22,Preventive Service,"Scheduled service: oil, filters, inspection",3640.0,1370.0,5010.0,3.5,LOW,86,COMPLETED
+391,26,2026-05-23,Preventive Service,"Scheduled service: oil, filters, inspection",2870.0,960.0,3830.0,4.3,LOW,84,COMPLETED
+392,69,2026-05-23,Preventive Service,"Scheduled service: oil, filters, inspection",2670.0,860.0,3530.0,2.9,LOW,176,COMPLETED
+393,31,2026-05-24,Tyre Replacement,Rear tyre set replaced,13680.0,7710.0,21390.0,4.9,MEDIUM,84,COMPLETED
+394,101,2026-05-24,Preventive Service,"Scheduled service: oil, filters, inspection",3530.0,1460.0,4990.0,4.6,LOW,265,COMPLETED
+395,108,2026-05-24,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,71590.0,9900.0,81490.0,49.3,CRITICAL,264,COMPLETED
+396,11,2026-05-26,Preventive Service,"Scheduled service: oil, filters, inspection",3300.0,920.0,4220.0,4.7,LOW,25,COMPLETED
+397,33,2026-05-26,Preventive Service,"Scheduled service: oil, filters, inspection",3480.0,880.0,4360.0,4.1,LOW,85,COMPLETED
+398,85,2026-05-26,Preventive Service,"Scheduled service: oil, filters, inspection",1990.0,1400.0,3390.0,4.3,LOW,236,COMPLETED
+399,106,2026-05-26,Preventive Service,"Scheduled service: oil, filters, inspection",4180.0,820.0,5000.0,4.5,LOW,266,COMPLETED
+400,118,2026-05-26,Preventive Service,"Scheduled service: oil, filters, inspection",4410.0,1750.0,6160.0,6.4,LOW,296,COMPLETED
+401,74,2026-05-27,Body Work,Panel and seat repair,13670.0,4940.0,18610.0,29.3,LOW,206,COMPLETED
+402,92,2026-05-28,Engine Repair,Engine overheating / power loss repaired,47890.0,17340.0,65230.0,50.7,HIGH,234,COMPLETED
+403,95,2026-05-28,Preventive Service,"Scheduled service: oil, filters, inspection",2500.0,990.0,3490.0,5.6,LOW,235,COMPLETED
+404,98,2026-05-28,Preventive Service,"Scheduled service: oil, filters, inspection",2380.0,1030.0,3410.0,3.3,LOW,264,COMPLETED
+405,18,2026-05-29,Preventive Service,"Scheduled service: oil, filters, inspection",2480.0,770.0,3250.0,3.6,LOW,55,COMPLETED
+406,21,2026-05-29,Preventive Service,"Scheduled service: oil, filters, inspection",4190.0,1070.0,5260.0,2.6,LOW,56,COMPLETED
+407,49,2026-05-29,Brake Repair,Brake pads/liners replaced after inspection,9560.0,1270.0,10830.0,11.5,MEDIUM,146,COMPLETED
+408,101,2026-05-29,Engine Repair,Engine overheating / power loss repaired,24620.0,17570.0,42190.0,22.1,HIGH,264,COMPLETED
+409,7,2026-05-30,Preventive Service,"Scheduled service: oil, filters, inspection",2160.0,1680.0,3840.0,6.4,LOW,26,COMPLETED
+410,44,2026-05-30,Preventive Service,"Scheduled service: oil, filters, inspection",2180.0,1040.0,3220.0,5.1,LOW,116,COMPLETED
+411,93,2026-05-31,Preventive Service,"Scheduled service: oil, filters, inspection",3800.0,1120.0,4920.0,5.8,LOW,236,COMPLETED
+412,90,2026-06-01,Electrical Fault,Wiring and lighting fault rectified,12370.0,2070.0,14440.0,12.7,MEDIUM,236,COMPLETED
+413,52,2026-06-02,Electrical Fault,Wiring and lighting fault rectified,12850.0,3510.0,16360.0,10.3,MEDIUM,144,COMPLETED
+414,64,2026-06-02,Preventive Service,"Scheduled service: oil, filters, inspection",2420.0,930.0,3350.0,6.3,LOW,175,COMPLETED
+415,23,2026-06-03,Preventive Service,"Scheduled service: oil, filters, inspection",5780.0,1220.0,7000.0,4.5,LOW,56,COMPLETED
+416,31,2026-06-04,Preventive Service,"Scheduled service: oil, filters, inspection",3780.0,1350.0,5130.0,3.1,LOW,84,COMPLETED
+417,41,2026-06-04,Body Work,Panel and seat repair,10410.0,5500.0,15910.0,13.0,LOW,115,COMPLETED
+418,92,2026-06-04,Preventive Service,"Scheduled service: oil, filters, inspection",4580.0,1410.0,5990.0,5.8,LOW,234,COMPLETED
+419,116,2026-06-04,Brake Repair,Brake pads/liners replaced after inspection,4670.0,2230.0,6900.0,5.4,MEDIUM,295,COMPLETED
+420,116,2026-06-05,Preventive Service,"Scheduled service: oil, filters, inspection",2920.0,1100.0,4020.0,2.9,LOW,294,COMPLETED
+421,27,2026-06-06,Preventive Service,"Scheduled service: oil, filters, inspection",4710.0,1180.0,5890.0,4.1,LOW,85,COMPLETED
+422,115,2026-06-07,Brake Repair,Brake pads/liners replaced after inspection,5440.0,2630.0,8070.0,11.8,MEDIUM,295,COMPLETED
+423,25,2026-06-08,Preventive Service,"Scheduled service: oil, filters, inspection",4260.0,1060.0,5320.0,2.6,LOW,84,COMPLETED
+424,68,2026-06-09,Preventive Service,"Scheduled service: oil, filters, inspection",4750.0,1470.0,6220.0,5.2,LOW,174,COMPLETED
+425,84,2026-06-09,Preventive Service,"Scheduled service: oil, filters, inspection",2980.0,1100.0,4080.0,4.6,LOW,204,COMPLETED
+426,104,2026-06-09,Preventive Service,"Scheduled service: oil, filters, inspection",4390.0,790.0,5180.0,2.5,LOW,265,COMPLETED
+427,13,2026-06-10,Preventive Service,"Scheduled service: oil, filters, inspection",3180.0,1190.0,4370.0,2.9,LOW,56,COMPLETED
+428,38,2026-06-10,Preventive Service,"Scheduled service: oil, filters, inspection",3910.0,1650.0,5560.0,4.8,LOW,114,COMPLETED
+429,50,2026-06-10,Preventive Service,"Scheduled service: oil, filters, inspection",2160.0,780.0,2940.0,6.2,LOW,145,COMPLETED
+430,84,2026-06-10,Electrical Fault,Wiring and lighting fault rectified,8120.0,1730.0,9850.0,6.8,MEDIUM,206,COMPLETED
+431,4,2026-06-11,Preventive Service,"Scheduled service: oil, filters, inspection",4330.0,1160.0,5490.0,5.1,LOW,25,COMPLETED
+432,114,2026-06-11,Preventive Service,"Scheduled service: oil, filters, inspection",3760.0,1540.0,5300.0,5.0,LOW,296,COMPLETED
+433,28,2026-06-12,Tyre Replacement,Rear tyre set replaced,16940.0,5420.0,22360.0,6.2,MEDIUM,85,COMPLETED
+434,55,2026-06-13,Preventive Service,"Scheduled service: oil, filters, inspection",3040.0,1230.0,4270.0,5.9,LOW,146,COMPLETED
+435,40,2026-06-14,Preventive Service,"Scheduled service: oil, filters, inspection",4770.0,1610.0,6380.0,6.3,LOW,114,COMPLETED
+436,11,2026-06-15,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,6170.0,1690.0,7860.0,6.1,CRITICAL,25,COMPLETED
+437,61,2026-06-15,Preventive Service,"Scheduled service: oil, filters, inspection",4070.0,1290.0,5360.0,4.9,LOW,175,COMPLETED
+438,71,2026-06-15,Preventive Service,"Scheduled service: oil, filters, inspection",3710.0,1560.0,5270.0,4.3,LOW,175,COMPLETED
+439,28,2026-06-16,Preventive Service,"Scheduled service: oil, filters, inspection",3760.0,1370.0,5130.0,4.9,LOW,85,COMPLETED
+440,109,2026-06-16,Preventive Service,"Scheduled service: oil, filters, inspection",5780.0,1080.0,6860.0,6.3,LOW,296,COMPLETED
+441,67,2026-06-17,Preventive Service,"Scheduled service: oil, filters, inspection",4100.0,800.0,4900.0,3.8,LOW,176,COMPLETED
+442,86,2026-06-17,Preventive Service,"Scheduled service: oil, filters, inspection",3710.0,810.0,4520.0,6.1,LOW,235,COMPLETED
+443,108,2026-06-17,Preventive Service,"Scheduled service: oil, filters, inspection",4290.0,1650.0,5940.0,5.3,LOW,266,COMPLETED
+444,117,2026-06-18,Preventive Service,"Scheduled service: oil, filters, inspection",3420.0,1740.0,5160.0,2.8,LOW,295,COMPLETED
+445,12,2026-06-19,Preventive Service,"Scheduled service: oil, filters, inspection",1970.0,880.0,2850.0,2.7,LOW,26,COMPLETED
+446,24,2026-06-19,Preventive Service,"Scheduled service: oil, filters, inspection",2940.0,1400.0,4340.0,5.4,LOW,54,COMPLETED
+447,57,2026-06-20,Brake Repair,Brake pads/liners replaced after inspection,8130.0,3270.0,11400.0,5.9,MEDIUM,145,COMPLETED
+448,12,2026-06-22,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,6660.0,2530.0,9190.0,11.2,CRITICAL,24,COMPLETED
+449,13,2026-06-22,Tyre Replacement,Rear tyre set replaced,23010.0,9040.0,32050.0,5.1,MEDIUM,55,COMPLETED
+450,112,2026-06-22,Preventive Service,"Scheduled service: oil, filters, inspection",3750.0,1320.0,5070.0,4.8,LOW,294,COMPLETED
+451,19,2026-06-23,Preventive Service,"Scheduled service: oil, filters, inspection",3860.0,1790.0,5650.0,5.1,LOW,55,COMPLETED
+452,94,2026-06-23,Preventive Service,"Scheduled service: oil, filters, inspection",2050.0,1020.0,3070.0,4.5,LOW,236,COMPLETED
+453,120,2026-06-23,Body Work,Panel and seat repair,12590.0,2960.0,15550.0,21.3,LOW,295,COMPLETED
+454,91,2026-06-24,Preventive Service,"Scheduled service: oil, filters, inspection",4480.0,940.0,5420.0,3.2,LOW,236,COMPLETED
+455,100,2026-06-24,Preventive Service,"Scheduled service: oil, filters, inspection",2790.0,870.0,3660.0,3.3,LOW,264,COMPLETED
+456,104,2026-06-25,Electrical Fault,Wiring and lighting fault rectified,7430.0,4410.0,11840.0,6.7,MEDIUM,264,COMPLETED
+457,41,2026-06-26,Preventive Service,"Scheduled service: oil, filters, inspection",2120.0,1410.0,3530.0,3.4,LOW,115,COMPLETED
+458,69,2026-06-26,Electrical Fault,Wiring and lighting fault rectified,10520.0,2500.0,13020.0,12.3,MEDIUM,175,COMPLETED
+459,54,2026-06-27,Body Work,Panel and seat repair,16760.0,4520.0,21280.0,21.5,LOW,145,COMPLETED
+460,79,2026-06-27,Preventive Service,"Scheduled service: oil, filters, inspection",2770.0,970.0,3740.0,4.3,LOW,204,COMPLETED
+461,83,2026-06-27,Preventive Service,"Scheduled service: oil, filters, inspection",3960.0,1060.0,5020.0,4.2,LOW,204,COMPLETED
+462,10,2026-06-29,Preventive Service,"Scheduled service: oil, filters, inspection",2020.0,1150.0,3170.0,5.9,LOW,24,COMPLETED
+463,42,2026-06-29,Preventive Service,"Scheduled service: oil, filters, inspection",3280.0,820.0,4100.0,4.2,LOW,115,COMPLETED
+464,52,2026-06-29,Preventive Service,"Scheduled service: oil, filters, inspection",2520.0,830.0,3350.0,5.2,LOW,146,COMPLETED
+465,113,2026-06-29,Preventive Service,"Scheduled service: oil, filters, inspection",2630.0,950.0,3580.0,4.3,LOW,296,COMPLETED
+466,15,2026-06-30,Preventive Service,"Scheduled service: oil, filters, inspection",4650.0,1420.0,6070.0,3.7,LOW,55,COMPLETED
+467,75,2026-07-03,Preventive Service,"Scheduled service: oil, filters, inspection",2950.0,1390.0,4340.0,5.0,LOW,204,COMPLETED
+468,113,2026-07-03,Electrical Fault,Wiring and lighting fault rectified,9600.0,2040.0,11640.0,13.1,MEDIUM,296,COMPLETED
+469,25,2026-07-04,Electrical Fault,Wiring and lighting fault rectified,6100.0,4430.0,10530.0,8.3,MEDIUM,84,COMPLETED
+470,65,2026-07-04,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,7830.0,1560.0,9390.0,7.7,CRITICAL,176,COMPLETED
+471,44,2026-07-06,Engine Repair,Engine overheating / power loss repaired,63190.0,8930.0,72120.0,45.0,HIGH,116,COMPLETED
+472,59,2026-07-06,Preventive Service,"Scheduled service: oil, filters, inspection",-4480.0,1300.0,5780.0,4.2,LOW,146,COMPLETED
+473,60,2026-07-06,Tyre Replacement,Rear tyre set replaced,25650.0,7110.0,32760.0,5.1,MEDIUM,144,COMPLETED
+474,115,2026-07-06,Preventive Service,"Scheduled service: oil, filters, inspection",2450.0,1770.0,4220.0,4.8,LOW,295,COMPLETED
+475,2,2026-07-07,Preventive Service,"Scheduled service: oil, filters, inspection",3020.0,1520.0,4540.0,6.0,LOW,25,COMPLETED
+476,5,2026-07-07,Preventive Service,"Scheduled service: oil, filters, inspection",4830.0,1010.0,5840.0,5.5,LOW,25,COMPLETED
+477,28,2026-07-07,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,11360.0,3020.0,14380.0,7.5,CRITICAL,85,COMPLETED
+478,43,2026-07-07,Preventive Service,"Scheduled service: oil, filters, inspection",5100.0,1440.0,6540.0,3.5,LOW,116,COMPLETED
+479,57,2026-07-07,Preventive Service,"Scheduled service: oil, filters, inspection",2190.0,1480.0,3670.0,2.9,LOW,145,COMPLETED
+480,61,2026-07-07,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,7140.0,3540.0,10680.0,9.0,CRITICAL,175,COMPLETED
+481,97,2026-07-08,Preventive Service,"Scheduled service: oil, filters, inspection",4600.0,1410.0,6010.0,4.0,LOW,264,COMPLETED
+482,24,2026-07-09,Tyre Replacement,Rear tyre set replaced,25740.0,6210.0,31950.0,4.3,MEDIUM,54,COMPLETED
+483,63,2026-07-09,Preventive Service,"Scheduled service: oil, filters, inspection",4540.0,960.0,5500.0,3.2,LOW,176,COMPLETED
+484,89,2026-07-10,Preventive Service,"Scheduled service: oil, filters, inspection",4780.0,890.0,5670.0,4.2,LOW,236,COMPLETED
+485,119,2026-07-11,Preventive Service,"Scheduled service: oil, filters, inspection",4600.0,1560.0,6160.0,5.6,LOW,294,COMPLETED
+486,8,2026-07-13,Tyre Replacement,Rear tyre set replaced,20100.0,5880.0,25980.0,4.9,MEDIUM,25,COMPLETED
+487,45,2026-07-13,Preventive Service,"Scheduled service: oil, filters, inspection",2870.0,860.0,3730.0,4.4,LOW,116,COMPLETED
+488,62,2026-07-13,Electrical Fault,Wiring and lighting fault rectified,4990.0,2320.0,7310.0,8.8,MEDIUM,174,COMPLETED
+489,80,2026-07-13,Preventive Service,"Scheduled service: oil, filters, inspection",5670.0,1110.0,6780.0,3.7,LOW,206,COMPLETED
+490,111,2026-07-13,Preventive Service,"Scheduled service: oil, filters, inspection",4270.0,1790.0,6060.0,4.3,LOW,294,COMPLETED
+491,14,2026-07-14,Body Work,Panel and seat repair,18040.0,4330.0,22370.0,24.4,LOW,55,COMPLETED
+492,53,2026-07-15,Preventive Service,"Scheduled service: oil, filters, inspection",2170.0,1790.0,3960.0,3.2,LOW,144,COMPLETED
+493,66,2026-07-15,Preventive Service,"Scheduled service: oil, filters, inspection",3470.0,1650.0,5120.0,3.7,LOW,175,COMPLETED
+494,29,2026-07-16,Preventive Service,"Scheduled service: oil, filters, inspection",2120.0,1430.0,3550.0,4.4,LOW,86,COMPLETED
+495,99,2026-07-16,Brake Repair,Brake pads/liners replaced after inspection,10660.0,3240.0,13900.0,11.5,MEDIUM,265,COMPLETED
+496,107,2026-07-16,Preventive Service,"Scheduled service: oil, filters, inspection",3620.0,890.0,4510.0,3.9,LOW,266,COMPLETED
+497,28,2026-07-17,Brake Repair,Brake pads/liners replaced after inspection,4440.0,3260.0,7700.0,12.4,MEDIUM,84,COMPLETED
+498,96,2026-07-17,Preventive Service,"Scheduled service: oil, filters, inspection",3010.0,920.0,3930.0,3.2,LOW,234,COMPLETED
+499,120,2026-07-17,Preventive Service,"Scheduled service: oil, filters, inspection",3970.0,1060.0,5030.0,3.5,LOW,294,COMPLETED
+500,5,2026-07-18,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,6580.0,1470.0,8050.0,6.3,CRITICAL,24,COMPLETED
+501,17,2026-07-18,Preventive Service,"Scheduled service: oil, filters, inspection",3420.0,1030.0,4450.0,3.4,LOW,54,COMPLETED
+502,47,2026-07-18,Preventive Service,"Scheduled service: oil, filters, inspection",4170.0,1370.0,5540.0,6.1,LOW,116,COMPLETED
+503,78,2026-07-18,Preventive Service,"Scheduled service: oil, filters, inspection",3160.0,840.0,4000.0,5.4,LOW,205,COMPLETED
+504,39,2026-07-19,Preventive Service,"Scheduled service: oil, filters, inspection",3180.0,900.0,4080.0,5.1,LOW,116,COMPLETED
+505,37,2026-07-20,Preventive Service,"Scheduled service: oil, filters, inspection",3610.0,1400.0,5010.0,4.3,LOW,115,COMPLETED
+506,39,2026-07-20,Body Work,Panel and seat repair,8050.0,6010.0,14060.0,27.4,LOW,115,COMPLETED
+507,49,2026-07-20,Body Work,Panel and seat repair,19950.0,3140.0,23090.0,22.4,LOW,144,COMPLETED
+508,20,2026-07-21,Preventive Service,"Scheduled service: oil, filters, inspection",3900.0,1190.0,5090.0,6.3,LOW,56,COMPLETED
+509,73,2026-07-21,Brake Repair,Brake pads/liners replaced after inspection,6670.0,1350.0,8020.0,11.3,MEDIUM,204,COMPLETED
+510,80,2026-07-21,Body Work,Panel and seat repair,9620.0,3830.0,13450.0,28.7,LOW,204,COMPLETED
+511,90,2026-07-21,Tyre Replacement,Rear tyre set replaced,-21270.0,8710.0,29980.0,3.5,MEDIUM,234,COMPLETED
+512,19,2026-07-22,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,4150.0,2940.0,7090.0,9.1,CRITICAL,55,COMPLETED
+513,56,2026-07-23,AC Repair,AC compressor/gas service,6770.0,3100.0,9870.0,15.2,MEDIUM,144,COMPLETED
+514,72,2026-07-23,Preventive Service,"Scheduled service: oil, filters, inspection",2860.0,1380.0,4240.0,5.9,LOW,176,COMPLETED
+515,6,2026-07-24,Engine Repair,Engine overheating / power loss repaired,58730.0,8840.0,67570.0,28.8,HIGH,25,COMPLETED
+516,35,2026-07-24,Preventive Service,"Scheduled service: oil, filters, inspection",3560.0,1740.0,5300.0,3.9,LOW,85,COMPLETED
+517,35,2026-07-24,Engine Repair,Engine overheating / power loss repaired,62220.0,26850.0,89070.0,25.6,HIGH,84,COMPLETED
+518,81,2026-07-24,Preventive Service,"Scheduled service: oil, filters, inspection",4300.0,930.0,5230.0,4.4,LOW,204,COMPLETED
+519,60,2026-07-25,Preventive Service,"Scheduled service: oil, filters, inspection",4340.0,1790.0,6130.0,5.4,LOW,146,COMPLETED
+520,102,2026-07-25,Preventive Service,"Scheduled service: oil, filters, inspection",2710.0,910.0,3620.0,2.6,LOW,266,COMPLETED
+521,82,2026-07-27,Preventive Service,"Scheduled service: oil, filters, inspection",4270.0,1330.0,5600.0,3.4,LOW,206,COMPLETED
+522,8,2026-07-29,Preventive Service,"Scheduled service: oil, filters, inspection",4940.0,1650.0,6590.0,6.3,LOW,26,COMPLETED
+523,36,2026-07-29,Preventive Service,"Scheduled service: oil, filters, inspection",2820.0,1090.0,3910.0,3.2,LOW,85,COMPLETED
+524,70,2026-07-29,Preventive Service,"Scheduled service: oil, filters, inspection",2130.0,1320.0,3450.0,4.9,LOW,174,COMPLETED
+525,43,2026-07-30,Body Work,Panel and seat repair,10780.0,5890.0,16670.0,31.9,LOW,115,COMPLETED
+526,43,2026-07-30,Engine Repair,Engine overheating / power loss repaired,58190.0,16370.0,74560.0,50.4,HIGH,114,COMPLETED
+527,99,2026-07-30,Preventive Service,"Scheduled service: oil, filters, inspection",3860.0,1730.0,5590.0,4.1,LOW,266,COMPLETED
+528,3,2026-07-31,Brake Repair,Brake pads/liners replaced after inspection,5470.0,2080.0,7550.0,5.2,HIGH,25,COMPLETED
+529,51,2026-07-31,Preventive Service,"Scheduled service: oil, filters, inspection",3460.0,1470.0,4930.0,5.4,LOW,146,COMPLETED
+530,62,2026-07-31,Preventive Service,"Scheduled service: oil, filters, inspection",4260.0,1770.0,6030.0,3.5,LOW,176,COMPLETED
+531,68,2026-07-31,Brake Repair,Brake pads/liners replaced after inspection,9880.0,3230.0,13110.0,7.5,MEDIUM,176,COMPLETED
+532,14,2026-08-01,Preventive Service,"Scheduled service: oil, filters, inspection",4360.0,1110.0,5470.0,2.8,LOW,56,COMPLETED
+533,110,2026-08-01,Preventive Service,"Scheduled service: oil, filters, inspection",3920.0,1040.0,4960.0,2.5,LOW,294,COMPLETED
+534,54,2026-08-02,Preventive Service,"Scheduled service: oil, filters, inspection",3430.0,980.0,4410.0,6.3,LOW,145,COMPLETED
+535,88,2026-08-02,Preventive Service,"Scheduled service: oil, filters, inspection",2280.0,1710.0,3990.0,4.1,LOW,236,COMPLETED
+536,65,2026-08-03,Preventive Service,"Scheduled service: oil, filters, inspection",4550.0,1090.0,5640.0,5.6,LOW,175,COMPLETED
+537,77,2026-08-03,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,8740.0,2040.0,10780.0,9.7,CRITICAL,204,COMPLETED
+538,16,2026-08-04,Preventive Service,"Scheduled service: oil, filters, inspection",2520.0,970.0,3490.0,6.1,LOW,54,COMPLETED
+539,34,2026-08-04,Preventive Service,"Scheduled service: oil, filters, inspection",2540.0,1470.0,4010.0,5.7,LOW,85,COMPLETED
+540,37,2026-08-04,Engine Repair,Engine overheating / power loss repaired,23640.0,10400.0,34040.0,55.6,HIGH,114,COMPLETED
+541,40,2026-08-04,Engine Repair,Engine overheating / power loss repaired,55910.0,22370.0,78280.0,43.6,HIGH,116,COMPLETED
+542,74,2026-08-04,Preventive Service,"Scheduled service: oil, filters, inspection",2830.0,1710.0,4540.0,6.1,LOW,205,COMPLETED
+543,18,2026-08-07,Electrical Fault,Wiring and lighting fault rectified,4050.0,1900.0,5950.0,13.0,MEDIUM,55,COMPLETED
+544,41,2026-08-07,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,34510.0,10990.0,45500.0,36.5,CRITICAL,114,COMPLETED
+545,58,2026-08-07,Preventive Service,"Scheduled service: oil, filters, inspection",2060.0,1190.0,3250.0,4.1,LOW,146,COMPLETED
+546,46,2026-08-08,Preventive Service,"Scheduled service: oil, filters, inspection",3440.0,1320.0,4760.0,5.2,LOW,115,COMPLETED
+547,70,2026-08-08,Tyre Replacement,Rear tyre set replaced,15840.0,5500.0,21340.0,5.9,MEDIUM,176,COMPLETED
+548,90,2026-08-09,Preventive Service,"Scheduled service: oil, filters, inspection",4710.0,1660.0,6370.0,2.6,LOW,235,COMPLETED
+549,49,2026-08-10,Preventive Service,"Scheduled service: oil, filters, inspection",3850.0,1710.0,5560.0,6.1,LOW,146,COMPLETED
+550,103,2026-08-10,Preventive Service,"Scheduled service: oil, filters, inspection",4180.0,880.0,5060.0,3.8,LOW,266,COMPLETED
+551,105,2026-08-11,Preventive Service,"Scheduled service: oil, filters, inspection",2070.0,990.0,3060.0,6.1,LOW,264,COMPLETED
+552,9,2026-08-12,Preventive Service,"Scheduled service: oil, filters, inspection",2440.0,1560.0,4000.0,3.9,LOW,24,COMPLETED
+553,87,2026-08-12,Electrical Fault,Wiring and lighting fault rectified,8010.0,3840.0,11850.0,13.0,MEDIUM,236,COMPLETED
+554,6,2026-08-13,Preventive Service,"Scheduled service: oil, filters, inspection",3110.0,950.0,4060.0,5.3,LOW,26,COMPLETED
+555,76,2026-08-13,Preventive Service,"Scheduled service: oil, filters, inspection",2100.0,1350.0,3450.0,3.3,LOW,205,COMPLETED
+556,101,2026-08-13,Preventive Service,"Scheduled service: oil, filters, inspection",2960.0,1750.0,4710.0,3.9,LOW,266,COMPLETED
+557,11,2026-08-14,Preventive Service,"Scheduled service: oil, filters, inspection",3920.0,860.0,4780.0,2.5,LOW,25,COMPLETED
+558,48,2026-08-14,Preventive Service,"Scheduled service: oil, filters, inspection",4100.0,1680.0,5780.0,4.3,LOW,114,COMPLETED
+559,33,2026-08-15,Preventive Service,"Scheduled service: oil, filters, inspection",3460.0,860.0,4320.0,2.6,LOW,86,COMPLETED
+560,120,2026-08-15,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,6940.0,1030.0,7970.0,11.2,CRITICAL,295,COMPLETED
+561,4,2026-08-16,Tyre Replacement,Rear tyre set replaced,13710.0,5730.0,19440.0,3.3,MEDIUM,25,COMPLETED
+562,73,2026-08-16,Preventive Service,"Scheduled service: oil, filters, inspection",4170.0,1670.0,5840.0,5.4,LOW,205,COMPLETED
+563,11,2026-08-17,Engine Repair,Engine overheating / power loss repaired,57960.0,7880.0,65840.0,46.5,HIGH,25,COMPLETED
+564,111,2026-08-17,Engine Repair,Engine overheating / power loss repaired,35500.0,16580.0,52080.0,56.6,HIGH,296,COMPLETED
+565,30,2026-08-18,Preventive Service,"Scheduled service: oil, filters, inspection",3090.0,1010.0,4100.0,2.7,LOW,86,COMPLETED
+566,56,2026-08-18,Preventive Service,"Scheduled service: oil, filters, inspection",2320.0,1530.0,3850.0,3.3,LOW,144,COMPLETED
+567,77,2026-08-18,Preventive Service,"Scheduled service: oil, filters, inspection",2270.0,820.0,3090.0,3.2,LOW,205,COMPLETED
+568,101,2026-08-18,Brake Repair,Brake pads/liners replaced after inspection,6320.0,3040.0,9360.0,10.6,MEDIUM,265,COMPLETED
+569,3,2026-08-19,Electrical Fault,Wiring and lighting fault rectified,5180.0,3610.0,8790.0,10.3,MEDIUM,25,COMPLETED
+570,18,2026-08-19,Preventive Service,"Scheduled service: oil, filters, inspection",3680.0,1790.0,5470.0,4.1,LOW,56,COMPLETED
+571,7,2026-08-20,Preventive Service,"Scheduled service: oil, filters, inspection",2680.0,1160.0,3840.0,3.0,LOW,24,COMPLETED
+572,87,2026-08-20,Preventive Service,"Scheduled service: oil, filters, inspection",4340.0,960.0,5300.0,3.8,LOW,236,COMPLETED
+573,118,2026-08-20,Preventive Service,"Scheduled service: oil, filters, inspection",2190.0,1570.0,3760.0,3.0,LOW,295,COMPLETED
+574,22,2026-08-21,Preventive Service,"Scheduled service: oil, filters, inspection",2690.0,840.0,3530.0,4.9,LOW,55,COMPLETED
+575,64,2026-08-21,Preventive Service,"Scheduled service: oil, filters, inspection",3480.0,1360.0,4840.0,4.4,LOW,176,COMPLETED
+576,109,2026-08-21,Brake Repair,Brake pads/liners replaced after inspection,6320.0,3230.0,9550.0,5.9,MEDIUM,296,COMPLETED
+577,1,2026-08-22,Preventive Service,"Scheduled service: oil, filters, inspection",3490.0,920.0,4410.0,3.5,LOW,26,COMPLETED
+578,106,2026-08-22,Preventive Service,"Scheduled service: oil, filters, inspection",4350.0,1340.0,5690.0,2.5,LOW,265,COMPLETED
+579,3,2026-08-23,Preventive Service,"Scheduled service: oil, filters, inspection",3270.0,1590.0,4860.0,4.7,LOW,25,COMPLETED
+580,23,2026-08-24,Brake Repair,Brake pads/liners replaced after inspection,7130.0,1830.0,8960.0,10.7,MEDIUM,54,COMPLETED
+581,48,2026-08-24,Brake Repair,Brake pads/liners replaced after inspection,9250.0,2360.0,11610.0,9.8,MEDIUM,116,COMPLETED
+582,97,2026-08-25,Brake Repair,Brake pads/liners replaced after inspection,6100.0,1280.0,7380.0,11.1,MEDIUM,265,COMPLETED
+583,85,2026-08-26,Preventive Service,"Scheduled service: oil, filters, inspection",3080.0,1470.0,4550.0,5.5,LOW,234,COMPLETED
+584,9,2026-08-27,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,6490.0,4180.0,10670.0,8.0,CRITICAL,25,COMPLETED
+585,32,2026-08-27,Preventive Service,"Scheduled service: oil, filters, inspection",3240.0,1480.0,4720.0,3.8,LOW,84,COMPLETED
+586,44,2026-08-27,Engine Repair,Engine overheating / power loss repaired,46390.0,9620.0,56010.0,43.7,HIGH,114,COMPLETED
+587,90,2026-08-27,Engine Repair,Engine overheating / power loss repaired,43970.0,15130.0,59100.0,24.5,HIGH,235,COMPLETED
+588,98,2026-08-27,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,8270.0,1650.0,9920.0,6.8,CRITICAL,266,COMPLETED
+589,44,2026-08-28,Preventive Service,"Scheduled service: oil, filters, inspection",4620.0,1610.0,6230.0,5.6,LOW,115,COMPLETED
+590,23,2026-08-30,Body Work,Panel and seat repair,6990.0,4090.0,11080.0,30.9,LOW,55,COMPLETED
+591,26,2026-08-30,Preventive Service,"Scheduled service: oil, filters, inspection",3810.0,920.0,4730.0,2.9,LOW,85,COMPLETED
+592,69,2026-08-30,Preventive Service,"Scheduled service: oil, filters, inspection",3420.0,1610.0,5030.0,3.8,LOW,175,COMPLETED
+593,15,2026-08-31,Tyre Replacement,Rear tyre set replaced,16900.0,8000.0,24900.0,3.3,MEDIUM,56,COMPLETED
+594,98,2026-08-31,Preventive Service,"Scheduled service: oil, filters, inspection",3910.0,1430.0,5340.0,4.2,LOW,266,COMPLETED
+595,35,2026-09-01,Tyre Replacement,Rear tyre set replaced,18660.0,6480.0,25140.0,7.6,MEDIUM,85,COMPLETED
+596,95,2026-09-01,Preventive Service,"Scheduled service: oil, filters, inspection",5170.0,820.0,5990.0,4.7,LOW,234,COMPLETED
+597,104,2026-09-01,Preventive Service,"Scheduled service: oil, filters, inspection",4360.0,1730.0,6090.0,6.4,LOW,264,COMPLETED
+598,23,2026-09-02,Preventive Service,"Scheduled service: oil, filters, inspection",2840.0,1620.0,4460.0,2.9,LOW,54,COMPLETED
+599,19,2026-09-03,Brake Repair,Brake pads/liners replaced after inspection,7370.0,1940.0,9310.0,8.6,MEDIUM,54,COMPLETED
+600,50,2026-09-03,Preventive Service,"Scheduled service: oil, filters, inspection",2850.0,1540.0,4390.0,4.5,LOW,146,COMPLETED
+601,21,2026-09-04,Preventive Service,"Scheduled service: oil, filters, inspection",2490.0,960.0,3450.0,2.9,LOW,56,COMPLETED
+602,96,2026-09-04,Tyre Replacement,Rear tyre set replaced,20630.0,6730.0,27360.0,6.4,MEDIUM,235,COMPLETED
+603,61,2026-09-05,Preventive Service,"Scheduled service: oil, filters, inspection",4400.0,1110.0,5510.0,6.2,LOW,174,COMPLETED
+604,93,2026-09-06,Preventive Service,"Scheduled service: oil, filters, inspection",4670.0,810.0,5480.0,6.3,LOW,235,COMPLETED
+605,13,2026-09-07,Preventive Service,"Scheduled service: oil, filters, inspection",4360.0,1530.0,5890.0,5.5,LOW,55,COMPLETED
+606,109,2026-09-07,Preventive Service,"Scheduled service: oil, filters, inspection",4500.0,1030.0,5530.0,3.1,LOW,294,COMPLETED
+607,28,2026-09-09,Brake Repair,Brake pads/liners replaced after inspection,6940.0,3190.0,10130.0,10.8,MEDIUM,86,COMPLETED
+608,92,2026-09-09,Preventive Service,"Scheduled service: oil, filters, inspection",4010.0,930.0,4940.0,4.0,LOW,235,COMPLETED
+609,31,2026-09-10,Preventive Service,"Scheduled service: oil, filters, inspection",4200.0,1290.0,5490.0,5.4,LOW,86,COMPLETED
+610,55,2026-09-10,Preventive Service,"Scheduled service: oil, filters, inspection",2570.0,1160.0,3730.0,3.9,LOW,144,COMPLETED
+611,98,2026-09-10,Engine Repair,Engine overheating / power loss repaired,66120.0,22390.0,88510.0,40.8,HIGH,264,COMPLETED
+612,4,2026-09-11,Preventive Service,"Scheduled service: oil, filters, inspection",4060.0,1680.0,5740.0,2.5,LOW,24,COMPLETED
+613,19,2026-09-11,Preventive Service,"Scheduled service: oil, filters, inspection",3670.0,1110.0,4780.0,4.0,LOW,55,COMPLETED
+614,116,2026-09-11,Preventive Service,"Scheduled service: oil, filters, inspection",5000.0,1740.0,6740.0,6.1,LOW,295,COMPLETED
+615,67,2026-09-12,Preventive Service,"Scheduled service: oil, filters, inspection",3520.0,1180.0,4700.0,4.3,LOW,175,COMPLETED
+616,22,2026-09-14,Battery Service,Traction battery diagnostics and cell balancing,9610.0,10180.0,19790.0,18.1,HIGH,56,COMPLETED
+617,27,2026-09-14,Preventive Service,"Scheduled service: oil, filters, inspection",3180.0,1520.0,4700.0,2.8,LOW,86,COMPLETED
+618,71,2026-09-14,Preventive Service,"Scheduled service: oil, filters, inspection",1990.0,1560.0,3550.0,3.3,LOW,175,COMPLETED
+619,108,2026-09-14,Preventive Service,"Scheduled service: oil, filters, inspection",3980.0,1680.0,5660.0,6.1,LOW,266,COMPLETED
+620,114,2026-09-14,Engine Repair,Engine overheating / power loss repaired,70560.0,12450.0,83010.0,39.3,HIGH,296,COMPLETED
+621,112,2026-09-15,Preventive Service,"Scheduled service: oil, filters, inspection",3760.0,1540.0,5300.0,2.4,LOW,295,COMPLETED
+622,25,2026-09-16,Preventive Service,"Scheduled service: oil, filters, inspection",5080.0,1090.0,6170.0,3.7,LOW,84,COMPLETED
+623,38,2026-09-16,Preventive Service,"Scheduled service: oil, filters, inspection",3420.0,770.0,4190.0,4.2,LOW,115,COMPLETED
+624,94,2026-09-16,Preventive Service,"Scheduled service: oil, filters, inspection",4430.0,910.0,5340.0,3.4,LOW,234,COMPLETED
+625,114,2026-09-16,Preventive Service,"Scheduled service: oil, filters, inspection",4320.0,830.0,5150.0,2.8,LOW,295,COMPLETED
+626,28,2026-09-17,Preventive Service,"Scheduled service: oil, filters, inspection",4930.0,1180.0,6110.0,5.3,LOW,86,COMPLETED
+627,68,2026-09-17,Preventive Service,"Scheduled service: oil, filters, inspection",4470.0,1510.0,5980.0,4.3,LOW,175,COMPLETED
+628,84,2026-09-17,Preventive Service,"Scheduled service: oil, filters, inspection",4860.0,1570.0,6430.0,4.9,LOW,205,COMPLETED
+629,12,2026-09-20,Preventive Service,"Scheduled service: oil, filters, inspection",3290.0,1510.0,4800.0,3.3,LOW,25,COMPLETED
+630,40,2026-09-21,Preventive Service,"Scheduled service: oil, filters, inspection",5050.0,1220.0,6270.0,5.4,LOW,115,COMPLETED
+631,100,2026-09-21,Preventive Service,"Scheduled service: oil, filters, inspection",2930.0,770.0,3700.0,4.1,LOW,265,COMPLETED
+632,24,2026-09-22,Preventive Service,"Scheduled service: oil, filters, inspection",3450.0,980.0,4430.0,5.1,LOW,55,COMPLETED
+633,75,2026-09-22,Preventive Service,"Scheduled service: oil, filters, inspection",2800.0,1240.0,4040.0,3.4,LOW,204,COMPLETED
+634,79,2026-09-22,Preventive Service,"Scheduled service: oil, filters, inspection",4200.0,1570.0,5770.0,4.1,LOW,205,COMPLETED
+635,86,2026-09-22,Preventive Service,"Scheduled service: oil, filters, inspection",4270.0,1140.0,5410.0,5.8,LOW,234,COMPLETED
+636,43,2026-09-24,AC Repair,AC compressor/gas service,8400.0,6020.0,14420.0,16.7,MEDIUM,116,COMPLETED
+637,117,2026-09-24,Preventive Service,"Scheduled service: oil, filters, inspection",3330.0,1430.0,4760.0,5.8,LOW,295,COMPLETED
+638,43,2026-09-25,Preventive Service,"Scheduled service: oil, filters, inspection",4490.0,760.0,5250.0,5.3,LOW,116,COMPLETED
+639,115,2026-09-25,Preventive Service,"Scheduled service: oil, filters, inspection",3480.0,1020.0,4500.0,5.8,LOW,296,COMPLETED
+640,27,2026-09-26,Engine Repair,Engine overheating / power loss repaired,23810.0,18490.0,42300.0,28.2,HIGH,84,COMPLETED
+641,112,2026-09-26,Brake Repair,Brake pads/liners replaced after inspection,10740.0,2220.0,12960.0,8.3,MEDIUM,295,COMPLETED
+642,42,2026-09-27,Preventive Service,"Scheduled service: oil, filters, inspection",4140.0,790.0,4930.0,5.3,LOW,116,COMPLETED
+643,2,2026-09-28,Preventive Service,"Scheduled service: oil, filters, inspection",4280.0,1500.0,5780.0,3.9,LOW,24,COMPLETED
+644,24,2026-09-28,Tyre Replacement,Rear tyre set replaced,24710.0,8670.0,33380.0,3.5,MEDIUM,56,COMPLETED
+645,59,2026-09-28,Preventive Service,"Scheduled service: oil, filters, inspection",3540.0,1530.0,5070.0,2.6,LOW,145,COMPLETED
+646,41,2026-09-29,Preventive Service,"Scheduled service: oil, filters, inspection",3500.0,1180.0,4680.0,6.3,LOW,114,COMPLETED
+647,18,2026-09-30,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,3110.0,900.0,4010.0,9.8,CRITICAL,55,COMPLETED
+648,91,2026-09-30,Preventive Service,"Scheduled service: oil, filters, inspection",3710.0,860.0,4570.0,3.5,LOW,234,COMPLETED
+649,119,2026-09-30,Preventive Service,"Scheduled service: oil, filters, inspection",2940.0,1570.0,4510.0,4.5,LOW,295,COMPLETED
+650,68,2026-10-01,Brake Repair,Brake pads/liners replaced after inspection,5770.0,2070.0,7840.0,12.3,HIGH,174,COMPLETED
+651,66,2026-10-02,Electrical Fault,Wiring and lighting fault rectified,3160.0,1260.0,4420.0,10.3,MEDIUM,175,COMPLETED
+652,7,2026-10-04,Engine Repair,Engine overheating / power loss repaired,48630.0,15960.0,64590.0,31.9,HIGH,26,COMPLETED
+653,45,2026-10-04,Preventive Service,"Scheduled service: oil, filters, inspection",2980.0,880.0,3860.0,6.3,LOW,115,COMPLETED
+654,83,2026-10-04,Preventive Service,"Scheduled service: oil, filters, inspection",2980.0,1030.0,4010.0,2.4,LOW,204,COMPLETED
+655,33,2026-10-05,Body Work,Panel and seat repair,14740.0,7320.0,22060.0,18.5,LOW,86,COMPLETED
+656,15,2026-10-06,Preventive Service,"Scheduled service: oil, filters, inspection",2270.0,1360.0,3630.0,3.0,LOW,55,COMPLETED
+657,42,2026-10-06,Engine Repair,Engine overheating / power loss repaired,23880.0,18070.0,41950.0,51.5,HIGH,115,COMPLETED
+658,63,2026-10-06,Preventive Service,"Scheduled service: oil, filters, inspection",2820.0,990.0,3810.0,5.7,LOW,176,COMPLETED
+659,113,2026-10-06,Preventive Service,"Scheduled service: oil, filters, inspection",4370.0,1690.0,6060.0,3.8,LOW,296,COMPLETED
+660,114,2026-10-06,Brake Repair,Brake pads/liners replaced after inspection,5450.0,1530.0,6980.0,11.1,MEDIUM,295,COMPLETED
+661,10,2026-10-07,Preventive Service,"Scheduled service: oil, filters, inspection",3130.0,920.0,4050.0,5.7,LOW,25,COMPLETED
+662,52,2026-10-07,Preventive Service,"Scheduled service: oil, filters, inspection",5250.0,1150.0,6400.0,3.1,LOW,144,COMPLETED
+663,60,2026-10-07,Tyre Replacement,Rear tyre set replaced,23220.0,5680.0,28900.0,7.3,HIGH,146,COMPLETED
+664,90,2026-10-07,Electrical Fault,Wiring and lighting fault rectified,10560.0,3220.0,13780.0,11.0,MEDIUM,235,COMPLETED
+665,29,2026-10-08,Preventive Service,"Scheduled service: oil, filters, inspection",2440.0,1530.0,3970.0,3.8,LOW,85,COMPLETED
+666,41,2026-10-08,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,52020.0,9400.0,61420.0,29.6,CRITICAL,115,COMPLETED
+667,66,2026-10-09,Preventive Service,"Scheduled service: oil, filters, inspection",4070.0,1760.0,5830.0,3.4,LOW,174,COMPLETED
+668,80,2026-10-09,Preventive Service,"Scheduled service: oil, filters, inspection",2880.0,1010.0,3890.0,5.4,LOW,204,COMPLETED
+669,120,2026-10-09,Preventive Service,"Scheduled service: oil, filters, inspection",4020.0,1670.0,5690.0,6.0,LOW,296,COMPLETED
+670,47,2026-10-10,Preventive Service,"Scheduled service: oil, filters, inspection",2290.0,1410.0,3700.0,4.7,LOW,116,COMPLETED
+671,52,2026-10-10,Electrical Fault,Wiring and lighting fault rectified,10940.0,2710.0,13650.0,8.4,MEDIUM,145,COMPLETED
+672,93,2026-10-10,Body Work,Panel and seat repair,14130.0,3210.0,17340.0,25.8,LOW,235,COMPLETED
+673,96,2026-10-10,Preventive Service,"Scheduled service: oil, filters, inspection",3180.0,1730.0,4910.0,2.4,LOW,236,COMPLETED
+674,97,2026-10-10,Preventive Service,"Scheduled service: oil, filters, inspection",4350.0,1300.0,5650.0,4.4,LOW,264,COMPLETED
+675,78,2026-10-11,Preventive Service,"Scheduled service: oil, filters, inspection",3170.0,1670.0,4840.0,5.0,LOW,205,COMPLETED
+676,81,2026-10-12,Preventive Service,"Scheduled service: oil, filters, inspection",4170.0,970.0,5140.0,4.4,LOW,206,COMPLETED
+677,57,2026-10-14,Preventive Service,"Scheduled service: oil, filters, inspection",2490.0,1020.0,3510.0,3.6,LOW,145,COMPLETED
+678,62,2026-10-14,Brake Repair,Brake pads/liners replaced after inspection,8060.0,2440.0,10500.0,12.7,MEDIUM,175,COMPLETED
+679,117,2026-10-14,Electrical Fault,Wiring and lighting fault rectified,9150.0,3600.0,12750.0,7.0,MEDIUM,296,COMPLETED
+680,5,2026-10-15,Preventive Service,"Scheduled service: oil, filters, inspection",4820.0,1600.0,6420.0,5.5,LOW,24,COMPLETED
+681,36,2026-10-15,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,13890.0,2360.0,16250.0,8.0,CRITICAL,85,COMPLETED
+682,89,2026-10-15,Preventive Service,"Scheduled service: oil, filters, inspection",5250.0,1420.0,6670.0,3.8,LOW,234,COMPLETED
+683,113,2026-10-15,Body Work,Panel and seat repair,7250.0,4020.0,11270.0,29.6,LOW,295,COMPLETED
+684,85,2026-10-17,Electrical Fault,Wiring and lighting fault rectified,4420.0,1790.0,6210.0,6.2,MEDIUM,235,COMPLETED
+685,60,2026-10-18,Preventive Service,"Scheduled service: oil, filters, inspection",2740.0,1770.0,4510.0,4.9,LOW,146,COMPLETED
+686,69,2026-10-18,AC Repair,AC compressor/gas service,16720.0,5930.0,22650.0,17.8,HIGH,175,COMPLETED
+687,70,2026-10-18,Preventive Service,"Scheduled service: oil, filters, inspection",2880.0,910.0,3790.0,5.7,LOW,175,COMPLETED
+688,72,2026-10-18,Preventive Service,"Scheduled service: oil, filters, inspection",3660.0,1670.0,5330.0,6.2,LOW,176,COMPLETED
+689,17,2026-10-19,Preventive Service,"Scheduled service: oil, filters, inspection",3800.0,1710.0,5510.0,4.1,LOW,54,COMPLETED
+690,20,2026-10-19,Preventive Service,"Scheduled service: oil, filters, inspection",3480.0,1400.0,4880.0,5.3,LOW,55,COMPLETED
+691,102,2026-10-19,Preventive Service,"Scheduled service: oil, filters, inspection",2380.0,1540.0,3920.0,6.4,LOW,264,COMPLETED
+692,53,2026-10-20,Preventive Service,"Scheduled service: oil, filters, inspection",2780.0,1030.0,3810.0,3.0,LOW,146,COMPLETED
+693,111,2026-10-20,Preventive Service,"Scheduled service: oil, filters, inspection",5250.0,1550.0,6800.0,3.4,LOW,296,COMPLETED
+694,39,2026-10-22,Preventive Service,"Scheduled service: oil, filters, inspection",5180.0,1280.0,6460.0,4.2,LOW,115,COMPLETED
+695,107,2026-10-22,Preventive Service,"Scheduled service: oil, filters, inspection",2240.0,840.0,3080.0,4.5,LOW,265,COMPLETED
+696,8,2026-10-23,Preventive Service,"Scheduled service: oil, filters, inspection",3150.0,1470.0,4620.0,4.7,LOW,25,COMPLETED
+697,35,2026-10-23,Preventive Service,"Scheduled service: oil, filters, inspection",2120.0,1750.0,3870.0,3.4,LOW,86,COMPLETED
+698,65,2026-10-23,Preventive Service,"Scheduled service: oil, filters, inspection",5170.0,870.0,6040.0,4.8,LOW,176,COMPLETED
+699,117,2026-10-23,Body Work,Panel and seat repair,8500.0,4780.0,13280.0,19.7,LOW,294,COMPLETED
+700,54,2026-10-24,Preventive Service,"Scheduled service: oil, filters, inspection",3350.0,950.0,4300.0,5.5,LOW,144,COMPLETED
+701,68,2026-10-24,Body Work,Panel and seat repair,10280.0,2500.0,12780.0,15.9,LOW,175,COMPLETED
+702,88,2026-10-24,Preventive Service,"Scheduled service: oil, filters, inspection",2930.0,1240.0,4170.0,3.2,LOW,235,COMPLETED
+703,16,2026-10-26,Preventive Service,"Scheduled service: oil, filters, inspection",4690.0,1570.0,6260.0,6.0,LOW,54,COMPLETED
+704,106,2026-10-27,Electrical Fault,Wiring and lighting fault rectified,10970.0,2030.0,13000.0,6.4,MEDIUM,264,COMPLETED
+705,37,2026-10-28,Preventive Service,"Scheduled service: oil, filters, inspection",3630.0,920.0,4550.0,2.5,LOW,114,COMPLETED
+706,14,2026-10-30,Preventive Service,"Scheduled service: oil, filters, inspection",2040.0,1110.0,3150.0,5.5,LOW,55,COMPLETED
+707,35,2026-10-30,Brake Repair,Brake pads/liners replaced after inspection,6650.0,3150.0,9800.0,8.1,MEDIUM,85,IN_PROGRESS
+708,73,2026-10-30,Brake Repair,On-road breakdown: Brake pads/liners replaced after inspection,4460.0,2470.0,6930.0,6.8,CRITICAL,204,IN_PROGRESS
+709,115,2026-10-30,Engine Repair,On-road breakdown: Engine overheating / power loss repaired,23870.0,16450.0,40320.0,50.3,CRITICAL,295,IN_PROGRESS
+710,119,2026-10-30,Electrical Fault,Wiring and lighting fault rectified,9970.0,4010.0,13980.0,10.9,MEDIUM,296,IN_PROGRESS
+711,46,2026-10-31,Preventive Service,"Scheduled service: oil, filters, inspection",3910.0,1770.0,5680.0,5.6,LOW,115,COMPLETED
+712,52,2026-10-31,Electrical Fault,On-road breakdown: Wiring and lighting fault rectified,5150.0,3530.0,8680.0,9.5,CRITICAL,145,IN_PROGRESS
+713,99,2026-10-31,Preventive Service,"Scheduled service: oil, filters, inspection",2700.0,1250.0,3950.0,4.3,LOW,266,COMPLETED

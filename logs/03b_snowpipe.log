@@ -1,0 +1,53 @@
+# Execution log for 03b_snowpipe.sql (2026-11-08 20:46:39)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> CREATE OR REPLACE PIPE STAGING.PIPE_COMPLAINTS_FEED COMMENT = 'Snowpipe: new complaint JSON files -> PASSENGER.COMPLAINTS_JSON' AS COPY INTO
+   | status
+   | Pipe PIPE_COMPLAINTS_FEED successfully created.
+
+> SHOW PIPES IN SCHEMA STAGING
+   | created_on | name | database_name | schema_name | definition | owner | notification_channel | comment | integration | pattern | error_integration | owner_role_type | invalid_reason | kind | is_snowflake_managed
+   | 2026-11-08 07:16:40.560000-08:00 | PIPE_COMPLAINTS_FEED | BMTC_DW | STAGING | COPY INTO PASSENGER.COMPLAINTS_JSON (COMPLAINT_ID, SUBMITTED | ACCOUNTADMIN | NULL | Snowpipe: new complaint JSON files -> PASSENGER.COMPLAINTS_J | NULL | NULL | NULL | ROLE | NULL | STAGE | false
+
+> SELECT COUNT(*) AS COMPLAINTS_BEFORE_FEED FROM PASSENGER.COMPLAINTS_JSON
+   | COMPLAINTS_BEFORE_FEED
+   | 460
+
+> PUT 'file://C:/Users/HamsaBM/Desktop/BMTC_CAPSTONE/data/incremental/complaints_feed_001.json' @STAGING.BMTC_INTERNAL_STAGE/feed/ AUTO_COMPRE
+   | source | target | source_size | target_size | source_compression | target_compression | status | message
+   | complaints_feed_001.json | complaints_feed_001.json.gz | 18362 | 2512 | NONE | GZIP | UPLOADED | 
+
+> ALTER PIPE STAGING.PIPE_COMPLAINTS_FEED REFRESH
+   | File | Status
+   | complaints_feed_001.json.gz | SENT
+
+> SELECT SYSTEM$WAIT(45, 'SECONDS')
+   | SYSTEM$WAIT(45, 'SECONDS')
+   | waited 45 seconds
+
+> SELECT SYSTEM$PIPE_STATUS('STAGING.PIPE_COMPLAINTS_FEED') AS PIPE_STATUS
+   | PIPE_STATUS
+   | {"executionState":"RUNNING","pendingFileCount":0,"lastIngest
+
+> SELECT SYSTEM$WAIT(30, 'SECONDS')
+   | SYSTEM$WAIT(30, 'SECONDS')
+   | waited 30 seconds
+
+> SELECT COUNT(*) AS COMPLAINTS_AFTER_FEED, COUNT_IF(SOURCE_FILE LIKE 'feed/%') AS LOADED_BY_SNOWPIPE FROM PASSENGER.COMPLAINTS_JSON
+   | COMPLAINTS_AFTER_FEED | LOADED_BY_SNOWPIPE
+   | 485 | 25
+
+> SELECT FILE_NAME, STATUS, ROW_COUNT, PIPE_NAME, LAST_LOAD_TIME FROM TABLE(INFORMATION_SCHEMA.COPY_HISTORY(TABLE_NAME => 'PASSENGER.COMPLAINT
+   | FILE_NAME | STATUS | ROW_COUNT | PIPE_NAME | LAST_LOAD_TIME
+   | complaints_feed_001.json.gz | Loaded | 25 | PIPE_COMPLAINTS_FEED | 2026-11-08 07:17:04.400000-08:00

@@ -1,0 +1,45 @@
+-- =====================================================================
+-- 13_app_service_user.sql | Least-privilege identity for the deployed app
+-- A public deployment must not run as ACCOUNTADMIN. BMTC_APP inherits
+-- BMTC_MANAGER (read all project data with PII masked + the app's three
+-- write operations) plus the monitoring rights the Data Management page needs.
+-- The service user authenticates with an RSA key pair (no password);
+-- scripts/setup_app_user.py generates the key and registers the public key.
+-- =====================================================================
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE BMTC_WH;
+USE DATABASE BMTC_DW;
+
+CREATE ROLE IF NOT EXISTS BMTC_APP COMMENT = 'Streamlit application service role';
+GRANT ROLE BMTC_MANAGER TO ROLE BMTC_APP;
+GRANT ROLE BMTC_APP TO ROLE BMTC_ADMIN;
+
+-- Row access: the application sees every depot (managers see only theirs)
+DELETE FROM GOVERNANCE.DEPOT_ACCESS_MAP WHERE ROLE_NAME = 'BMTC_APP';
+INSERT INTO GOVERNANCE.DEPOT_ACCESS_MAP VALUES ('BMTC_APP', 0);
+
+-- Monitoring used by the read-only Data Management page
+GRANT USAGE ON SCHEMA BMTC_DW.STAGING TO ROLE BMTC_APP;
+GRANT MONITOR ON PIPE BMTC_DW.STAGING.PIPE_COMPLAINTS_FEED TO ROLE BMTC_APP;
+GRANT SELECT ON STREAM BMTC_DW.TRIP.TRIP_DATA_STREAM TO ROLE BMTC_APP;
+GRANT USAGE ON SCHEMA BMTC_DW.GOVERNANCE TO ROLE BMTC_APP;
+GRANT USAGE ON PROCEDURE BMTC_DW.TRIP.SP_FLEET_HEALTH_SNAPSHOT() TO ROLE BMTC_APP;
+GRANT USAGE ON FUNCTION BMTC_DW.TRIP.FUEL_EFFICIENCY_CLASS(VARCHAR, FLOAT, FLOAT) TO ROLE BMTC_APP;
+GRANT USAGE ON FUNCTION BMTC_DW.PASSENGER.COMPLAINT_URGENCY_SCORE(VARIANT) TO ROLE BMTC_APP;
+-- Objects created after 09_security.sql
+GRANT SELECT ON ALL TABLES IN SCHEMA BMTC_DW.TRIP TO ROLE BMTC_APP;
+GRANT SELECT ON ALL VIEWS IN SCHEMA BMTC_DW.TRIP TO ROLE BMTC_APP;
+GRANT SELECT ON ALL TABLES IN SCHEMA BMTC_DW.BUS TO ROLE BMTC_APP;
+GRANT SELECT ON ALL VIEWS IN SCHEMA BMTC_DW.BUS TO ROLE BMTC_APP;
+GRANT SELECT ON ALL VIEWS IN SCHEMA BMTC_DW.PASSENGER TO ROLE BMTC_APP;
+
+-- Service user (key-pair only; TYPE = SERVICE cannot use a password)
+CREATE USER IF NOT EXISTS BMTC_STREAMLIT_APP
+  TYPE = SERVICE
+  DEFAULT_ROLE = BMTC_APP
+  DEFAULT_WAREHOUSE = BMTC_WH
+  DEFAULT_NAMESPACE = BMTC_DW.BUS
+  COMMENT = 'Streamlit application (key-pair auth)';
+GRANT ROLE BMTC_APP TO USER BMTC_STREAMLIT_APP;
+
+SHOW GRANTS TO ROLE BMTC_APP;

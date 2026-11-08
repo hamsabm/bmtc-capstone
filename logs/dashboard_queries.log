@@ -1,0 +1,176 @@
+# Execution log for dashboard_queries.sql (2026-11-08 20:51:15)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> CREATE OR REPLACE VIEW TRIP.V_PBI_DIM_DATE COMMENT = 'Power BI date dimension' AS SELECT d AS DATE_KEY, YEAR(d) AS YEAR, MONTH(d) AS MONTH_N
+   | status
+   | View V_PBI_DIM_DATE successfully created.
+
+> CREATE OR REPLACE VIEW TRIP.V_PBI_ROUTE_DAY_FACT COMMENT = 'Power BI fact: route x day' AS SELECT t.TRIP_DATE AS DATE_KEY, t.ROUTE_ID, t.ROU
+   | status
+   | View V_PBI_ROUTE_DAY_FACT successfully created.
+
+> GRANT SELECT ON VIEW TRIP.V_PBI_DIM_DATE TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW TRIP.V_PBI_ROUTE_DAY_FACT TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW TRIP.V_FUEL_EFFICIENCY_CLASSIFIED TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW TRIP.V_MAINTENANCE_DETAILS TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW BUS.V_BUS_SUMMARY TO ROLE BMTC_VIEWER
+   | status
+   | Statement executed successfully.
+
+> SELECT TOTAL_BUSES, TOTAL_ROUTES, TOTAL_TRIPS, TOTAL_TICKETS, TICKET_REVENUE, TOTAL_PASSES, ACTIVE_PASSES, TOTAL_COMPLAINTS, OPEN_COMPLAINTS
+   | TOTAL_BUSES | TOTAL_ROUTES | TOTAL_TRIPS | TOTAL_TICKETS | TICKET_REVENUE | TOTAL_PASSES | ACTIVE_PASSES | TOTAL_COMPLAINTS | OPEN_COMPLAINTS | FUEL_COST | MAINTENANCE_COST | ON_TIME_PCT
+   | 120 | 40 | 3945 | 120718 | 1693619.00 | 1500 | 304 | 485 | 106 | 2113469.60 | 7813410.00 | 57.0
+
+> SELECT d.YEAR_MONTH, SUM(f.REVENUE) AS REVENUE, SUM(f.PASSENGERS) AS PASSENGERS, SUM(f.TRIPS) AS TRIPS FROM TRIP.V_PBI_ROUTE_DAY_FACT f JOIN
+   | YEAR_MONTH | REVENUE | PASSENGERS | TRIPS
+   | 2025-11 | 129244.00 | 7925 | 296
+   | 2025-12 | 115597.00 | 7752 | 294
+   | 2026-01 | 128639.00 | 8464 | 309
+   | 2026-02 | 135734.00 | 8307 | 296
+   | 2026-03 | 129882.00 | 10918 | 350
+   | 2026-04 | 160171.00 | 11085 | 341
+   | 2026-05 | 164819.00 | 11805 | 353
+   | 2026-06 | 158128.00 | 12355 | 366
+   | 2026-07 | 171051.00 | 12220 | 361
+   | 2026-08 | 142538.00 | 10434 | 342
+   | 2026-09 | 139092.00 | 10135 | 318
+   | 2026-10 | 118724.00 | 9318 | 319
+
+> SELECT d.WEEKDAY, d.WEEKDAY_NO, ROUND(AVG(x.PASSENGERS), 0) AS AVG_DAILY_PASSENGERS FROM (SELECT DATE_KEY, SUM(PASSENGERS) AS PASSENGERS FRO
+   | WEEKDAY | WEEKDAY_NO | AVG_DAILY_PASSENGERS
+   | Mon | 1 | 386
+   | Tue | 2 | 386
+   | Wed | 3 | 397
+   | Thu | 4 | 403
+   | Fri | 5 | 395
+   | Sat | 6 | 178
+   | Sun | 7 | 173
+
+> SELECT DEPOT_NAME, SUM(REVENUE) AS REVENUE, SUM(PASSENGERS) AS PASSENGERS, ROUND(100 * SUM(ON_TIME_TRIPS) / SUM(TRIPS), 1) AS ON_TIME_PCT FR
+   | DEPOT_NAME | REVENUE | PASSENGERS | ON_TIME_PCT
+   | Koramangala Depot | 276909.00 | 12375 | 55.8
+   | Yelahanka Depot | 245790.00 | 12470 | 56.1
+   | Whitefield Depot | 241094.00 | 18159 | 55.0
+   | Kengeri Depot | 206579.00 | 9532 | 59.9
+   | Hebbal Depot | 202570.00 | 24041 | 54.0
+   | Shanthinagar Depot | 165795.00 | 13184 | 59.9
+   | Yeshwanthpur Depot | 113874.00 | 10832 | 50.7
+   | Peenya Depot | 99481.00 | 5393 | 53.7
+   | Banashankari Depot | 79015.00 | 5916 | 55.9
+   | Electronic City Depot | 62512.00 | 8816 | 53.8
+
+> SELECT BUS_TYPE, ROUND(AVG(KM_PER_UNIT), 2) AS AVG_KM_PER_UNIT, ROUND(AVG(COST_PER_KM), 2) AS AVG_COST_PER_KM FROM TRIP.V_FUEL_EFFICIENCY_CL
+   | BUS_TYPE | AVG_KM_PER_UNIT | AVG_COST_PER_KM
+   | Vayu Vajra | 2.07 | 43.08
+   | Vajra AC | 2.30 | 38.87
+   | Ordinary | 3.15 | 28.54
+   | Midi Feeder | 4.10 | 21.88
+   | Electric AC | 1.03 | 9.25
+
+> SELECT ROUTE_CATEGORY, SUM(REVENUE) AS REVENUE, SUM(PASSENGERS) AS PASSENGERS FROM TRIP.V_PBI_ROUTE_DAY_FACT GROUP BY ROUTE_CATEGORY ORDER B
+   | ROUTE_CATEGORY | REVENUE | PASSENGERS
+   | City Ordinary | 541360.00 | 66264
+   | AC Vajra | 411485.00 | 15425
+   | Airport Vayu Vajra | 370186.00 | 2353
+   | Suburban | 223004.00 | 15735
+   | Metro Feeder | 147584.00 | 20941
+
+> SELECT CATEGORY, PRIORITY, COUNT(*) AS COMPLAINTS FROM PASSENGER.V_COMPLAINT_ANALYTICS GROUP BY CATEGORY, PRIORITY ORDER BY COMPLAINTS DESC
+   | CATEGORY | PRIORITY | COMPLAINTS
+   | Delay | Medium | 122
+   | Staff Behaviour | Medium | 54
+   | Overcrowding | Medium | 50
+   | Cleanliness | Low | 48
+   | Bus Condition | Low | 46
+   | Safety | High | 43
+   | Ticketing | Low | 42
+   | AC Not Working | Medium | 10
+   | Bus Condition | High | 8
+   | Staff Behaviour | High | 7
+   | Overcrowding | High | 7
+   | Staff Behaviour | Low | 7
+   | Delay | High | 7
+   | Delay | Low | 6
+   | Ticketing | Medium | 6
+   | Bus Condition | Medium | 5
+   | Safety | Low | 4
+   | Cleanliness | High | 4
+   | Safety | Medium | 3
+   | Cleanliness | Medium | 3
+   | Ticketing | High | 2
+   | Overcrowding | Low | 1
+
+> SELECT MAINTENANCE_TYPE, COUNT(*) AS JOBS, SUM(TOTAL_COST) AS COST FROM TRIP.V_MAINTENANCE_DETAILS GROUP BY MAINTENANCE_TYPE ORDER BY COST D
+   | MAINTENANCE_TYPE | JOBS | COST
+   | Engine Repair | 43 | 2875850.00
+   | Preventive Service | 496 | 2382100.00
+   | Tyre Replacement | 32 | 906960.00
+   | Electrical Fault | 52 | 531850.00
+   | Body Work | 32 | 513090.00
+   | Brake Repair | 49 | 458260.00
+   | AC Repair | 8 | 125510.00
+   | Battery Service | 1 | 19790.00
+
+> SELECT ROUTE_CODE, ROUTE_CATEGORY, REVENUE, REVENUE_RANK FROM TRIP.V_ROUTE_PERFORMANCE WHERE TRIPS > 0 QUALIFY REVENUE_RANK <= 10 OR REVENUE
+   | ROUTE_CODE | ROUTE_CATEGORY | REVENUE | REVENUE_RANK
+   | KIA-480B | Airport Vayu Vajra | 182213.00 | 1
+   | V-468E | AC Vajra | 145991.00 | 2
+   | KIA-423D | Airport Vayu Vajra | 122910.00 | 3
+   | V-340 | AC Vajra | 89445.00 | 4
+   | V-268E | AC Vajra | 75622.00 | 5
+   | 251A | City Ordinary | 70801.00 | 6
+   | V-114A | AC Vajra | 69004.00 | 7
+   | 146B | City Ordinary | 66300.00 | 8
+   | KIA-454 | Airport Vayu Vajra | 65063.00 | 9
+   | 127A | City Ordinary | 64879.00 | 10
+   | MF-470C | Metro Feeder | 14529.00 | 29
+   | MF-123E | Metro Feeder | 13842.00 | 30
+   | V-585E | AC Vajra | 12388.00 | 31
+   | MF-189A | Metro Feeder | 12137.00 | 32
+   | V-501A | AC Vajra | 11813.00 | 33
+   | V-283A | AC Vajra | 7222.00 | 34
+   | MF-473 | Metro Feeder | 5934.00 | 35
+   | 264 | City Ordinary | 5521.00 | 36
+   | 421D | City Ordinary | 4363.00 | 37
+   | MF-106B | Metro Feeder | 3555.00 | 38
+
+> SELECT REGISTRATION_NO, BUS_TYPE, DEPOT_NAME, MAINTENANCE_COST, KM_PER_UNIT FROM BUS.V_BUS_SUMMARY ORDER BY MAINTENANCE_COST DESC LIMIT 10
+   | REGISTRATION_NO | BUS_TYPE | DEPOT_NAME | MAINTENANCE_COST | KM_PER_UNIT
+   | KA-02-F-8440 | Ordinary | Yeshwanthpur Depot | 311990.00 | 3.11
+   | KA-57-F-2759 | Ordinary | Hebbal Depot | 267980.00 | 3.14
+   | KA-05-F-7127 | Ordinary | Yelahanka Depot | 184240.00 | 2.74
+   | KA-02-F-6698 | Ordinary | Hebbal Depot | 167710.00 | 3.42
+   | KA-51-F-5744 | Midi Feeder | Yeshwanthpur Depot | 158220.00 | 3.76
+   | KA-02-F-5523 | Ordinary | Electronic City Depot | 151300.00 | 3.24
+   | KA-05-F-8585 | Vayu Vajra | Hebbal Depot | 148180.00 | NULL
+   | KA-41-F-1731 | Midi Feeder | Kengeri Depot | 145490.00 | 4.61
+   | KA-01-F-9869 | Ordinary | Kengeri Depot | 144710.00 | 3.09
+   | KA-01-F-8723 | Vajra AC | Peenya Depot | 137230.00 | NULL
+
+> SELECT PERIOD, ROUND(AVG(DELAY_MINUTES), 1) AS AVG_DELAY, ROUND(AVG(OCCUPANCY_RATIO), 2) AS AVG_OCCUPANCY FROM TRIP.V_TRIP_DETAILS GROUP BY 
+   | PERIOD | AVG_DELAY | AVG_OCCUPANCY
+   | Peak | 13.7 | 0.99
+   | Off-peak | 3.1 | 0.58

@@ -1,0 +1,107 @@
+# Execution log for 10_python_udf.sql (2026-11-08 20:50:39)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> CREATE OR REPLACE FUNCTION TRIP.FUEL_EFFICIENCY_CLASS(BUS_TYPE VARCHAR, KM FLOAT, QUANTITY FLOAT) RETURNS VARCHAR LANGUAGE PYTHON RUNTIME_VE
+   | status
+   | Function FUEL_EFFICIENCY_CLASS successfully created.
+
+> CREATE OR REPLACE FUNCTION PASSENGER.COMPLAINT_URGENCY_SCORE(DOC VARIANT) RETURNS NUMBER LANGUAGE PYTHON RUNTIME_VERSION = '3.11' HANDLER = 
+   | status
+   | Function COMPLAINT_URGENCY_SCORE successfully created.
+
+> SELECT TRIP.FUEL_EFFICIENCY_CLASS('Ordinary', 340, 100) AS EXPECT_GOOD, TRIP.FUEL_EFFICIENCY_CLASS('Electric AC', 150, 180) AS EXPECT_POOR, 
+   | EXPECT_GOOD | EXPECT_POOR | EXPECT_UNKNOWN
+   | GOOD | POOR | UNKNOWN
+
+> CREATE OR REPLACE VIEW TRIP.V_FUEL_EFFICIENCY_CLASSIFIED COMMENT = 'Fuel events with Python UDF efficiency class' AS SELECT v.*, TRIP.FUEL_E
+   | status
+   | View V_FUEL_EFFICIENCY_CLASSIFIED successfully created.
+
+> SELECT BUS_TYPE, EFFICIENCY_CLASS, COUNT(*) AS FILLS, ROUND(AVG(KM_PER_UNIT), 2) AS AVG_KM_PER_UNIT FROM TRIP.V_FUEL_EFFICIENCY_CLASSIFIED G
+   | BUS_TYPE | EFFICIENCY_CLASS | FILLS | AVG_KM_PER_UNIT
+   | Electric AC | AVERAGE | 22 | 1.01
+   | Electric AC | GOOD | 11 | 1.07
+   | Midi Feeder | AVERAGE | 16 | 3.88
+   | Midi Feeder | EXCELLENT | 5 | 4.65
+   | Midi Feeder | GOOD | 29 | 4.30
+   | Midi Feeder | POOR | 8 | 3.49
+   | Ordinary | AVERAGE | 94 | 3.07
+   | Ordinary | EXCELLENT | 27 | 3.67
+   | Ordinary | GOOD | 61 | 3.36
+   | Ordinary | POOR | 42 | 2.68
+   | Vajra AC | AVERAGE | 14 | 2.18
+   | Vajra AC | EXCELLENT | 3 | 2.57
+   | Vajra AC | GOOD | 15 | 2.41
+   | Vajra AC | POOR | 2 | 1.96
+   | Vayu Vajra | AVERAGE | 20 | 2.02
+   | Vayu Vajra | GOOD | 13 | 2.16
+   | Vayu Vajra | POOR | 1 | 1.86
+
+> SELECT COMPLAINT_ID, PAYLOAD:category::VARCHAR AS CATEGORY, PAYLOAD:priority::VARCHAR AS PRIORITY, PAYLOAD:resolution.status::VARCHAR AS STA
+   | COMPLAINT_ID | CATEGORY | PRIORITY | STATUS | URGENCY
+   | CMP-000018 | Safety | High | Open | 93
+   | CMP-000360 | Safety | High | Open | 88
+   | CMP-000196 | Staff Behaviour | High | In Progress | 83
+   | CMP-000016 | Safety | High | Open | 80
+   | CMP-000071 | Safety | High | In Progress | 80
+   | CMP-000122 | Safety | High | Open | 80
+   | CMP-000188 | Safety | High | In Progress | 80
+   | CMP-000297 | Safety | High | In Progress | 80
+   | CMP-000477 | Safety | High | Open | 80
+   | CMP-000377 | Delay | High | Open | 75
+
+> CREATE TABLE IF NOT EXISTS TRIP.FLEET_HEALTH_SNAPSHOT ( SNAPSHOT_AT TIMESTAMP_NTZ, DEPOT_NAME VARCHAR, BUSES NUMBER, POOR_EFFICIENCY_FILLS N
+   | status
+   | FLEET_HEALTH_SNAPSHOT already exists, statement succeeded.
+
+> CREATE OR REPLACE PROCEDURE TRIP.SP_FLEET_HEALTH_SNAPSHOT() RETURNS VARCHAR LANGUAGE PYTHON RUNTIME_VERSION = '3.11' PACKAGES = ('snowflake-
+   | status
+   | Function SP_FLEET_HEALTH_SNAPSHOT successfully created.
+
+> CALL TRIP.SP_FLEET_HEALTH_SNAPSHOT(); -- @optional
+   | SP_FLEET_HEALTH_SNAPSHOT
+   | 10 depots scored. Best: Yeshwanthpur Depot (84.3). Needs att
+
+> SELECT DEPOT_NAME, BUSES, POOR_EFFICIENCY_FILLS, SERIOUS_MAINTENANCE_JOBS, HEALTH_SCORE FROM TRIP.FLEET_HEALTH_SNAPSHOT QUALIFY SNAPSHOT_AT 
+   | DEPOT_NAME | BUSES | POOR_EFFICIENCY_FILLS | SERIOUS_MAINTENANCE_JOBS | HEALTH_SCORE
+   | Peenya Depot | 12 | 8 | 5 | 52.0
+   | Hebbal Depot | 12 | 12 | 16 | 52.8
+   | Banashankari Depot | 12 | 8 | 5 | 59.5
+   | Yelahanka Depot | 12 | 8 | 11 | 69.4
+   | Koramangala Depot | 12 | 6 | 9 | 70.8
+   | Electronic City Depot | 12 | 2 | 10 | 74.9
+   | Shanthinagar Depot | 12 | 3 | 11 | 77.0
+   | Whitefield Depot | 12 | 2 | 10 | 82.2
+   | Kengeri Depot | 12 | 3 | 7 | 82.7
+   | Yeshwanthpur Depot | 12 | 1 | 10 | 84.3
+
+> GRANT USAGE ON FUNCTION TRIP.FUEL_EFFICIENCY_CLASS(VARCHAR, FLOAT, FLOAT) TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully.
+
+> GRANT USAGE ON FUNCTION PASSENGER.COMPLAINT_URGENCY_SCORE(VARIANT) TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON VIEW TRIP.V_FUEL_EFFICIENCY_CLASSIFIED TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully.
+
+> GRANT SELECT ON TABLE TRIP.FLEET_HEALTH_SNAPSHOT TO ROLE BMTC_ANALYST
+   | status
+   | Statement executed successfully.
+
+> GRANT USAGE ON PROCEDURE TRIP.SP_FLEET_HEALTH_SNAPSHOT() TO ROLE BMTC_MANAGER; -- @optional
+   | status
+   | Statement executed successfully.

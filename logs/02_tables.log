@@ -1,0 +1,94 @@
+# Execution log for 02_tables.sql (2026-11-08 20:43:09)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> CREATE OR REPLACE TABLE BUS.DEPOT_MASTER ( DEPOT_ID NUMBER(4) NOT NULL PRIMARY KEY, DEPOT_CODE VARCHAR(10) NOT NULL UNIQUE, DEPOT_NAME VARCH
+   | status
+   | Table DEPOT_MASTER successfully created.
+
+> CREATE OR REPLACE TABLE BUS.BUS_MASTER ( BUS_ID NUMBER(6) NOT NULL PRIMARY KEY, REGISTRATION_NO VARCHAR(15) NOT NULL UNIQUE, BUS_TYPE VARCHA
+   | status
+   | Table BUS_MASTER successfully created.
+
+> CREATE OR REPLACE TABLE BUS.EMPLOYEE_MASTER ( EMPLOYEE_ID NUMBER(6) NOT NULL PRIMARY KEY, EMPLOYEE_CODE VARCHAR(10) NOT NULL UNIQUE, EMPLOYE
+   | status
+   | Table EMPLOYEE_MASTER successfully created.
+
+> CREATE OR REPLACE TABLE TRIP.ROUTE_MASTER ( ROUTE_ID NUMBER(5) NOT NULL PRIMARY KEY, ROUTE_CODE VARCHAR(12) NOT NULL UNIQUE, ROUTE_NAME VARC
+   | status
+   | Table ROUTE_MASTER successfully created.
+
+> CREATE OR REPLACE TABLE TRIP.TRIP_DATA ( TRIP_ID NUMBER(10) NOT NULL PRIMARY KEY, BUS_ID NUMBER(6) NOT NULL REFERENCES BUS.BUS_MASTER(BUS_ID
+   | status
+   | Table TRIP_DATA successfully created.
+
+> CREATE OR REPLACE TABLE TRIP.TICKET_DATA ( TICKET_ID NUMBER(12) NOT NULL PRIMARY KEY, TICKET_NO VARCHAR(15) NOT NULL, TRIP_ID NUMBER(10) NOT
+   | status
+   | Table TICKET_DATA successfully created.
+
+> CREATE OR REPLACE TABLE TRIP.FUEL_LOG ( FUEL_ID NUMBER(8) NOT NULL PRIMARY KEY, BUS_ID NUMBER(6) NOT NULL REFERENCES BUS.BUS_MASTER(BUS_ID),
+   | status
+   | Table FUEL_LOG successfully created.
+
+> CREATE OR REPLACE TABLE TRIP.MAINTENANCE_LOG ( MAINTENANCE_ID NUMBER(8) NOT NULL PRIMARY KEY, BUS_ID NUMBER(6) NOT NULL REFERENCES BUS.BUS_M
+   | status
+   | Table MAINTENANCE_LOG successfully created.
+
+> CREATE OR REPLACE TABLE PASSENGER.PASS_DATA ( PASS_ID NUMBER(8) NOT NULL PRIMARY KEY, PASS_NUMBER VARCHAR(20) NOT NULL UNIQUE, PASSENGER_NAM
+   | status
+   | Table PASS_DATA successfully created.
+
+> CREATE OR REPLACE TABLE PASSENGER.COMPLAINTS_JSON ( COMPLAINT_ID VARCHAR(20) NOT NULL PRIMARY KEY, SUBMITTED_AT TIMESTAMP_NTZ, PAYLOAD VARIA
+   | status
+   | Table COMPLAINTS_JSON successfully created.
+
+> ALTER TABLE TRIP.TRIP_DATA SET COMMENT = 'Trip operations (synthetic) - one row per scheduled trip'
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.BUS_MASTER ADD COLUMN DATA_SOURCE VARCHAR(30) DEFAULT 'SYNTHETIC_ACADEMIC'
+   | status
+   | Statement executed successfully.
+
+> ALTER TABLE BUS.BUS_MASTER ALTER COLUMN STATUS COMMENT 'ACTIVE / UNDER_MAINTENANCE / RETIRED'
+   | status
+   | Statement executed successfully.
+
+> SHOW TABLES IN DATABASE BMTC_DW
+   | created_on | name | database_name | schema_name | kind | comment | cluster_by | rows | bytes | owner | retention_time | automatic_clustering | change_tracking | search_optimization | search_optimization_progress | search_optimization_bytes | is_external | enable_schema_evolution | owner_role_type | is_event | is_hybrid | is_iceberg | is_dynamic | is_immutable | is_interactive | row_timestamp | error_logging
+   | 2026-11-08 07:13:10.643000-08:00 | BUS_MASTER | BMTC_DW | BUS | TABLE | Fleet register (synthetic) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:56:33.819000-08:00 | BUS_MASTER_CLONE | BMTC_DW | BUS | TABLE | Fleet register (synthetic) |  | 120 | 4096 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:52:09.293000-08:00 | BUS_STATUS_AUDIT | BMTC_DW | BUS | TABLE |  |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:13:10.243000-08:00 | DEPOT_MASTER | BMTC_DW | BUS | TABLE | Bus depots (synthetic) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:13:11.113000-08:00 | EMPLOYEE_MASTER | BMTC_DW | BUS | TABLE | Depot workforce (synthetic people) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:00:43.757000-08:00 | DEPOT_ACCESS_MAP | BMTC_DW | GOVERNANCE | TABLE | Which role may see which depot rows; DEPOT_ID 0 = all depots |  | 4 | 1024 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:13:14.604000-08:00 | COMPLAINTS_JSON | BMTC_DW | PASSENGER | TABLE | Passenger complaints as semi-structured JSON (synthetic) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:13:14.073000-08:00 | PASS_DATA | BMTC_DW | PASSENGER | TABLE | Passenger passes (synthetic people) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:56.066000-08:00 | LOAD_REJECTS | BMTC_DW | STAGING | TRANSIENT |  |  | 1 | 1024 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:48.236000-08:00 | STG_BUS_MASTER | BMTC_DW | STAGING | TRANSIENT |  |  | 120 | 3584 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:47.816000-08:00 | STG_DEPOT_MASTER | BMTC_DW | STAGING | TRANSIENT |  |  | 10 | 2048 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:48.611000-08:00 | STG_EMPLOYEE_MASTER | BMTC_DW | STAGING | TRANSIENT |  |  | 300 | 12288 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:50.306000-08:00 | STG_FUEL_LOG | BMTC_DW | STAGING | TRANSIENT |  |  | 383 | 9216 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:50.741000-08:00 | STG_MAINTENANCE_LOG | BMTC_DW | STAGING | TRANSIENT |  |  | 713 | 16896 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:51.116000-08:00 | STG_PASS_DATA | BMTC_DW | STAGING | TRANSIENT |  |  | 1500 | 56320 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:49.021000-08:00 | STG_ROUTE_MASTER | BMTC_DW | STAGING | TRANSIENT |  |  | 40 | 3072 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:49.907000-08:00 | STG_TICKET_DATA | BMTC_DW | STAGING | TRANSIENT |  |  | 120731 | 2807296 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:47:49.511000-08:00 | STG_TRIP_DATA | BMTC_DW | STAGING | TRANSIENT |  |  | 3950 | 119808 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:02:16.763000-08:00 | FLEET_HEALTH_SNAPSHOT | BMTC_DW | TRIP | TABLE |  |  | 10 | 1536 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:13:13.243000-08:00 | FUEL_LOG | BMTC_DW | TRIP | TABLE | Diesel fills and EV charging sessions (synthetic) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:13:13.638000-08:00 | MAINTENANCE_LOG | BMTC_DW | TRIP | TABLE | Workshop maintenance history (synthetic) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:13:11.518000-08:00 | ROUTE_MASTER | BMTC_DW | TRIP | TABLE | Route network (synthetic codes) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:56:32.007000-08:00 | ROUTE_MASTER_PRE_FARE_ERROR | BMTC_DW | TRIP | TABLE | Route network (synthetic codes) |  | 40 | 3584 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 06:56:39.122000-08:00 | TASK_RUN_LOG | BMTC_DW | TRIP | TABLE |  |  | 2 | 1024 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:13:12.748000-08:00 | TICKET_DATA | BMTC_DW | TRIP | TABLE | Ticket and pass-validation transactions (synthetic) |  | 0 | 0 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | ... 2 more rows

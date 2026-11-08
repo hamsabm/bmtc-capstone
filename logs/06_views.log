@@ -1,0 +1,122 @@
+# Execution log for 06_views.sql (2026-11-08 20:48:16)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> CREATE OR REPLACE VIEW TRIP.V_DASHBOARD_KPIS COMMENT = 'Headline KPIs for the dashboard (Streamlit Dashboard page, Power BI cards)' AS SELEC
+   | status
+   | View V_DASHBOARD_KPIS successfully created.
+
+> CREATE OR REPLACE VIEW TRIP.V_TRIP_DETAILS COMMENT = 'One row per trip enriched with route, bus, depot and ticket revenue' AS SELECT t.TRIP_
+   | status
+   | View V_TRIP_DETAILS successfully created.
+
+> CREATE OR REPLACE VIEW TRIP.V_ROUTE_PERFORMANCE COMMENT = 'Route KPIs: trips, ridership, revenue, punctuality, ranking' AS SELECT r.ROUTE_ID
+   | status
+   | View V_ROUTE_PERFORMANCE successfully created.
+
+> CREATE OR REPLACE VIEW TRIP.V_DAILY_OPERATIONS COMMENT = 'Daily trips, ridership, revenue and punctuality' AS SELECT TRIP_DATE, COUNT(*) AS 
+   | status
+   | View V_DAILY_OPERATIONS successfully created.
+
+> CREATE OR REPLACE VIEW TRIP.V_FUEL_EFFICIENCY COMMENT = 'Fuel/charging events with efficiency (km per litre or km per kWh) and cost per km' 
+   | status
+   | View V_FUEL_EFFICIENCY successfully created.
+
+> CREATE OR REPLACE VIEW TRIP.V_MAINTENANCE_DETAILS COMMENT = 'Maintenance jobs with bus, depot and mechanic' AS SELECT m.MAINTENANCE_ID, m.MA
+   | status
+   | View V_MAINTENANCE_DETAILS successfully created.
+
+> CREATE OR REPLACE VIEW BUS.V_BUS_SUMMARY COMMENT = 'Per-bus utilisation, fuel efficiency and maintenance burden' AS SELECT b.BUS_ID, b.REGIS
+   | status
+   | View V_BUS_SUMMARY successfully created.
+
+> CREATE OR REPLACE VIEW PASSENGER.V_COMPLAINT_ANALYTICS COMMENT = 'Complaint JSON documents projected into relational columns' AS SELECT c.CO
+   | status
+   | View V_COMPLAINT_ANALYTICS successfully created.
+
+> CREATE OR REPLACE VIEW PASSENGER.V_PASS_SUMMARY COMMENT = 'Monthly pass sales by type (no personal data)' AS SELECT DATE_TRUNC('MONTH', ISSU
+   | status
+   | View V_PASS_SUMMARY successfully created.
+
+> CREATE OR REPLACE MATERIALIZED VIEW TRIP.MV_DAILY_ROUTE_REVENUE COMMENT = 'Materialized daily ticket revenue per route (Enterprise feature)'
+   | status
+   | Materialized view MV_DAILY_ROUTE_REVENUE successfully create
+
+> SHOW MATERIALIZED VIEWS IN SCHEMA TRIP; -- @optional
+   | created_on | name | reserved | database_name | schema_name | cluster_by | rows | bytes | source_database_name | source_schema_name | source_table_name | refreshed_on | compacted_on | owner | invalid | invalid_reason | behind_by | comment | text | is_secure | automatic_clustering | owner_role_type
+   | 2026-11-08 07:18:20.397000-08:00 | MV_DAILY_ROUTE_REVENUE |  | BMTC_DW | TRIP |  | 3263 | 26112 | BMTC_DW | TRIP | TICKET_DATA | 2026-11-08 07:16:36.291000-08:00 | 2026-11-08 07:16:36.291000-08:00 | ACCOUNTADMIN | false | NULL | 0s | Materialized daily ticket revenue per route (Enterprise feat | CREATE OR REPLACE MATERIALIZED VIEW TRIP.MV_DAILY_ROUTE_REVE | false | OFF | ROLE
+
+> SELECT TICKET_DATE, SUM(REVENUE) AS REVENUE FROM TRIP.MV_DAILY_ROUTE_REVENUE WHERE TICKET_DATE >= '2026-10-25' GROUP BY TICKET_DATE ORDER BY
+   | TICKET_DATE | REVENUE
+   | 2026-10-25 | 1500.00
+   | 2026-10-26 | 7578.00
+   | 2026-10-27 | 5335.00
+   | 2026-10-28 | 2926.00
+   | 2026-10-29 | 5192.00
+   | 2026-10-30 | 5160.00
+   | 2026-10-31 | 1507.00
+
+> SELECT * FROM TRIP.V_DASHBOARD_KPIS
+   | TOTAL_BUSES | ACTIVE_BUSES | TOTAL_DEPOTS | TOTAL_EMPLOYEES | TOTAL_ROUTES | TOTAL_TRIPS | TOTAL_TICKETS | TICKET_REVENUE | TOTAL_PASSES | ACTIVE_PASSES | TOTAL_COMPLAINTS | OPEN_COMPLAINTS | TOTAL_FUEL_RECORDS | FUEL_COST | TOTAL_MAINTENANCE_RECORDS | MAINTENANCE_COST | ON_TIME_PCT
+   | 120 | 115 | 10 | 300 | 40 | 3945 | 120718 | 1693619.00 | 1500 | 304 | 485 | 106 | 383 | 2113469.60 | 713 | 7813410.00 | 57.0
+
+> SELECT ROUTE_CODE, TRIPS, PASSENGERS, REVENUE, REVENUE_RANK FROM TRIP.V_ROUTE_PERFORMANCE ORDER BY REVENUE_RANK LIMIT 5
+   | ROUTE_CODE | TRIPS | PASSENGERS | REVENUE | REVENUE_RANK
+   | KIA-480B | 74 | 1198 | 182213.00 | 1
+   | V-468E | 125 | 3713 | 145991.00 | 2
+   | KIA-423D | 66 | 766 | 122910.00 | 3
+   | V-340 | 126 | 3838 | 89445.00 | 4
+   | V-268E | 119 | 3867 | 75622.00 | 5
+
+> SELECT CATEGORY, COUNT(*) AS N FROM PASSENGER.V_COMPLAINT_ANALYTICS GROUP BY CATEGORY ORDER BY N DESC
+   | CATEGORY | N
+   | Delay | 135
+   | Staff Behaviour | 68
+   | Bus Condition | 59
+   | Overcrowding | 58
+   | Cleanliness | 55
+   | Ticketing | 50
+   | Safety | 50
+   | AC Not Working | 10
+
+> SHOW VIEWS IN DATABASE BMTC_DW
+   | created_on | name | reserved | database_name | schema_name | owner | comment | text | is_secure | is_materialized | owner_role_type | change_tracking
+   | 2026-11-08 07:00:29.672000-08:00 | SV_DEPOT_PAYROLL_SUMMARY |  | BMTC_DW | BUS | ACCOUNTADMIN | Aggregated payroll per depot and role - no individual salari | CREATE OR REPLACE SECURE VIEW BUS.SV_DEPOT_PAYROLL_SUMMARY
+c | true | false | ROLE | OFF
+   | 2026-11-08 07:00:29.331000-08:00 | SV_EMPLOYEE_DIRECTORY |  | BMTC_DW | BUS | ACCOUNTADMIN | Workforce directory without contact details or salary (secur | CREATE OR REPLACE SECURE VIEW BUS.SV_EMPLOYEE_DIRECTORY
+comm | true | false | ROLE | OFF
+   | 2026-11-08 07:18:19.426000-08:00 | V_BUS_SUMMARY |  | BMTC_DW | BUS | ACCOUNTADMIN | Per-bus utilisation, fuel efficiency and maintenance burden | CREATE OR REPLACE VIEW BUS.V_BUS_SUMMARY
+comment = 'Per-bus  | false | false | ROLE | OFF
+   | 1969-12-31 16:00:00-08:00 | APPLICABLE_ROLES |  | BMTC_DW | INFORMATION_SCHEMA |  | The roles that can be applied to the current user. |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | APPLICATION_CONFIGURATIONS |  | BMTC_DW | INFORMATION_SCHEMA |  | The configurations currently defined in the current applicat |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | APPLICATION_SERVICES |  | BMTC_DW | INFORMATION_SCHEMA |  | The application services in this database that are accessibl |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | APPLICATION_SPECIFICATIONS |  | BMTC_DW | INFORMATION_SCHEMA |  | The specification requests currently defined in the current  |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | BACKUPS |  | BMTC_DW | INFORMATION_SCHEMA |  | All backups within an account |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | BACKUP_POLICIES |  | BMTC_DW | INFORMATION_SCHEMA |  | All backup policies within an account |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | BACKUP_SETS |  | BMTC_DW | INFORMATION_SCHEMA |  | All backup sets within an account |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | CHECK_CONSTRAINTS |  | BMTC_DW | INFORMATION_SCHEMA |  | CHECK constraints defined on tables that are accessible by t |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | CLASSES |  | BMTC_DW | INFORMATION_SCHEMA |  | The BUNDLE CLASS that the current user has privileges to vie |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | CLASS_INSTANCES |  | BMTC_DW | INFORMATION_SCHEMA |  | The BUNDLE INSTANCE that the current user has privileges to  |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | CLASS_INSTANCE_FUNCTIONS |  | BMTC_DW | INFORMATION_SCHEMA |  | The functions defined in a bundle that are accessible to the |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | CLASS_INSTANCE_PROCEDURES |  | BMTC_DW | INFORMATION_SCHEMA |  | The procedures defined in a bundle that are accessible to th |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | COLUMNS |  | BMTC_DW | INFORMATION_SCHEMA |  | The columns of tables defined in this database that are acce |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | CORTEX_SEARCH_SERVICES |  | BMTC_DW | INFORMATION_SCHEMA |  | The Cortex Search Services defined in this database that are |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | CORTEX_SEARCH_SERVICE_SCORING_PROFILES |  | BMTC_DW | INFORMATION_SCHEMA |  | The Cortex Search Service scoring profiles defined in this d |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | CURRENT_PACKAGES_POLICY |  | BMTC_DW | INFORMATION_SCHEMA |  | The packages policy set on the current account |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | DATABASES |  | BMTC_DW | INFORMATION_SCHEMA |  | The databases that are accessible to the current user's role |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | ELEMENT_TYPES |  | BMTC_DW | INFORMATION_SCHEMA |  | The element types of structured array types defined in this  |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | ENABLED_ROLES |  | BMTC_DW | INFORMATION_SCHEMA |  | The roles that are enabled to the current user. |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | EVENT_TABLES |  | BMTC_DW | INFORMATION_SCHEMA |  | The event tables defined in this database that are accessibl |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | EXTERNAL_TABLES |  | BMTC_DW | INFORMATION_SCHEMA |  | The external tables defined in this database that are access |  | false | false |  | OFF
+   | 1969-12-31 16:00:00-08:00 | FIELDS |  | BMTC_DW | INFORMATION_SCHEMA |  | The fields of structured object and map types defined in thi |  | false | false |  | OFF
+   | ... 55 more rows

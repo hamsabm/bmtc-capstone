@@ -1,0 +1,11 @@
+DEPOT_ID,DEPOT_CODE,DEPOT_NAME,ZONE,ADDRESS,BUS_CAPACITY,ESTABLISHED_YEAR,CONTACT_PHONE
+1,DPT-02,Shanthinagar Depot,Central,"Shanthinagar, Bengaluru",130,1995,9881399869
+2,DPT-07,Yeshwanthpur Depot,North,"Yeshwanthpur, Bengaluru",200,2006,9973091141
+3,DPT-12,Kengeri Depot,West,"Kengeri, Bengaluru",190,1975,9753645568
+4,DPT-18,Hebbal Depot,North,"Hebbal, Bengaluru",130,1996,9188447294
+5,DPT-21,Banashankari Depot,South,"Banashankari, Bengaluru",120,1998,9576169871
+6,DPT-25,Whitefield Depot,East,"Whitefield, Bengaluru",180,2007,9976846978
+7,DPT-28,Electronic City Depot,South,"Electronic City, Bengaluru",200,1976,9932081967
+8,DPT-31,Peenya Depot,West,"Peenya, Bengaluru",140,2005,9317784864
+9,DPT-34,Koramangala Depot,Central,"Koramangala, Bengaluru",200,2007,9766344002
+10,DPT-40,Yelahanka Depot,North,"Yelahanka, Bengaluru",190,2008,9753477876

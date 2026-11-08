@@ -1,0 +1,155 @@
+-- =====================================================================
+-- 02_tables.sql  |  Permanent project tables (full rebuild: CREATE OR REPLACE)
+-- Primary/foreign keys are declared for documentation and BI relationship
+-- detection (Snowflake enforces NOT NULL only).
+-- Re-running this script recreates empty tables; then run 03 to reload.
+-- =====================================================================
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE BMTC_WH;
+USE DATABASE BMTC_DW;
+
+-- ---------------------------------------------------------------- BUS
+CREATE OR REPLACE TABLE BUS.DEPOT_MASTER (
+  DEPOT_ID          NUMBER(4)     NOT NULL PRIMARY KEY,
+  DEPOT_CODE        VARCHAR(10)   NOT NULL UNIQUE,
+  DEPOT_NAME        VARCHAR(80)   NOT NULL,
+  ZONE              VARCHAR(20)   NOT NULL,
+  ADDRESS           VARCHAR(150),
+  BUS_CAPACITY      NUMBER(4),
+  ESTABLISHED_YEAR  NUMBER(4),
+  CONTACT_PHONE     VARCHAR(15)
+) COMMENT = 'Bus depots (synthetic)';
+
+CREATE OR REPLACE TABLE BUS.BUS_MASTER (
+  BUS_ID            NUMBER(6)     NOT NULL PRIMARY KEY,
+  REGISTRATION_NO   VARCHAR(15)   NOT NULL UNIQUE,
+  BUS_TYPE          VARCHAR(20)   NOT NULL,
+  DEPOT_ID          NUMBER(4)     NOT NULL REFERENCES BUS.DEPOT_MASTER(DEPOT_ID),
+  MANUFACTURER      VARCHAR(40),
+  MANUFACTURE_YEAR  NUMBER(4),
+  SEATING_CAPACITY  NUMBER(3),
+  FUEL_TYPE         VARCHAR(10)   NOT NULL,
+  STATUS            VARCHAR(20)   NOT NULL,
+  COMMISSION_DATE   DATE
+) COMMENT = 'Fleet register (synthetic)';
+
+CREATE OR REPLACE TABLE BUS.EMPLOYEE_MASTER (
+  EMPLOYEE_ID       NUMBER(6)     NOT NULL PRIMARY KEY,
+  EMPLOYEE_CODE     VARCHAR(10)   NOT NULL UNIQUE,
+  EMPLOYEE_NAME     VARCHAR(80)   NOT NULL,
+  ROLE              VARCHAR(20)   NOT NULL,
+  DEPOT_ID          NUMBER(4)     NOT NULL REFERENCES BUS.DEPOT_MASTER(DEPOT_ID),
+  JOIN_DATE         DATE,
+  PHONE             VARCHAR(15),            -- sensitive
+  EMAIL             VARCHAR(120),           -- sensitive
+  MONTHLY_SALARY    NUMBER(10,2),           -- sensitive
+  STATUS            VARCHAR(15)
+) COMMENT = 'Depot workforce (synthetic people)';
+
+-- ---------------------------------------------------------------- TRIP
+CREATE OR REPLACE TABLE TRIP.ROUTE_MASTER (
+  ROUTE_ID          NUMBER(5)     NOT NULL PRIMARY KEY,
+  ROUTE_CODE        VARCHAR(12)   NOT NULL UNIQUE,
+  ROUTE_NAME        VARCHAR(120)  NOT NULL,
+  SOURCE_STOP       VARCHAR(60),
+  DESTINATION_STOP  VARCHAR(60),
+  DISTANCE_KM       NUMBER(6,1),
+  NUM_STOPS         NUMBER(4),
+  ROUTE_CATEGORY    VARCHAR(30),
+  BASE_FARE         NUMBER(8,2),
+  DEPOT_ID          NUMBER(4)     REFERENCES BUS.DEPOT_MASTER(DEPOT_ID),
+  ACTIVE_FLAG       BOOLEAN
+) COMMENT = 'Route network (synthetic codes)';
+
+CREATE OR REPLACE TABLE TRIP.TRIP_DATA (
+  TRIP_ID           NUMBER(10)    NOT NULL PRIMARY KEY,
+  BUS_ID            NUMBER(6)     NOT NULL REFERENCES BUS.BUS_MASTER(BUS_ID),
+  ROUTE_ID          NUMBER(5)     NOT NULL REFERENCES TRIP.ROUTE_MASTER(ROUTE_ID),
+  DRIVER_ID         NUMBER(6)     REFERENCES BUS.EMPLOYEE_MASTER(EMPLOYEE_ID),
+  CONDUCTOR_ID      NUMBER(6)     REFERENCES BUS.EMPLOYEE_MASTER(EMPLOYEE_ID),
+  TRIP_DATE         DATE          NOT NULL,
+  SCHEDULED_START   TIMESTAMP_NTZ NOT NULL,
+  ACTUAL_START      TIMESTAMP_NTZ,
+  ACTUAL_END        TIMESTAMP_NTZ,
+  DELAY_MINUTES     NUMBER(5),
+  PASSENGER_COUNT   NUMBER(5),
+  DISTANCE_KM       NUMBER(6,1),
+  TRIP_STATUS       VARCHAR(15)   NOT NULL
+) COMMENT = 'Trip operations (synthetic)';
+
+CREATE OR REPLACE TABLE TRIP.TICKET_DATA (
+  TICKET_ID          NUMBER(12)   NOT NULL PRIMARY KEY,
+  TICKET_NO          VARCHAR(15)  NOT NULL,
+  TRIP_ID            NUMBER(10)   NOT NULL REFERENCES TRIP.TRIP_DATA(TRIP_ID),
+  ROUTE_ID           NUMBER(5)    NOT NULL REFERENCES TRIP.ROUTE_MASTER(ROUTE_ID),
+  TICKET_TS          TIMESTAMP_NTZ NOT NULL,
+  TICKET_DATE        DATE         NOT NULL,
+  TICKET_TYPE        VARCHAR(20)  NOT NULL,
+  PASSENGER_CATEGORY VARCHAR(20),
+  TRAVEL_KM          NUMBER(6,1),
+  FARE               NUMBER(8,2)  NOT NULL,
+  PAYMENT_MODE       VARCHAR(10),
+  PASS_ID            NUMBER(8)              -- set for pass validations
+) COMMENT = 'Ticket and pass-validation transactions (synthetic)';
+
+CREATE OR REPLACE TABLE TRIP.FUEL_LOG (
+  FUEL_ID             NUMBER(8)    NOT NULL PRIMARY KEY,
+  BUS_ID              NUMBER(6)    NOT NULL REFERENCES BUS.BUS_MASTER(BUS_ID),
+  DEPOT_ID            NUMBER(4)    REFERENCES BUS.DEPOT_MASTER(DEPOT_ID),
+  FUEL_DATE           DATE         NOT NULL,
+  FUEL_TYPE           VARCHAR(10)  NOT NULL,
+  UNIT                VARCHAR(6)   NOT NULL,   -- LITRE (diesel) / KWH (electric)
+  QUANTITY            NUMBER(8,1),
+  UNIT_PRICE          NUMBER(8,2),
+  TOTAL_COST          NUMBER(12,2),
+  ODOMETER_KM         NUMBER(10,1),
+  KM_SINCE_LAST_FILL  NUMBER(8,1),
+  STATION             VARCHAR(80)
+) COMMENT = 'Diesel fills and EV charging sessions (synthetic)';
+
+CREATE OR REPLACE TABLE TRIP.MAINTENANCE_LOG (
+  MAINTENANCE_ID    NUMBER(8)     NOT NULL PRIMARY KEY,
+  BUS_ID            NUMBER(6)     NOT NULL REFERENCES BUS.BUS_MASTER(BUS_ID),
+  MAINTENANCE_DATE  DATE          NOT NULL,
+  MAINTENANCE_TYPE  VARCHAR(30)   NOT NULL,
+  DESCRIPTION       VARCHAR(200),
+  PARTS_COST        NUMBER(12,2),
+  LABOUR_COST       NUMBER(12,2),
+  TOTAL_COST        NUMBER(12,2),
+  DOWNTIME_HOURS    NUMBER(6,1),
+  SEVERITY          VARCHAR(10),
+  MECHANIC_ID       NUMBER(6)     REFERENCES BUS.EMPLOYEE_MASTER(EMPLOYEE_ID),
+  STATUS            VARCHAR(15)
+) COMMENT = 'Workshop maintenance history (synthetic)';
+
+-- ---------------------------------------------------------------- PASSENGER
+CREATE OR REPLACE TABLE PASSENGER.PASS_DATA (
+  PASS_ID            NUMBER(8)    NOT NULL PRIMARY KEY,
+  PASS_NUMBER        VARCHAR(20)  NOT NULL UNIQUE,
+  PASSENGER_NAME     VARCHAR(80),           -- sensitive
+  PHONE              VARCHAR(15),           -- sensitive
+  EMAIL              VARCHAR(120),          -- sensitive
+  PASS_TYPE          VARCHAR(30)  NOT NULL,
+  PASSENGER_CATEGORY VARCHAR(20),
+  ISSUE_DATE         DATE         NOT NULL,
+  VALID_FROM         DATE         NOT NULL,
+  VALID_TO           DATE,
+  PRICE              NUMBER(8,2),
+  ISSUING_DEPOT_ID   NUMBER(4)    REFERENCES BUS.DEPOT_MASTER(DEPOT_ID),
+  STATUS             VARCHAR(15)
+) COMMENT = 'Passenger passes (synthetic people)';
+
+CREATE OR REPLACE TABLE PASSENGER.COMPLAINTS_JSON (
+  COMPLAINT_ID   VARCHAR(20)    NOT NULL PRIMARY KEY,
+  SUBMITTED_AT   TIMESTAMP_NTZ,
+  PAYLOAD        VARIANT        NOT NULL,   -- full complaint document (nested JSON)
+  SOURCE_FILE    VARCHAR(200),
+  LOADED_AT      TIMESTAMP_NTZ  DEFAULT CURRENT_TIMESTAMP()
+) COMMENT = 'Passenger complaints as semi-structured JSON (synthetic)';
+
+-- DDL: ALTER examples on project tables
+ALTER TABLE TRIP.TRIP_DATA SET COMMENT = 'Trip operations (synthetic) - one row per scheduled trip';
+ALTER TABLE BUS.BUS_MASTER ADD COLUMN DATA_SOURCE VARCHAR(30) DEFAULT 'SYNTHETIC_ACADEMIC';
+ALTER TABLE BUS.BUS_MASTER ALTER COLUMN STATUS COMMENT 'ACTIVE / UNDER_MAINTENANCE / RETIRED';
+
+SHOW TABLES IN DATABASE BMTC_DW;

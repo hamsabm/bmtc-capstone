@@ -1,0 +1,167 @@
+# Execution log for 05_json_variant.sql (2026-11-08 20:48:13)
+
+> USE ROLE ACCOUNTADMIN
+   | status
+   | Statement executed successfully.
+
+> USE WAREHOUSE BMTC_WH
+   | status
+   | Statement executed successfully.
+
+> USE DATABASE BMTC_DW
+   | status
+   | Statement executed successfully.
+
+> SELECT COMPLAINT_ID, PAYLOAD FROM PASSENGER.COMPLAINTS_JSON ORDER BY COMPLAINT_ID LIMIT 2
+   | COMPLAINT_ID | PAYLOAD
+   | CMP-000001 | {
+  "category": "Staff Behaviour",
+  "channel": "Twitter/X",
+   | CMP-000002 | {
+  "category": "Overcrowding",
+  "channel": "Depot Counter"
+
+> SELECT TYPEOF(PAYLOAD) AS DOC_TYPE, TYPEOF(PAYLOAD:tags) AS TAGS_TYPE, TYPEOF(PAYLOAD:service.trip_id) AS TRIP_ID_TYPE, OBJECT_KEYS(PAYLOAD)
+   | DOC_TYPE | TAGS_TYPE | TRIP_ID_TYPE | TOP_LEVEL_KEYS
+   | OBJECT | ARRAY | INTEGER | [
+  "category",
+  "channel",
+  "complaint_id",
+  "descriptio
+
+> SELECT COMPLAINT_ID, PAYLOAD:category::VARCHAR AS CATEGORY, PAYLOAD:sub_category::VARCHAR AS SUB_CATEGORY, PAYLOAD:priority::VARCHAR AS PRIO
+   | COMPLAINT_ID | CATEGORY | SUB_CATEGORY | PRIORITY | CHANNEL | ROUTE_CODE | BUS_ID | LAT | LON | RESOLUTION_STATUS | ASSIGNED_SUPERVISOR | RESOLUTION_DAYS | PASS_ID | TAG_COUNT
+   | CMP-000471 | Bus Condition | Leaking roof | Low | Twitter/X | 146B | 4 | 12.94624 | 77.68795 | In Progress | 29 | NULL | NULL | 3
+   | CMP-000462 | Delay | Bus did not arrive | Medium | Helpline 1800-425-1663 | 251A | 16 | 12.93692 | 77.74973 | Open | 57 | NULL | NULL | 3
+   | CMP-000479 | Delay | Long wait at stop | Medium | Mobile App | MF-106B | 12 | 13.11908 | 77.6832 | In Progress | 27 | NULL | 1301 | 3
+   | CMP-000470 | Delay | Late departure | Medium | Mobile App | 233B | 41 | 13.06485 | 77.70839 | Open | 119 | NULL | NULL | 1
+   | CMP-000461 | Staff Behaviour | Driver used phone | High | Helpline 1800-425-1663 | 458D | 40 | 13.11318 | 77.78482 | Open | 117 | NULL | NULL | 0
+   | CMP-000460 | Cleanliness | Dirty seats | Low | Twitter/X | 458D | 41 | 13.03963 | 77.7084 | In Progress | 118 | NULL | 233 | 0
+   | CMP-000478 | Overcrowding | No standing space | High | Mobile App | 251A | 13 | 12.97388 | 77.54184 | Open | 58 | NULL | 18 | 1
+   | CMP-000477 | Safety | Door open while moving | High | Mobile App | MF-473 | 83 | 13.06741 | 77.67531 | Open | 209 | NULL | 705 | 0
+   | CMP-000472 | Staff Behaviour | Refused to stop | Medium | Depot Counter | 189E | 63 | 12.91839 | 77.46367 | In Progress | 178 | NULL | 1023 | 2
+   | CMP-000475 | Staff Behaviour | Refused to stop | Medium | Twitter/X | KIA-480B | 104 | 12.96037 | 77.73112 | In Progress | 267 | NULL | NULL | 1
+   | CMP-000485 | Staff Behaviour | Refused to stop | Medium | Helpline 1800-425-1663 | MF-470C | 96 | 12.93278 | 77.73511 | In Progress | 237 | NULL | 513 | 1
+   | CMP-000474 | Ticketing | Change not returned | Low | Helpline 1800-425-1663 | 127A | 39 | 13.02315 | 77.74678 | In Progress | 119 | NULL | 376 | 1
+   | CMP-000484 | Bus Condition | Leaking roof | Low | Mobile App | 295D | 16 | 13.08838 | 77.51908 | Open | 57 | NULL | 1350 | 2
+   | CMP-000466 | Staff Behaviour | Rude conductor | Medium | Mobile App | 384D | 61 | 13.09189 | 77.61115 | Open | 179 | NULL | 1485 | 1
+   | CMP-000464 | Bus Condition | Broken seat | High | Helpline 1800-425-1663 | 421A | 53 | 12.89897 | 77.49946 | In Progress | 147 | NULL | 600 | 1
+   | CMP-000473 | Staff Behaviour | Driver used phone | Medium | Depot Counter | V-340 | 69 | 13.02613 | 77.50255 | In Progress | 179 | NULL | 245 | 3
+   | CMP-000476 | Bus Condition | Broken seat | Low | Depot Counter | 564C | 77 | 13.03094 | 77.61633 | Open | 208 | NULL | 973 | 0
+   | CMP-000467 | Cleanliness | Dirty seats | Low | Helpline 1800-425-1663 | 117A | 27 | 12.96518 | 77.64667 | In Progress | 87 | NULL | NULL | 3
+   | CMP-000483 | Bus Condition | Broken seat | Medium | Mobile App | V-114A | 9 | 13.0095 | 77.51887 | Open | 29 | NULL | 1168 | 3
+   | CMP-000463 | Delay | Long wait at stop | Medium | Mobile App | 146B | 1 | 12.89736 | 77.79227 | Open | 29 | NULL | 809 | 3
+
+> SELECT COMPLAINT_ID, SUBMITTED_AT, PAYLOAD:description::VARCHAR AS DESCRIPTION, PAYLOAD:resolution.status::VARCHAR AS STATUS FROM PASSENGER.
+   | COMPLAINT_ID | SUBMITTED_AT | DESCRIPTION | STATUS
+   | CMP-000477 | 2026-10-30 22:19:00 | Door open while moving on route MF-473 near HSR Layout. | Open
+   | CMP-000016 | 2025-11-26 08:45:00 | Door open while moving on route 442A near Hebbal. | Open
+   | CMP-000018 | 2025-11-28 16:07:00 | Rash driving on route V-468E near Banashankari TTMC. | Open
+   | CMP-000071 | 2026-01-17 02:49:00 | Door open while moving on route 244C near Nagawara. | In Progress
+   | CMP-000122 | 2026-03-06 14:41:00 | Harassment reported on route 145A near Malleshwaram. | Open
+   | CMP-000188 | 2026-04-24 05:33:00 | Harassment reported on route 458D near JP Nagar. | In Progress
+   | CMP-000297 | 2026-07-03 17:18:00 | Harassment reported on route 595A near Rajajinagar. | In Progress
+   | CMP-000360 | 2026-08-10 02:59:00 | Door open while moving on route 244C near Yelahanka. | Open
+
+> SELECT PAYLOAD:category::VARCHAR AS CATEGORY, COUNT(*) AS COMPLAINTS, COUNT_IF(PAYLOAD:priority::VARCHAR = 'High') AS HIGH_PRIORITY, ROUND(1
+   | CATEGORY | COMPLAINTS | HIGH_PRIORITY | RESOLVED_PCT | AVG_RESOLUTION_DAYS | AVG_SATISFACTION
+   | Delay | 135 | 7 | 73.3 | 6.5 | 3.00
+   | Staff Behaviour | 68 | 7 | 67.6 | 7.1 | 3.41
+   | Bus Condition | 59 | 8 | 69.5 | 5.8 | 3.37
+   | Overcrowding | 58 | 7 | 74.1 | 6.0 | 2.91
+   | Cleanliness | 55 | 4 | 67.3 | 6.7 | 3.11
+   | Safety | 50 | 43 | 74.0 | 3.2 | 2.92
+   | Ticketing | 50 | 2 | 74.0 | 7.2 | 2.78
+   | AC Not Working | 10 | 0 | 100.0 | 7.5 | 3.80
+
+> SELECT t.VALUE::VARCHAR AS TAG, COUNT(*) AS COMPLAINTS FROM PASSENGER.COMPLAINTS_JSON c, LATERAL FLATTEN(INPUT => c.PAYLOAD:tags) t GROUP BY
+   | TAG | COMPLAINTS
+   | student | 104
+   | weekend | 98
+   | peak-hour | 95
+   | senior-citizen | 89
+   | repeat | 87
+   | night | 80
+   | women-safety | 78
+   | photo-attached | 75
+
+> SELECT r.ROUTE_CODE, r.ROUTE_CATEGORY, COUNT(c.COMPLAINT_ID) AS COMPLAINTS, p.PASSENGERS, ROUND(1000 * COUNT(c.COMPLAINT_ID) / NULLIF(p.PASS
+   | ROUTE_CODE | ROUTE_CATEGORY | COMPLAINTS | PASSENGERS | COMPLAINTS_PER_1000_PAX
+   | V-283A | AC Vajra | 4 | 325 | 12.31
+   | 421D | City Ordinary | 8 | 719 | 11.13
+   | KIA-423D | Airport Vayu Vajra | 8 | 766 | 10.44
+   | V-501A | AC Vajra | 7 | 671 | 10.43
+   | V-585E | AC Vajra | 4 | 471 | 8.49
+   | 295D | City Ordinary | 14 | 1665 | 8.41
+   | KIA-480B | Airport Vayu Vajra | 10 | 1198 | 8.35
+   | 244C | Suburban | 10 | 1226 | 8.16
+   | KIA-454 | Airport Vayu Vajra | 3 | 389 | 7.71
+   | 264 | City Ordinary | 5 | 684 | 7.31
+
+> SELECT PAYLOAD:category::VARCHAR AS CATEGORY, COUNT(*) AS COMPLAINTS, ROUND(AVG(t.DELAY_MINUTES), 1) AS AVG_ACTUAL_DELAY, COUNT_IF(t.TRIP_ST
+   | CATEGORY | COMPLAINTS | AVG_ACTUAL_DELAY | ON_CANCELLED_TRIPS
+   | Delay | 135 | 33.3 | 21
+   | AC Not Working | 10 | 25.8 | 1
+   | Overcrowding | 58 | 10.3 | 0
+   | Staff Behaviour | 68 | 10.1 | 0
+   | Ticketing | 50 | 9.1 | 0
+   | Cleanliness | 55 | 9.1 | 0
+   | Safety | 50 | 8.4 | 1
+   | Bus Condition | 59 | 7.1 | 1
+
+> SELECT DATE_TRUNC('MONTH', SUBMITTED_AT) AS MONTH, PAYLOAD:channel::VARCHAR AS CHANNEL, COUNT(*) AS COMPLAINTS FROM PASSENGER.COMPLAINTS_JSO
+   | MONTH | CHANNEL | COMPLAINTS
+   | 2025-11-01 00:00:00 | Depot Counter | 2
+   | 2025-11-01 00:00:00 | Email | 2
+   | 2025-11-01 00:00:00 | Helpline 1800-425-1663 | 6
+   | 2025-11-01 00:00:00 | Mobile App | 8
+   | 2025-11-01 00:00:00 | Twitter/X | 4
+   | 2025-12-01 00:00:00 | Depot Counter | 3
+   | 2025-12-01 00:00:00 | Email | 5
+   | 2025-12-01 00:00:00 | Helpline 1800-425-1663 | 4
+   | 2025-12-01 00:00:00 | Mobile App | 15
+   | 2025-12-01 00:00:00 | Twitter/X | 4
+   | 2026-01-01 00:00:00 | Depot Counter | 4
+   | 2026-01-01 00:00:00 | Email | 3
+   | 2026-01-01 00:00:00 | Helpline 1800-425-1663 | 6
+   | 2026-01-01 00:00:00 | Mobile App | 18
+   | 2026-01-01 00:00:00 | Twitter/X | 2
+   | 2026-02-01 00:00:00 | Depot Counter | 1
+   | 2026-02-01 00:00:00 | Email | 2
+   | 2026-02-01 00:00:00 | Helpline 1800-425-1663 | 6
+   | 2026-02-01 00:00:00 | Mobile App | 17
+   | 2026-02-01 00:00:00 | Twitter/X | 3
+   | 2026-03-01 00:00:00 | Depot Counter | 4
+   | 2026-03-01 00:00:00 | Email | 5
+   | 2026-03-01 00:00:00 | Helpline 1800-425-1663 | 18
+   | 2026-03-01 00:00:00 | Mobile App | 24
+   | 2026-03-01 00:00:00 | Twitter/X | 2
+   | ... 37 more rows
+
+> SELECT OBJECT_CONSTRUCT('route_code', PAYLOAD:service.route_code::VARCHAR, 'complaints', COUNT(*), 'categories', ARRAY_AGG(DISTINCT PAYLOAD:
+   | ROUTE_COMPLAINT_DOC
+   | {
+  "categories": [
+    "Delay",
+    "Staff Behaviour",
+    
+   | {
+  "categories": [
+    "Cleanliness",
+    "Overcrowding",
+ 
+   | {
+  "categories": [
+    "Overcrowding",
+    "Delay",
+    "Cl
+   | {
+  "categories": [
+    "Overcrowding",
+    "Safety",
+    "C
+   | {
+  "categories": [
+    "Cleanliness",
+    "Bus Condition",
+
