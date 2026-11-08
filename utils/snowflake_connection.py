@@ -35,11 +35,12 @@ def _get(key: str, default: str | None = None) -> str | None:
     val = os.getenv(key)
     if val:
         return val
-    if not any(p.exists() for p in (ROOT / ".streamlit" / "secrets.toml", Path.home() / ".streamlit" / "secrets.toml")):
-        return default
     try:
         import streamlit as st
 
+        # Silent probe that honours every location Streamlit reads secrets from (incl. Streamlit Cloud)
+        if not st.secrets.load_if_toml_exists():
+            return default
         if key in st.secrets:
             return str(st.secrets[key])
     except Exception:  # noqa: BLE001 - no secrets file / not running under Streamlit
