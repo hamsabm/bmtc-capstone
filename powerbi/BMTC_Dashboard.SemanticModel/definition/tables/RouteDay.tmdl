@@ -1,0 +1,138 @@
+table RouteDay
+	lineageTag: 9f9ab4e3-067f-53c0-8c9e-26ea72d0cb7d
+
+	measure 'Total Revenue' = SUM(RouteDay[REVENUE])
+		formatString: #,0
+		lineageTag: 0f9764f1-5d6e-5fdf-abc0-daa5875577fe
+
+	measure 'Total Passengers' = SUM(RouteDay[PASSENGERS])
+		formatString: #,0
+		lineageTag: a627b259-a976-56d5-bf95-632f0281d0db
+
+	measure 'Total Trips' = SUM(RouteDay[TRIPS])
+		formatString: #,0
+		lineageTag: e946250b-9ac3-5758-b038-ad5f72361f38
+
+	measure 'On-time %' = DIVIDE(SUM(RouteDay[ON_TIME_TRIPS]), SUM(RouteDay[TRIPS]))
+		formatString: 0.0%
+		lineageTag: 4c5b637f-1272-571d-8ca6-ad6b3a6a72c0
+
+	measure 'Revenue per km' = DIVIDE(SUM(RouteDay[REVENUE]), SUM(RouteDay[KM]))
+		formatString: #,0.00
+		lineageTag: b61fec7d-bdca-598a-aea0-c79b1795aa05
+
+	column DATE_KEY
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 443c41da-27fb-5017-8120-fccb0d7e9710
+		summarizeBy: none
+		sourceColumn: DATE_KEY
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROUTE_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 832975f8-f3a9-59b9-9cc6-2657cf02f01a
+		summarizeBy: none
+		sourceColumn: ROUTE_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROUTE_CODE
+		dataType: string
+		lineageTag: f31d8762-ac09-5bcf-bb66-59d500ed8d9f
+		summarizeBy: none
+		sourceColumn: ROUTE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROUTE_CATEGORY
+		dataType: string
+		lineageTag: b1be5117-fa2f-5dad-ba42-5dbc5d2c7149
+		summarizeBy: none
+		sourceColumn: ROUTE_CATEGORY
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEPOT_NAME
+		dataType: string
+		lineageTag: 7282f969-eb01-554b-894d-943bb3c5a94b
+		summarizeBy: none
+		sourceColumn: DEPOT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ca931df-c9da-5d7c-8745-f6c481badbf4
+		summarizeBy: sum
+		sourceColumn: TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column PASSENGERS
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c58f15d-97ed-58b5-89a4-8244aa1991f6
+		summarizeBy: sum
+		sourceColumn: PASSENGERS
+
+		annotation SummarizationSetBy = Automatic
+
+	column REVENUE
+		dataType: double
+		lineageTag: ba264061-d29c-508c-9c01-c6d6cdd2401a
+		summarizeBy: sum
+		sourceColumn: REVENUE
+
+		annotation SummarizationSetBy = Automatic
+
+	column KM
+		dataType: double
+		lineageTag: a7a975ec-4f1e-5edf-9682-05f6f43e84b3
+		summarizeBy: sum
+		sourceColumn: KM
+
+		annotation SummarizationSetBy = Automatic
+
+	column DELAY_MIN
+		dataType: int64
+		formatString: 0
+		lineageTag: f7fcc7bf-3d3d-5f04-9b37-0998e3295fd2
+		summarizeBy: sum
+		sourceColumn: DELAY_MIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column ON_TIME_TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: 97dda4e5-da96-5736-909d-93748aa6db92
+		summarizeBy: sum
+		sourceColumn: ON_TIME_TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FAILED_TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: e15178b8-d9b6-5e32-a59a-57606650bb29
+		summarizeBy: sum
+		sourceColumn: FAILED_TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RouteDay = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("OTSODYW-YJ16532.snowflakecomputing.com", "BMTC_WH"),
+				    Db = Source{[Name = "BMTC_DW", Kind = "Database"]}[Data],
+				    Sch = Db{[Name = "TRIP", Kind = "Schema"]}[Data],
+				    Result = Sch{[Name = "V_PBI_ROUTE_DAY_FACT", Kind = "View"]}[Data]
+				in
+				    Result
+
+	annotation PBI_ResultType = Table

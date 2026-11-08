@@ -1,0 +1,214 @@
+table Complaints
+	lineageTag: a60e7935-41db-5a55-8a71-786746b65594
+
+	measure 'Complaint Count' = COUNTROWS(Complaints)
+		formatString: #,0
+		lineageTag: 2b2d3d01-d944-5954-9f8e-701ae5ab669f
+
+	measure 'Open Complaints' = CALCULATE(COUNTROWS(Complaints), Complaints[RESOLUTION_STATUS] IN {"Open", "In Progress"})
+		formatString: #,0
+		lineageTag: 21a13f0a-ae83-5899-871c-fa9eb2d82ba9
+
+	column COMPLAINT_ID
+		dataType: string
+		lineageTag: 8f0e3c9d-d01d-534d-9858-766f86f0c759
+		summarizeBy: none
+		sourceColumn: COMPLAINT_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUBMITTED_AT
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c7bcef64-2d0d-5bdc-afba-2eebf59e45f2
+		summarizeBy: none
+		sourceColumn: SUBMITTED_AT
+
+		annotation SummarizationSetBy = Automatic
+
+	column COMPLAINT_MONTH
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e7d660cd-d9c4-5d17-bf91-bee482b5fd4d
+		summarizeBy: none
+		sourceColumn: COMPLAINT_MONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORY
+		dataType: string
+		lineageTag: 7ad51f64-1022-59ff-aa0a-083b4ddd194c
+		summarizeBy: none
+		sourceColumn: CATEGORY
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUB_CATEGORY
+		dataType: string
+		lineageTag: 4bedbeca-0d6b-523f-9736-77898850642a
+		summarizeBy: none
+		sourceColumn: SUB_CATEGORY
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRIORITY
+		dataType: string
+		lineageTag: 56aa3aac-4dd0-55fe-bf98-1895ad6e46bf
+		summarizeBy: none
+		sourceColumn: PRIORITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column CHANNEL
+		dataType: string
+		lineageTag: 8d47c333-6168-5bcb-8c3b-8368e979b64e
+		summarizeBy: none
+		sourceColumn: CHANNEL
+
+		annotation SummarizationSetBy = Automatic
+
+	column DESCRIPTION
+		dataType: string
+		lineageTag: 10341542-bd2a-5581-bd0c-48f79149d3d8
+		summarizeBy: none
+		sourceColumn: DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRIP_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: f995ba5f-1bb0-52ac-b155-eec0a34d679f
+		summarizeBy: none
+		sourceColumn: TRIP_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROUTE_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 2392fa19-3d2d-5b76-82e8-185f8ff19f69
+		summarizeBy: none
+		sourceColumn: ROUTE_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROUTE_CODE
+		dataType: string
+		lineageTag: d8e00104-dbbe-552d-96e5-e0bb089500d6
+		summarizeBy: none
+		sourceColumn: ROUTE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column BUS_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d569907-b940-5ba0-812f-1cdfebd0f210
+		summarizeBy: none
+		sourceColumn: BUS_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEPOT_NAME
+		dataType: string
+		lineageTag: 30c8271b-0fd7-5cea-9e00-a37b6e0f2cf5
+		summarizeBy: none
+		sourceColumn: DEPOT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column STOP_NAME
+		dataType: string
+		lineageTag: b5c91e09-c512-5a1a-b98d-2cc172c89ccf
+		summarizeBy: none
+		sourceColumn: STOP_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LAT
+		dataType: double
+		lineageTag: 0cc672d5-77d4-5292-90d8-49ba6ab97f9a
+		summarizeBy: sum
+		sourceColumn: LAT
+
+		annotation SummarizationSetBy = Automatic
+
+	column LON
+		dataType: double
+		lineageTag: d6c8fcd3-3322-5be2-a471-2e1c05ced594
+		summarizeBy: sum
+		sourceColumn: LON
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_REGISTERED
+		dataType: boolean
+		lineageTag: 3974451c-07fd-59a1-925f-1a2433bf9532
+		summarizeBy: none
+		sourceColumn: IS_REGISTERED
+
+		annotation SummarizationSetBy = Automatic
+
+	column LANGUAGE
+		dataType: string
+		lineageTag: cc2355d6-6747-5fb5-aa11-daa2f51aa91d
+		summarizeBy: none
+		sourceColumn: LANGUAGE
+
+		annotation SummarizationSetBy = Automatic
+
+	column RESOLUTION_STATUS
+		dataType: string
+		lineageTag: 3af2013c-d4f4-5165-9f39-5bb12f56deb2
+		summarizeBy: none
+		sourceColumn: RESOLUTION_STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column RESOLUTION_DAYS
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e62e889-2124-53a3-af60-46b4e91b7c30
+		summarizeBy: sum
+		sourceColumn: RESOLUTION_DAYS
+
+		annotation SummarizationSetBy = Automatic
+
+	column SATISFACTION_RATING
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d51d87e-c80a-5843-b440-a2b96f3fdd4c
+		summarizeBy: sum
+		sourceColumn: SATISFACTION_RATING
+
+		annotation SummarizationSetBy = Automatic
+
+	column TAGS
+		dataType: string
+		lineageTag: cde1d804-c5bd-59bc-9a9a-9d2d0b249fb2
+		summarizeBy: none
+		sourceColumn: TAGS
+
+		annotation SummarizationSetBy = Automatic
+
+	column INGESTION
+		dataType: string
+		lineageTag: dc075d39-bede-5170-8d3a-d302b70b6d66
+		summarizeBy: none
+		sourceColumn: INGESTION
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Complaints = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("OTSODYW-YJ16532.snowflakecomputing.com", "BMTC_WH"),
+				    Db = Source{[Name = "BMTC_DW", Kind = "Database"]}[Data],
+				    Sch = Db{[Name = "PASSENGER", Kind = "Schema"]}[Data],
+				    Result = Sch{[Name = "V_COMPLAINT_ANALYTICS", Kind = "View"]}[Data]
+				in
+				    Result
+
+	annotation PBI_ResultType = Table

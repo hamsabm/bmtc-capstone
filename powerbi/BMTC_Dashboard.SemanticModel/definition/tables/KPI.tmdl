@@ -1,0 +1,172 @@
+table KPI
+	lineageTag: 0356a445-34ee-5281-b935-7a0855b0f928
+
+	measure 'Active Passes' = SUM(KPI[ACTIVE_PASSES])
+		formatString: #,0
+		lineageTag: 22cd2fd5-d165-5b71-8b6c-6a4bb75734b6
+
+	measure 'Fleet Size' = SUM(KPI[TOTAL_BUSES])
+		formatString: #,0
+		lineageTag: c3dc63c8-b90f-5781-8865-e98a96bbb612
+
+	column TOTAL_BUSES
+		dataType: int64
+		formatString: 0
+		lineageTag: 2bb92c8b-a1a4-5a33-81e1-1f7754c5f5bb
+		summarizeBy: sum
+		sourceColumn: TOTAL_BUSES
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACTIVE_BUSES
+		dataType: int64
+		formatString: 0
+		lineageTag: a567113c-ba2a-5ed3-81e0-d16275e99018
+		summarizeBy: sum
+		sourceColumn: ACTIVE_BUSES
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_DEPOTS
+		dataType: int64
+		formatString: 0
+		lineageTag: 48daac22-e0ae-55ec-b11a-16fede59e0f7
+		summarizeBy: sum
+		sourceColumn: TOTAL_DEPOTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_EMPLOYEES
+		dataType: int64
+		formatString: 0
+		lineageTag: 79817b74-f3bf-5644-9962-a9316eea9045
+		summarizeBy: sum
+		sourceColumn: TOTAL_EMPLOYEES
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_ROUTES
+		dataType: int64
+		formatString: 0
+		lineageTag: 592a9676-c72f-533b-a372-17d85b67dc31
+		summarizeBy: sum
+		sourceColumn: TOTAL_ROUTES
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: b8b094a3-8645-5517-848e-cf387a05b4e8
+		summarizeBy: sum
+		sourceColumn: TOTAL_TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_TICKETS
+		dataType: int64
+		formatString: 0
+		lineageTag: c12cda10-cca2-57cf-add0-e5039788cd2c
+		summarizeBy: sum
+		sourceColumn: TOTAL_TICKETS
+
+		annotation SummarizationSetBy = Automatic
+
+	column TICKET_REVENUE
+		dataType: double
+		lineageTag: 5820dca4-4fcf-52d7-922c-0aace4627457
+		summarizeBy: sum
+		sourceColumn: TICKET_REVENUE
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_PASSES
+		dataType: int64
+		formatString: 0
+		lineageTag: 0465e38f-11cc-57b0-bded-903ca308cd2e
+		summarizeBy: sum
+		sourceColumn: TOTAL_PASSES
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACTIVE_PASSES
+		dataType: int64
+		formatString: 0
+		lineageTag: 89a35039-7c1d-51bd-86e7-57e3dd6864a7
+		summarizeBy: sum
+		sourceColumn: ACTIVE_PASSES
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_COMPLAINTS
+		dataType: int64
+		formatString: 0
+		lineageTag: 405abd66-f170-576b-b98d-85b5fffcfee7
+		summarizeBy: sum
+		sourceColumn: TOTAL_COMPLAINTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column OPEN_COMPLAINTS
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a02e5b2-2cee-5fe0-9ec2-25d53a75463a
+		summarizeBy: sum
+		sourceColumn: OPEN_COMPLAINTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_FUEL_RECORDS
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a5d42df-c9c0-55f5-8b9d-9f62b7e3a86a
+		summarizeBy: sum
+		sourceColumn: TOTAL_FUEL_RECORDS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FUEL_COST
+		dataType: double
+		lineageTag: 393d1b1a-e830-56d4-8f6b-0b3c051bfaf4
+		summarizeBy: sum
+		sourceColumn: FUEL_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_MAINTENANCE_RECORDS
+		dataType: int64
+		formatString: 0
+		lineageTag: 300e8dcb-527a-56a1-8e14-cdd7ea032127
+		summarizeBy: sum
+		sourceColumn: TOTAL_MAINTENANCE_RECORDS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MAINTENANCE_COST
+		dataType: double
+		lineageTag: 0e36039d-10a7-5f4e-83a7-863ba5c4fa7a
+		summarizeBy: sum
+		sourceColumn: MAINTENANCE_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column ON_TIME_PCT
+		dataType: double
+		lineageTag: 8e24854a-0604-55e3-bd0f-36aaf1e3d045
+		summarizeBy: sum
+		sourceColumn: ON_TIME_PCT
+
+		annotation SummarizationSetBy = Automatic
+
+	partition KPI = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("OTSODYW-YJ16532.snowflakecomputing.com", "BMTC_WH"),
+				    Db = Source{[Name = "BMTC_DW", Kind = "Database"]}[Data],
+				    Sch = Db{[Name = "TRIP", Kind = "Schema"]}[Data],
+				    Result = Sch{[Name = "V_DASHBOARD_KPIS", Kind = "View"]}[Data]
+				in
+				    Result
+
+	annotation PBI_ResultType = Table

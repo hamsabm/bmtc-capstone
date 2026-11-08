@@ -1,0 +1,123 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "t1",
+  "position": {
+    "x": 850,
+    "y": 425,
+    "z": 0,
+    "width": 420,
+    "height": 285
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Routes"
+                    }
+                  },
+                  "Property": "REVENUE_RANK"
+                }
+              },
+              "queryRef": "Routes.REVENUE_RANK",
+              "nativeQueryRef": "REVENUE_RANK",
+              "displayName": "Rank"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Routes"
+                    }
+                  },
+                  "Property": "ROUTE_CODE"
+                }
+              },
+              "queryRef": "Routes.ROUTE_CODE",
+              "nativeQueryRef": "ROUTE_CODE",
+              "displayName": "Route"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Routes"
+                    }
+                  },
+                  "Property": "ROUTE_CATEGORY"
+                }
+              },
+              "queryRef": "Routes.ROUTE_CATEGORY",
+              "nativeQueryRef": "ROUTE_CATEGORY",
+              "displayName": "Category"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Routes"
+                    }
+                  },
+                  "Property": "Route Revenue"
+                }
+              },
+              "queryRef": "Routes.Route Revenue",
+              "nativeQueryRef": "Route Revenue",
+              "displayName": "Revenue"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Routes"
+                  }
+                },
+                "Property": "REVENUE_RANK"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Route ranking - top to bottom'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "c8",
+  "position": {
+    "x": 940,
+    "y": 10,
+    "z": 0,
+    "width": 330,
+    "height": 110
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaints"
+                    }
+                  },
+                  "Property": "Open Complaints"
+                }
+              },
+              "queryRef": "Complaints.Open Complaints",
+              "nativeQueryRef": "Open Complaints"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Open complaints'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

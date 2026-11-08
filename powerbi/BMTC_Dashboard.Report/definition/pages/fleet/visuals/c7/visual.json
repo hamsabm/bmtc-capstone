@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "c7",
+  "position": {
+    "x": 630,
+    "y": 10,
+    "z": 0,
+    "width": 300,
+    "height": 110
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Maintenance"
+                    }
+                  },
+                  "Property": "Maintenance Cost"
+                }
+              },
+              "queryRef": "Maintenance.Maintenance Cost",
+              "nativeQueryRef": "Maintenance Cost"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Maintenance cost (Rs)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

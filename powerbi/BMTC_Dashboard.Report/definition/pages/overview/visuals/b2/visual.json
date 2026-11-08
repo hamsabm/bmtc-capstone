@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "b2",
+  "position": {
+    "x": 420,
+    "y": 425,
+    "z": 0,
+    "width": 420,
+    "height": 285
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaints"
+                    }
+                  },
+                  "Property": "CATEGORY"
+                }
+              },
+              "queryRef": "Complaints.CATEGORY",
+              "nativeQueryRef": "CATEGORY",
+              "displayName": "Category"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaints"
+                    }
+                  },
+                  "Property": "Complaint Count"
+                }
+              },
+              "queryRef": "Complaints.Complaint Count",
+              "nativeQueryRef": "Complaint Count"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Complaints"
+                  }
+                },
+                "Property": "Complaint Count"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Complaints by category (from JSON)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

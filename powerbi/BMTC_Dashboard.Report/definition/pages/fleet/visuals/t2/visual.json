@@ -1,0 +1,138 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "t2",
+  "position": {
+    "x": 640,
+    "y": 425,
+    "z": 0,
+    "width": 630,
+    "height": 285
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Buses"
+                    }
+                  },
+                  "Property": "REGISTRATION_NO"
+                }
+              },
+              "queryRef": "Buses.REGISTRATION_NO",
+              "nativeQueryRef": "REGISTRATION_NO",
+              "displayName": "Bus"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Buses"
+                    }
+                  },
+                  "Property": "BUS_TYPE"
+                }
+              },
+              "queryRef": "Buses.BUS_TYPE",
+              "nativeQueryRef": "BUS_TYPE",
+              "displayName": "Type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Buses"
+                    }
+                  },
+                  "Property": "DEPOT_NAME"
+                }
+              },
+              "queryRef": "Buses.DEPOT_NAME",
+              "nativeQueryRef": "DEPOT_NAME",
+              "displayName": "Depot"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Buses"
+                    }
+                  },
+                  "Property": "MAINTENANCE_COST"
+                }
+              },
+              "queryRef": "Buses.MAINTENANCE_COST",
+              "nativeQueryRef": "MAINTENANCE_COST",
+              "displayName": "Maintenance cost"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Buses"
+                    }
+                  },
+                  "Property": "KM_PER_UNIT"
+                }
+              },
+              "queryRef": "Buses.KM_PER_UNIT",
+              "nativeQueryRef": "KM_PER_UNIT",
+              "displayName": "km per unit"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Buses"
+                  }
+                },
+                "Property": "MAINTENANCE_COST"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Costliest buses to maintain (top to bottom)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

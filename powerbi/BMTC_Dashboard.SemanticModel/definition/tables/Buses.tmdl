@@ -1,0 +1,173 @@
+table Buses
+	lineageTag: 184f3058-e452-52eb-83b6-e495fa55ca05
+
+	column BUS_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 29ff20b5-b68b-5fb3-8a46-8cf403ed7aa8
+		summarizeBy: none
+		sourceColumn: BUS_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column REGISTRATION_NO
+		dataType: string
+		lineageTag: f018a30d-c751-53d7-bd0a-72b217b2f824
+		summarizeBy: none
+		sourceColumn: REGISTRATION_NO
+
+		annotation SummarizationSetBy = Automatic
+
+	column BUS_TYPE
+		dataType: string
+		lineageTag: d5fad6cc-2279-5436-a6d3-ad9ad03a5fe8
+		summarizeBy: none
+		sourceColumn: BUS_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column FUEL_TYPE
+		dataType: string
+		lineageTag: 488153d0-a294-5c23-afc6-d504bbd6a517
+		summarizeBy: none
+		sourceColumn: FUEL_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MANUFACTURER
+		dataType: string
+		lineageTag: f5105565-3db9-5d5f-bd3d-e701bf09524d
+		summarizeBy: none
+		sourceColumn: MANUFACTURER
+
+		annotation SummarizationSetBy = Automatic
+
+	column MANUFACTURE_YEAR
+		dataType: int64
+		formatString: 0
+		lineageTag: 25966891-7150-5d99-b1a7-da19e0848b02
+		summarizeBy: none
+		sourceColumn: MANUFACTURE_YEAR
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATUS
+		dataType: string
+		lineageTag: 0fffd248-df0c-5f00-9dc6-27b7f1b26650
+		summarizeBy: none
+		sourceColumn: STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEPOT_NAME
+		dataType: string
+		lineageTag: 1b3a68be-98fd-505e-be32-48a76b6d1398
+		summarizeBy: none
+		sourceColumn: DEPOT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column ZONE
+		dataType: string
+		lineageTag: e8187825-9775-59bd-af95-87964b56a4c9
+		summarizeBy: none
+		sourceColumn: ZONE
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e84539e-1929-5257-a7b0-2e784d5afb91
+		summarizeBy: sum
+		sourceColumn: TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column KM_OPERATED
+		dataType: double
+		lineageTag: 2d68a3e9-1461-5fa8-98ae-596666ca0bc4
+		summarizeBy: sum
+		sourceColumn: KM_OPERATED
+
+		annotation SummarizationSetBy = Automatic
+
+	column PASSENGERS
+		dataType: int64
+		formatString: 0
+		lineageTag: ce9b6dd4-d95f-507a-b58e-e8c67ef1ee20
+		summarizeBy: sum
+		sourceColumn: PASSENGERS
+
+		annotation SummarizationSetBy = Automatic
+
+	column FUEL_QTY
+		dataType: double
+		lineageTag: 3bfd6c6b-0e41-5619-b0f3-f5a950e56c0f
+		summarizeBy: sum
+		sourceColumn: FUEL_QTY
+
+		annotation SummarizationSetBy = Automatic
+
+	column FUEL_COST
+		dataType: double
+		lineageTag: 5e0e1b1f-7bda-5aea-b6fc-13dee4dc297c
+		summarizeBy: sum
+		sourceColumn: FUEL_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column KM_PER_UNIT
+		dataType: double
+		lineageTag: 1e5725e1-b637-5f56-87a4-344b04d252ab
+		summarizeBy: sum
+		sourceColumn: KM_PER_UNIT
+
+		annotation SummarizationSetBy = Automatic
+
+	column MAINTENANCE_JOBS
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e192faf-93d8-5760-bba2-15692cf037fc
+		summarizeBy: sum
+		sourceColumn: MAINTENANCE_JOBS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MAINTENANCE_COST
+		dataType: double
+		lineageTag: 27ad2048-6224-504e-a9fa-b9c284aee5ba
+		summarizeBy: sum
+		sourceColumn: MAINTENANCE_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOWNTIME_HOURS
+		dataType: double
+		lineageTag: 14e23ecb-33fc-5090-bd62-6c0f9c79d19f
+		summarizeBy: sum
+		sourceColumn: DOWNTIME_HOURS
+
+		annotation SummarizationSetBy = Automatic
+
+	column LAST_SERVICE
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9da67b7e-850d-56bc-b963-7eafe3edeeec
+		summarizeBy: none
+		sourceColumn: LAST_SERVICE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Buses = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("OTSODYW-YJ16532.snowflakecomputing.com", "BMTC_WH"),
+				    Db = Source{[Name = "BMTC_DW", Kind = "Database"]}[Data],
+				    Sch = Db{[Name = "BUS", Kind = "Schema"]}[Data],
+				    Result = Sch{[Name = "V_BUS_SUMMARY", Kind = "View"]}[Data]
+				in
+				    Result
+
+	annotation PBI_ResultType = Table

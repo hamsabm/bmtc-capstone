@@ -1,0 +1,7 @@
+relationship 6d54866f-2052-5200-9dc7-59b87cd1285d
+	fromColumn: RouteDay.DATE_KEY
+	toColumn: DimDate.DATE_KEY
+
+relationship 0c1d3844-126d-5b15-8d9d-83e0310d4105
+	fromColumn: RouteDay.ROUTE_ID
+	toColumn: Routes.ROUTE_ID

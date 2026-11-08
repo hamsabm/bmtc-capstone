@@ -1,0 +1,153 @@
+table Routes
+	lineageTag: de557ed2-a864-54ec-9f93-a5c086bdac13
+
+	measure 'Route Revenue' = SUM(Routes[REVENUE])
+		formatString: #,0
+		lineageTag: 2fd65edb-251b-58b0-9e64-11d8462bd089
+
+	column ROUTE_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e7ceab7-2cc6-5f85-a7ea-921a8b5225b5
+		summarizeBy: none
+		sourceColumn: ROUTE_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROUTE_CODE
+		dataType: string
+		lineageTag: 087448ef-fd3a-5284-a1a7-5c58482e8bd6
+		summarizeBy: none
+		sourceColumn: ROUTE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROUTE_NAME
+		dataType: string
+		lineageTag: 69429d23-7d17-5e00-9352-9b2d84cb5ec8
+		summarizeBy: none
+		sourceColumn: ROUTE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROUTE_CATEGORY
+		dataType: string
+		lineageTag: 87659fae-20e4-5e0f-82c4-4855b8438bb6
+		summarizeBy: none
+		sourceColumn: ROUTE_CATEGORY
+
+		annotation SummarizationSetBy = Automatic
+
+	column DISTANCE_KM
+		dataType: double
+		lineageTag: 871e3b34-6fc1-5e2b-819d-ec595b25b3f0
+		summarizeBy: sum
+		sourceColumn: DISTANCE_KM
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACTIVE_FLAG
+		dataType: boolean
+		lineageTag: 3039628a-d797-5da4-8500-4900204dcc55
+		summarizeBy: none
+		sourceColumn: ACTIVE_FLAG
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEPOT_NAME
+		dataType: string
+		lineageTag: 9d7a5697-973f-5bd5-8217-5abf81a0b22a
+		summarizeBy: none
+		sourceColumn: DEPOT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: 82208925-871c-57a6-a6da-aea98214e07b
+		summarizeBy: sum
+		sourceColumn: TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column COMPLETED_TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: c63976a5-c6d0-520a-a855-c920b02cc293
+		summarizeBy: sum
+		sourceColumn: COMPLETED_TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CANCELLED_TRIPS
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ed2943f-4641-5214-b7b8-c6f3934d7630
+		summarizeBy: sum
+		sourceColumn: CANCELLED_TRIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column PASSENGERS
+		dataType: int64
+		formatString: 0
+		lineageTag: 6dc9f532-c70b-567e-9915-626a507176e6
+		summarizeBy: sum
+		sourceColumn: PASSENGERS
+
+		annotation SummarizationSetBy = Automatic
+
+	column REVENUE
+		dataType: double
+		lineageTag: c5ad8a82-deb0-55de-af27-318d54231aff
+		summarizeBy: sum
+		sourceColumn: REVENUE
+
+		annotation SummarizationSetBy = Automatic
+
+	column REVENUE_PER_KM
+		dataType: double
+		lineageTag: 0a6c92c1-cbf7-5e34-a77d-11aa5d8e5adb
+		summarizeBy: sum
+		sourceColumn: REVENUE_PER_KM
+
+		annotation SummarizationSetBy = Automatic
+
+	column AVG_DELAY_MIN
+		dataType: double
+		lineageTag: 33191aa9-d324-5353-819a-ee5e420ab76b
+		summarizeBy: sum
+		sourceColumn: AVG_DELAY_MIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column AVG_OCCUPANCY
+		dataType: double
+		lineageTag: 65de1143-cfd2-54b7-9f2d-fa52ba76dc0c
+		summarizeBy: sum
+		sourceColumn: AVG_OCCUPANCY
+
+		annotation SummarizationSetBy = Automatic
+
+	column REVENUE_RANK
+		dataType: int64
+		formatString: 0
+		lineageTag: 4df5aeef-2140-55b8-99e2-19e59c51796a
+		summarizeBy: sum
+		sourceColumn: REVENUE_RANK
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Routes = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("OTSODYW-YJ16532.snowflakecomputing.com", "BMTC_WH"),
+				    Db = Source{[Name = "BMTC_DW", Kind = "Database"]}[Data],
+				    Sch = Db{[Name = "TRIP", Kind = "Schema"]}[Data],
+				    Result = Sch{[Name = "V_ROUTE_PERFORMANCE", Kind = "View"]}[Data]
+				in
+				    Result
+
+	annotation PBI_ResultType = Table

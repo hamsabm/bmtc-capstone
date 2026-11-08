@@ -1,0 +1,92 @@
+table DimDate
+	lineageTag: efabe7ce-4f1f-584b-b89b-23c10426b64d
+
+	column DATE_KEY
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6cef80be-e20b-5487-a027-8a8dfad82d7c
+		summarizeBy: none
+		sourceColumn: DATE_KEY
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR
+		dataType: int64
+		formatString: 0
+		lineageTag: d1233f21-4ea1-5a69-9c67-4e5d59c5f5e0
+		summarizeBy: none
+		sourceColumn: YEAR
+
+		annotation SummarizationSetBy = Automatic
+
+	column MONTH_NO
+		dataType: int64
+		formatString: 0
+		lineageTag: a34a2727-d1c3-5281-84f5-e62113600081
+		summarizeBy: none
+		sourceColumn: MONTH_NO
+
+		annotation SummarizationSetBy = Automatic
+
+	column MONTH_NAME
+		dataType: string
+		lineageTag: 13ba2a2c-d358-5398-9f49-0cc18027c293
+		summarizeBy: none
+		sourceColumn: MONTH_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR_MONTH
+		dataType: string
+		lineageTag: 5b107939-6e88-5c17-a2d7-ef3dd124b67f
+		summarizeBy: none
+		sourceColumn: YEAR_MONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column WEEKDAY_NO
+		dataType: int64
+		formatString: 0
+		lineageTag: 48e02b16-4536-5794-aaf4-1063491b3f37
+		summarizeBy: none
+		sourceColumn: WEEKDAY_NO
+
+		annotation SummarizationSetBy = Automatic
+
+	column WEEKDAY
+		dataType: string
+		lineageTag: a7eb61cc-c372-5612-a3b0-0fd94ca647be
+		summarizeBy: none
+		sourceColumn: WEEKDAY
+
+		annotation SummarizationSetBy = Automatic
+
+	column DAY_TYPE
+		dataType: string
+		lineageTag: 757a0465-4626-51aa-a011-424269f23402
+		summarizeBy: none
+		sourceColumn: DAY_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISO_WEEK
+		dataType: int64
+		formatString: 0
+		lineageTag: 4d3bdd9b-e4c6-59c4-ac91-0a90943d51ed
+		summarizeBy: sum
+		sourceColumn: ISO_WEEK
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("OTSODYW-YJ16532.snowflakecomputing.com", "BMTC_WH"),
+				    Db = Source{[Name = "BMTC_DW", Kind = "Database"]}[Data],
+				    Sch = Db{[Name = "TRIP", Kind = "Schema"]}[Data],
+				    Result = Sch{[Name = "V_PBI_DIM_DATE", Kind = "View"]}[Data]
+				in
+				    Result
+
+	annotation PBI_ResultType = Table

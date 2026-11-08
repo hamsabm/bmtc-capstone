@@ -1,0 +1,176 @@
+table Fuel
+	lineageTag: 8883a123-defc-5668-9b92-919121043295
+
+	measure 'Fuel Cost' = SUM(Fuel[TOTAL_COST])
+		formatString: #,0
+		lineageTag: e94baea9-8e3f-5b0e-a6ff-4e1c30d97d4c
+
+	measure 'Avg km per unit' = AVERAGE(Fuel[KM_PER_UNIT])
+		formatString: 0.00
+		lineageTag: 38dee9e3-c660-584c-a949-60b933c47aef
+
+	measure 'Fill Count' = COUNTROWS(Fuel)
+		formatString: #,0
+		lineageTag: f63bd287-2026-5a73-9e51-cbab9854aceb
+
+	column FUEL_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 83806794-f3a0-500c-a6d7-9d27e2de9ba1
+		summarizeBy: none
+		sourceColumn: FUEL_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column FUEL_DATE
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 67f7c5ad-e2a2-5e4a-9d59-711fb39b674b
+		summarizeBy: none
+		sourceColumn: FUEL_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column FUEL_MONTH
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d76b0032-7653-5d13-9a44-9e0b54f95230
+		summarizeBy: none
+		sourceColumn: FUEL_MONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column BUS_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f73ecef-9c05-58a9-a8e7-c29a0cafadda
+		summarizeBy: none
+		sourceColumn: BUS_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column REGISTRATION_NO
+		dataType: string
+		lineageTag: 247c4f7e-2704-5df5-819d-b9e1284de117
+		summarizeBy: none
+		sourceColumn: REGISTRATION_NO
+
+		annotation SummarizationSetBy = Automatic
+
+	column BUS_TYPE
+		dataType: string
+		lineageTag: d087bd64-9443-53f0-9bb5-38f294141338
+		summarizeBy: none
+		sourceColumn: BUS_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MANUFACTURE_YEAR
+		dataType: int64
+		formatString: 0
+		lineageTag: 03456f0a-3a28-5895-a2a2-de93bbecc6d6
+		summarizeBy: none
+		sourceColumn: MANUFACTURE_YEAR
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEPOT_NAME
+		dataType: string
+		lineageTag: 3f6c7257-3a05-52bf-9c93-24080f6d3ffa
+		summarizeBy: none
+		sourceColumn: DEPOT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column FUEL_TYPE
+		dataType: string
+		lineageTag: e8cdec75-85c6-59a5-99a7-b855502c46dc
+		summarizeBy: none
+		sourceColumn: FUEL_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column UNIT
+		dataType: string
+		lineageTag: 73a32598-9295-5be2-8313-0b28209476f2
+		summarizeBy: none
+		sourceColumn: UNIT
+
+		annotation SummarizationSetBy = Automatic
+
+	column QUANTITY
+		dataType: double
+		lineageTag: 4bc27cf1-2799-5b65-8bd8-1e11cedbcff8
+		summarizeBy: sum
+		sourceColumn: QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column UNIT_PRICE
+		dataType: double
+		lineageTag: 38a15821-de7a-5ea7-b39d-ef2bea93b151
+		summarizeBy: sum
+		sourceColumn: UNIT_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_COST
+		dataType: double
+		lineageTag: ba4d0fc0-be47-572e-817a-6ea1619568a9
+		summarizeBy: sum
+		sourceColumn: TOTAL_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column KM_SINCE_LAST_FILL
+		dataType: double
+		lineageTag: 03369a2d-14d3-5c48-b71a-c3a8522220a7
+		summarizeBy: sum
+		sourceColumn: KM_SINCE_LAST_FILL
+
+		annotation SummarizationSetBy = Automatic
+
+	column ODOMETER_KM
+		dataType: double
+		lineageTag: 54332ead-6c4e-59c6-90d5-1bd7b41bae73
+		summarizeBy: sum
+		sourceColumn: ODOMETER_KM
+
+		annotation SummarizationSetBy = Automatic
+
+	column KM_PER_UNIT
+		dataType: double
+		lineageTag: 0edd7332-8213-50b6-bcb6-84b12194bdb1
+		summarizeBy: sum
+		sourceColumn: KM_PER_UNIT
+
+		annotation SummarizationSetBy = Automatic
+
+	column COST_PER_KM
+		dataType: double
+		lineageTag: 95d25f6d-300b-5e7d-b530-f72ba63c9612
+		summarizeBy: sum
+		sourceColumn: COST_PER_KM
+
+		annotation SummarizationSetBy = Automatic
+
+	column EFFICIENCY_CLASS
+		dataType: string
+		lineageTag: c04bd229-1245-58c6-a9ea-2eff7702a269
+		summarizeBy: none
+		sourceColumn: EFFICIENCY_CLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fuel = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("OTSODYW-YJ16532.snowflakecomputing.com", "BMTC_WH"),
+				    Db = Source{[Name = "BMTC_DW", Kind = "Database"]}[Data],
+				    Sch = Db{[Name = "TRIP", Kind = "Schema"]}[Data],
+				    Result = Sch{[Name = "V_FUEL_EFFICIENCY_CLASSIFIED", Kind = "View"]}[Data]
+				in
+				    Result
+
+	annotation PBI_ResultType = Table

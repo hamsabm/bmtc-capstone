@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "s1",
+  "position": {
+    "x": 1010,
+    "y": 10,
+    "z": 0,
+    "width": 260,
+    "height": 110
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "RouteDay"
+                    }
+                  },
+                  "Property": "DEPOT_NAME"
+                }
+              },
+              "queryRef": "RouteDay.DEPOT_NAME",
+              "nativeQueryRef": "DEPOT_NAME",
+              "displayName": "Depot"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Depot'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

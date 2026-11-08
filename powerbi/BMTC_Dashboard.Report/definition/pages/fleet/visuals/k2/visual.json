@@ -1,0 +1,97 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "k2",
+  "position": {
+    "x": 10,
+    "y": 425,
+    "z": 0,
+    "width": 620,
+    "height": 285
+  },
+  "visual": {
+    "visualType": "stackedColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "BUS_TYPE"
+                }
+              },
+              "queryRef": "Fuel.BUS_TYPE",
+              "nativeQueryRef": "BUS_TYPE",
+              "displayName": "Bus type"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "EFFICIENCY_CLASS"
+                }
+              },
+              "queryRef": "Fuel.EFFICIENCY_CLASS",
+              "nativeQueryRef": "EFFICIENCY_CLASS",
+              "displayName": "Class"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "Fill Count"
+                }
+              },
+              "queryRef": "Fuel.Fill Count",
+              "nativeQueryRef": "Fill Count"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python UDF efficiency class by bus type'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

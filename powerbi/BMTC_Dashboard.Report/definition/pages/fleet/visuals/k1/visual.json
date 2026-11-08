@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "k1",
+  "position": {
+    "x": 640,
+    "y": 130,
+    "z": 0,
+    "width": 630,
+    "height": 285
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Maintenance"
+                    }
+                  },
+                  "Property": "MAINTENANCE_TYPE"
+                }
+              },
+              "queryRef": "Maintenance.MAINTENANCE_TYPE",
+              "nativeQueryRef": "MAINTENANCE_TYPE",
+              "displayName": "Type"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Maintenance"
+                    }
+                  },
+                  "Property": "Maintenance Cost"
+                }
+              },
+              "queryRef": "Maintenance.Maintenance Cost",
+              "nativeQueryRef": "Maintenance Cost"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Maintenance"
+                  }
+                },
+                "Property": "Maintenance Cost"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Maintenance cost by type'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

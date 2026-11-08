@@ -1,0 +1,164 @@
+table Maintenance
+	lineageTag: 05a46569-36ca-5917-9dcd-c983de9385ff
+
+	measure 'Maintenance Cost' = SUM(Maintenance[TOTAL_COST])
+		formatString: #,0
+		lineageTag: f8ec4545-ee10-5f09-9aab-62d8cd88d52e
+
+	measure 'Maintenance Jobs' = COUNTROWS(Maintenance)
+		formatString: #,0
+		lineageTag: 98e917a8-8705-5974-9fb8-94e2fd71b0a9
+
+	column MAINTENANCE_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 99c75121-de1d-5837-96f4-49bc75473dbc
+		summarizeBy: none
+		sourceColumn: MAINTENANCE_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column MAINTENANCE_DATE
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f3b0ef0f-7758-5896-9d73-94f949a57d2c
+		summarizeBy: none
+		sourceColumn: MAINTENANCE_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MAINTENANCE_MONTH
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7dc7817e-e3fd-5005-9732-38c058ec30ba
+		summarizeBy: none
+		sourceColumn: MAINTENANCE_MONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column BUS_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 346a99da-105d-51fe-afca-020eb71bdb7f
+		summarizeBy: none
+		sourceColumn: BUS_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column REGISTRATION_NO
+		dataType: string
+		lineageTag: 8d3e47db-3980-5370-93ee-8cb57916c3b6
+		summarizeBy: none
+		sourceColumn: REGISTRATION_NO
+
+		annotation SummarizationSetBy = Automatic
+
+	column BUS_TYPE
+		dataType: string
+		lineageTag: 4ecc61c1-2671-54a7-8ed0-1d0338b3c2d7
+		summarizeBy: none
+		sourceColumn: BUS_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MANUFACTURE_YEAR
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e961fe0-0dd3-5b74-9673-a133e24c45e4
+		summarizeBy: none
+		sourceColumn: MANUFACTURE_YEAR
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEPOT_NAME
+		dataType: string
+		lineageTag: 330c744d-fdec-51e6-a96f-08c7145a3bbe
+		summarizeBy: none
+		sourceColumn: DEPOT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MAINTENANCE_TYPE
+		dataType: string
+		lineageTag: a63f357a-171b-5d80-9ba7-b53e6941e7fb
+		summarizeBy: none
+		sourceColumn: MAINTENANCE_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DESCRIPTION
+		dataType: string
+		lineageTag: e3598a58-f43e-5ebd-8fb5-85d98c7e8df4
+		summarizeBy: none
+		sourceColumn: DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column PARTS_COST
+		dataType: double
+		lineageTag: 4679967d-38fb-5f19-be2e-270594db788a
+		summarizeBy: sum
+		sourceColumn: PARTS_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column LABOUR_COST
+		dataType: double
+		lineageTag: 381a477e-bc9e-5fd1-af07-177da350542c
+		summarizeBy: sum
+		sourceColumn: LABOUR_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column TOTAL_COST
+		dataType: double
+		lineageTag: 239d9654-df65-5606-8cbc-405a6d657228
+		summarizeBy: sum
+		sourceColumn: TOTAL_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOWNTIME_HOURS
+		dataType: double
+		lineageTag: 1d1e346a-f055-5957-b030-269e52685cca
+		summarizeBy: sum
+		sourceColumn: DOWNTIME_HOURS
+
+		annotation SummarizationSetBy = Automatic
+
+	column SEVERITY
+		dataType: string
+		lineageTag: 907a4ec4-c165-58e9-90b1-9c80990ce24e
+		summarizeBy: none
+		sourceColumn: SEVERITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATUS
+		dataType: string
+		lineageTag: 50f66548-c827-53a7-b74d-fe695ea130c4
+		summarizeBy: none
+		sourceColumn: STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MECHANIC_NAME
+		dataType: string
+		lineageTag: 29302087-c3ec-57a8-a034-ea9c41f36289
+		summarizeBy: none
+		sourceColumn: MECHANIC_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Maintenance = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("OTSODYW-YJ16532.snowflakecomputing.com", "BMTC_WH"),
+				    Db = Source{[Name = "BMTC_DW", Kind = "Database"]}[Data],
+				    Sch = Db{[Name = "TRIP", Kind = "Schema"]}[Data],
+				    Result = Sch{[Name = "V_MAINTENANCE_DETAILS", Kind = "View"]}[Data]
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
