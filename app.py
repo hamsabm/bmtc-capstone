@@ -1,4 +1,4 @@
-"""BMTC Data Warehouse & Analytics System - Streamlit entry point (navigation).
+r"""BMTC Data Warehouse & Analytics System - Streamlit entry point (navigation).
 
 Run:  .\venv\Scripts\python.exe -m streamlit run app.py
 """
