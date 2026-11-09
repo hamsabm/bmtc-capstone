@@ -1,4 +1,4 @@
-# Execution log for 12_data_sharing.sql (2026-11-08 20:51:07)
+# Execution log for 12_data_sharing.sql (2026-11-08 23:42:12)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -16,9 +16,13 @@
    | status
    | View SV_SHARE_ROUTE_DAILY successfully created.
 
-> CREATE SHARE IF NOT EXISTS BMTC_ROUTE_PERFORMANCE_SHARE COMMENT = 'BMTC (synthetic) route performance for transport planning partners'; -- @
+> CREATE SHARE IF NOT EXISTS BMTC_ROUTE_PERFORMANCE_SHARE COMMENT = 'BMTC route performance for transport planning partners'; -- @optional
    | status
    | BMTC_ROUTE_PERFORMANCE_SHARE already exists, statement succe
+
+> ALTER SHARE BMTC_ROUTE_PERFORMANCE_SHARE SET COMMENT = 'BMTC route performance for transport planning partners'; -- @optional
+   | status
+   | Statement executed successfully.
 
 > GRANT USAGE ON DATABASE BMTC_DW TO SHARE BMTC_ROUTE_PERFORMANCE_SHARE; -- @optional
    | status
@@ -34,13 +38,13 @@
 
 > SHOW SHARES LIKE 'BMTC_ROUTE_PERFORMANCE_SHARE'; -- @optional
    | created_on | kind | owner_account | name | database_name | to | owner | comment | listing_global_name | secure_objects_only
-   | 2026-11-08 07:02:29.440000-08:00 | OUTBOUND | OTSODYW.YJ16532 | BMTC_ROUTE_PERFORMANCE_SHARE | BMTC_DW |  | ACCOUNTADMIN | BMTC (synthetic) route performance for transport planning pa |  | true
+   | 2026-11-08 07:02:29.440000-08:00 | OUTBOUND | OTSODYW.YJ16532 | BMTC_ROUTE_PERFORMANCE_SHARE | BMTC_DW |  | ACCOUNTADMIN | BMTC route performance for transport planning partners |  | true
 
 > DESC SHARE BMTC_ROUTE_PERFORMANCE_SHARE; -- @optional
    | kind | name | shared_on
    | DATABASE | BMTC_DW | 2026-11-08 07:02:29.773000-08:00
    | SCHEMA | BMTC_DW.TRIP | 2026-11-08 07:02:30.038000-08:00
-   | VIEW | BMTC_DW.TRIP.SV_SHARE_ROUTE_DAILY | 2026-11-08 07:21:10.147000-08:00
+   | VIEW | BMTC_DW.TRIP.SV_SHARE_ROUTE_DAILY | 2026-11-08 10:12:14.583000-08:00
 
 > SELECT ROUTE_CODE, SUM(PASSENGERS) AS PASSENGERS FROM TRIP.SV_SHARE_ROUTE_DAILY GROUP BY ROUTE_CODE ORDER BY PASSENGERS DESC LIMIT 5
    | ROUTE_CODE | PASSENGERS

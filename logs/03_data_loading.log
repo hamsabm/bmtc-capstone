@@ -1,4 +1,4 @@
-# Execution log for 03_data_loading.sql (2026-11-08 20:46:05)
+# Execution log for 03_data_loading.sql (2026-11-08 23:37:14)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -50,16 +50,16 @@
 
 > LIST @STAGING.BMTC_INTERNAL_STAGE
    | name | size | md5 | last_modified
-   | bmtc_internal_stage/csv/bus_master.csv.gz | 2128 | 66bb7c71abef59225b39f9b797f759e3 | Sun, 8 Nov 2026 15:16:09 GMT
-   | bmtc_internal_stage/csv/depot_master.csv.gz | 448 | 98d715375da7509c80c2cc0f1a092b0a | Sun, 8 Nov 2026 15:16:09 GMT
-   | bmtc_internal_stage/csv/employee_master.csv.gz | 9216 | d548618171545c98998ac11c6cd26418 | Sun, 8 Nov 2026 15:16:09 GMT
-   | bmtc_internal_stage/csv/fuel_log.csv.gz | 10032 | 4b55e2d6bd1b8e652b2583cee2e73a32 | Sun, 8 Nov 2026 15:16:09 GMT
-   | bmtc_internal_stage/csv/maintenance_log.csv.gz | 13808 | 8baafa70fbe5db6616fd8019bc2354c9 | Sun, 8 Nov 2026 15:16:09 GMT
-   | bmtc_internal_stage/csv/pass_data.csv.gz | 44256 | 93b57c790c095fc89ea980d637a86171 | Sun, 8 Nov 2026 15:16:09 GMT
-   | bmtc_internal_stage/csv/route_master.csv.gz | 1264 | dad04d82455056935470bcbe2c0d966f | Sun, 8 Nov 2026 15:16:09 GMT
-   | bmtc_internal_stage/csv/ticket_data.csv.gz | 1576592 | 66f84ddfeb553774a67687e1e83ff346 | Sun, 8 Nov 2026 15:16:17 GMT
-   | bmtc_internal_stage/csv/trip_data.csv.gz | 86192 | 84b7306657fc2bc4d961cd15726f247b | Sun, 8 Nov 2026 15:16:10 GMT
-   | bmtc_internal_stage/json/complaints.json.gz | 29568 | 05e08f988b323d2887731084e933016e | Sun, 8 Nov 2026 15:16:18 GMT
+   | bmtc_internal_stage/csv/bus_master.csv.gz | 2128 | 48cb6abc2fc22b52f5e25542e6a5673b | Sun, 8 Nov 2026 18:07:18 GMT
+   | bmtc_internal_stage/csv/depot_master.csv.gz | 448 | 1309894f330461ac40fdd59a20776cbc | Sun, 8 Nov 2026 18:07:18 GMT
+   | bmtc_internal_stage/csv/employee_master.csv.gz | 9216 | b130f0772f7853c98684d01ac2fe1b07 | Sun, 8 Nov 2026 18:07:18 GMT
+   | bmtc_internal_stage/csv/fuel_log.csv.gz | 10032 | 1f478cade173cd2d4df6a0ff022b9e26 | Sun, 8 Nov 2026 18:07:18 GMT
+   | bmtc_internal_stage/csv/maintenance_log.csv.gz | 13808 | f4fb200c6b7d43281da9a88359a07bf1 | Sun, 8 Nov 2026 18:07:18 GMT
+   | bmtc_internal_stage/csv/pass_data.csv.gz | 44256 | 8d01daa9a914ce8232b2ae15b2d8c6d8 | Sun, 8 Nov 2026 18:07:18 GMT
+   | bmtc_internal_stage/csv/route_master.csv.gz | 1264 | 290bbaac7a4e7f08f773e8ea472e69ba | Sun, 8 Nov 2026 18:07:18 GMT
+   | bmtc_internal_stage/csv/ticket_data.csv.gz | 1576592 | 1f9113fb858571848394ccea4001e7c2 | Sun, 8 Nov 2026 18:07:22 GMT
+   | bmtc_internal_stage/csv/trip_data.csv.gz | 86192 | cff201563a5aaeeed9c36ee7bfb3cedd | Sun, 8 Nov 2026 18:07:19 GMT
+   | bmtc_internal_stage/json/complaints.json.gz | 29568 | d02bf9bef3370b9c0e443dfcd1632763 | Sun, 8 Nov 2026 18:07:23 GMT
 
 > SELECT $1 AS BUS_ID, $2 AS REGISTRATION_NO, $3 AS BUS_TYPE, $4 AS DEPOT_ID FROM @STAGING.BMTC_INTERNAL_STAGE/csv/bus_master.csv.gz (FILE_FOR
    | BUS_ID | REGISTRATION_NO | BUS_TYPE | DEPOT_ID

@@ -1,4 +1,4 @@
-# Execution log for dashboard_queries.sql (2026-11-08 23:01:23)
+# Execution log for dashboard_queries.sql (2026-11-09 09:20:09)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -109,15 +109,15 @@
    | Ticketing | Low | 42
    | AC Not Working | Medium | 10
    | Bus Condition | High | 8
+   | Overcrowding | High | 7
+   | Staff Behaviour | Low | 7
    | Staff Behaviour | High | 7
    | Delay | High | 7
-   | Staff Behaviour | Low | 7
-   | Overcrowding | High | 7
-   | Delay | Low | 6
    | Ticketing | Medium | 6
+   | Delay | Low | 6
    | Bus Condition | Medium | 5
-   | Cleanliness | High | 4
    | Safety | Low | 4
+   | Cleanliness | High | 4
    | Safety | Medium | 3
    | Cleanliness | Medium | 3
    | Ticketing | High | 2

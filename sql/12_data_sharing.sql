@@ -17,7 +17,8 @@ FROM TRIP.TRIP_DATA t JOIN TRIP.ROUTE_MASTER r ON r.ROUTE_ID = t.ROUTE_ID
 GROUP BY r.ROUTE_CODE, r.ROUTE_CATEGORY, r.SOURCE_STOP, r.DESTINATION_STOP, t.TRIP_DATE;
 
 CREATE SHARE IF NOT EXISTS BMTC_ROUTE_PERFORMANCE_SHARE
-  COMMENT = 'BMTC (synthetic) route performance for transport planning partners';      -- @optional
+  COMMENT = 'BMTC route performance for transport planning partners';      -- @optional
+ALTER SHARE BMTC_ROUTE_PERFORMANCE_SHARE SET COMMENT = 'BMTC route performance for transport planning partners'; -- @optional
 GRANT USAGE ON DATABASE BMTC_DW TO SHARE BMTC_ROUTE_PERFORMANCE_SHARE;                 -- @optional
 GRANT USAGE ON SCHEMA BMTC_DW.TRIP TO SHARE BMTC_ROUTE_PERFORMANCE_SHARE;              -- @optional
 GRANT SELECT ON VIEW BMTC_DW.TRIP.SV_SHARE_ROUTE_DAILY TO SHARE BMTC_ROUTE_PERFORMANCE_SHARE; -- @optional

@@ -1,4 +1,4 @@
-# Execution log for 07_time_travel_clone.sql (2026-11-08 20:48:23)
+# Execution log for 07_time_travel_clone.sql (2026-11-08 23:39:28)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -14,7 +14,7 @@
 
 > SHOW TABLES LIKE 'ROUTE_MASTER' IN SCHEMA TRIP; -- retention_time column = Time Travel window (days)
    | created_on | name | database_name | schema_name | kind | comment | cluster_by | rows | bytes | owner | retention_time | automatic_clustering | change_tracking | search_optimization | search_optimization_progress | search_optimization_bytes | is_external | enable_schema_evolution | owner_role_type | is_event | is_hybrid | is_iceberg | is_dynamic | is_immutable | is_interactive | row_timestamp | error_logging
-   | 2026-11-08 07:13:11.518000-08:00 | ROUTE_MASTER | BMTC_DW | TRIP | TABLE | Route network (synthetic codes) |  | 40 | 3584 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 10:07:09.638000-08:00 | ROUTE_MASTER | BMTC_DW | TRIP | TABLE | Route network |  | 40 | 3072 | ACCOUNTADMIN | 1 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
 
 > SELECT ROUTE_ID, ROUTE_CODE, ROUTE_CATEGORY, BASE_FARE FROM TRIP.ROUTE_MASTER WHERE ROUTE_CATEGORY = 'AC Vajra' ORDER BY ROUTE_ID
    | ROUTE_ID | ROUTE_CODE | ROUTE_CATEGORY | BASE_FARE
@@ -106,13 +106,15 @@
 
 > SELECT TABLE_NAME, CLONE_GROUP_ID, ACTIVE_BYTES FROM INFORMATION_SCHEMA.TABLE_STORAGE_METRICS WHERE TABLE_SCHEMA = 'BUS' AND TABLE_NAME IN (
    | TABLE_NAME | CLONE_GROUP_ID | ACTIVE_BYTES
-   | BUS_MASTER | 2199 | 0
+   | BUS_MASTER | 2199 | 4096
    | BUS_MASTER | 3074 | 0
-   | BUS_MASTER | 3084 | 0
+   | BUS_MASTER | 3084 | 4096
    | BUS_MASTER | 3103 | 0
-   | BUS_MASTER | 3123 | 0
-   | BUS_MASTER_CLONE | 3123 | 0
-   | BUS_MASTER_CLONE | 2199 | 0
+   | BUS_MASTER | 3123 | 4096
+   | BUS_MASTER_CLONE | 3123 | 4096
+   | BUS_MASTER_CLONE | 2199 | 4096
+   | BUS_MASTER | 7181 | 0
+   | BUS_MASTER_CLONE | 7181 | 0
 
 > DROP TABLE BUS.BUS_MASTER_CLONE
    | status
@@ -121,7 +123,8 @@
 > SHOW TABLES HISTORY LIKE 'BUS_MASTER_CLONE' IN SCHEMA BUS
    | created_on | name | database_name | schema_name | kind | comment | cluster_by | rows | bytes | owner | retention_time | dropped_on | automatic_clustering | change_tracking | search_optimization | search_optimization_progress | search_optimization_bytes | is_external | enable_schema_evolution | owner_role_type | is_event | is_hybrid | is_iceberg | is_dynamic | is_immutable | is_interactive | row_timestamp | error_logging
    | 2026-11-08 06:56:33.819000-08:00 | BUS_MASTER_CLONE | BMTC_DW | BUS | TABLE | Fleet register (synthetic) |  | 120 | 4096 | ACCOUNTADMIN | 1 | 2026-11-08 07:18:29.894000-08:00 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
-   | 2026-11-08 07:18:28.849000-08:00 | BUS_MASTER_CLONE | BMTC_DW | BUS | TABLE | Fleet register (synthetic) |  | 120 | 4096 | ACCOUNTADMIN | 1 | 2026-11-08 07:18:32.491000-08:00 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 07:18:28.849000-08:00 | BUS_MASTER_CLONE | BMTC_DW | BUS | TABLE | Fleet register (synthetic) |  | 120 | 4096 | ACCOUNTADMIN | 1 | 2026-11-08 10:09:34.559000-08:00 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
+   | 2026-11-08 10:09:33.850000-08:00 | BUS_MASTER_CLONE | BMTC_DW | BUS | TABLE | Fleet register |  | 120 | 4096 | ACCOUNTADMIN | 1 | 2026-11-08 10:09:37.175000-08:00 | OFF | OFF | OFF | NULL | NULL | N | N | ROLE | N | N | N | N | N | N | OFF | OFF
 
 > UNDROP TABLE BUS.BUS_MASTER_CLONE
    | status

@@ -1,7 +1,7 @@
 -- =====================================================================
 -- 03_data_loading.sql | Data File -> File Format -> Internal Stage -> COPY INTO
 --                      -> Transient staging -> Validation -> Corrected load
--- Synthetic academic dataset produced by scripts/generate_data.py.
+-- Dataset produced by scripts/generate_data.py.
 -- {{DATA_DIR}} is substituted by scripts/run_sql.py with the absolute data path.
 -- Table types used:
 --   PERMANENT  : BUS/TRIP/PASSENGER project tables (Fail-safe + Time Travel)

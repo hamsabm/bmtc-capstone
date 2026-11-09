@@ -1,4 +1,4 @@
-# Execution log for 04_advanced_sql.sql (2026-11-08 20:48:01)
+# Execution log for 04_advanced_sql.sql (2026-11-08 23:39:04)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -88,9 +88,9 @@
 > SELECT d.DEPOT_NAME, b.BUS_TYPE, COUNT(*) AS BUSES, ROUND(AVG(b.SEATING_CAPACITY), 1) AS AVG_SEATS, ROUND(AVG(2026 - b.MANUFACTURE_YEAR), 1)
    | DEPOT_NAME | BUS_TYPE | BUSES | AVG_SEATS | AVG_AGE_YEARS
    | Banashankari Depot | Ordinary | 5 | 42.0 | 5.6
+   | Banashankari Depot | Vajra AC | 2 | 40.0 | 6.0
    | Banashankari Depot | Midi Feeder | 2 | 33.0 | 3.5
    | Banashankari Depot | Electric AC | 2 | 34.0 | 1.5
-   | Banashankari Depot | Vajra AC | 2 | 40.0 | 6.0
    | Banashankari Depot | Vayu Vajra | 1 | 43.0 | 5.0
    | Electronic City Depot | Ordinary | 5 | 42.4 | 4.6
    | Electronic City Depot | Vajra AC | 2 | 42.0 | 2.0
@@ -98,9 +98,9 @@
    | Electronic City Depot | Midi Feeder | 2 | 32.0 | 4.5
    | Electronic City Depot | Vayu Vajra | 1 | 45.0 | 10.0
    | Hebbal Depot | Ordinary | 5 | 42.4 | 5.8
+   | Hebbal Depot | Electric AC | 2 | 36.0 | 1.5
    | Hebbal Depot | Vajra AC | 2 | 42.0 | 4.5
    | Hebbal Depot | Midi Feeder | 2 | 32.0 | 4.0
-   | Hebbal Depot | Electric AC | 2 | 36.0 | 1.5
    | Hebbal Depot | Vayu Vajra | 1 | 45.0 | 4.0
    | Kengeri Depot | Ordinary | 5 | 41.6 | 5.6
    | Kengeri Depot | Electric AC | 2 | 33.0 | 3.0
@@ -108,39 +108,39 @@
    | Kengeri Depot | Midi Feeder | 2 | 31.0 | 5.5
    | Kengeri Depot | Vayu Vajra | 1 | 45.0 | 7.0
    | Koramangala Depot | Ordinary | 5 | 42.8 | 4.4
+   | Koramangala Depot | Midi Feeder | 2 | 32.0 | 4.0
    | Koramangala Depot | Electric AC | 2 | 36.0 | 2.0
    | Koramangala Depot | Vajra AC | 2 | 41.0 | 4.0
-   | Koramangala Depot | Midi Feeder | 2 | 32.0 | 4.0
    | Koramangala Depot | Vayu Vajra | 1 | 45.0 | 5.0
    | ... 25 more rows
 
 > SELECT b.BUS_ID, b.REGISTRATION_NO, b.BUS_TYPE, d.DEPOT_NAME, COUNT(t.TRIP_ID) AS TRIPS FROM BUS.BUS_MASTER b JOIN BUS.DEPOT_MASTER d ON d.D
    | BUS_ID | REGISTRATION_NO | BUS_TYPE | DEPOT_NAME | TRIPS
-   | 59 | KA-41-F-8906 | Midi Feeder | Banashankari Depot | 0
    | 56 | KA-57-F-5183 | Vayu Vajra | Banashankari Depot | 0
+   | 59 | KA-41-F-8906 | Midi Feeder | Banashankari Depot | 0
    | 60 | KA-51-F-3968 | Midi Feeder | Banashankari Depot | 0
    | 80 | KA-02-F-9533 | Vayu Vajra | Electronic City Depot | 0
    | 42 | KA-02-F-2131 | Vajra AC | Hebbal Depot | 0
-   | 47 | KA-05-F-6435 | Midi Feeder | Hebbal Depot | 0
-   | 48 | KA-53-F-7544 | Midi Feeder | Hebbal Depot | 0
    | 46 | KA-02-F-6243 | Electric AC | Hebbal Depot | 0
+   | 48 | KA-53-F-7544 | Midi Feeder | Hebbal Depot | 0
    | 43 | KA-04-F-6324 | Vajra AC | Hebbal Depot | 0
-   | 44 | KA-05-F-8585 | Vayu Vajra | Hebbal Depot | 0
    | 45 | KA-05-F-3529 | Electric AC | Hebbal Depot | 0
+   | 47 | KA-05-F-6435 | Midi Feeder | Hebbal Depot | 0
+   | 44 | KA-05-F-8585 | Vayu Vajra | Hebbal Depot | 0
    | 30 | KA-01-F-1186 | Vajra AC | Kengeri Depot | 0
    | 34 | KA-51-F-9957 | Electric AC | Kengeri Depot | 0
-   | 33 | KA-04-F-8943 | Electric AC | Kengeri Depot | 0
    | 31 | KA-53-F-6897 | Vajra AC | Kengeri Depot | 0
-   | 102 | KA-41-F-5110 | Vajra AC | Koramangala Depot | 0
-   | 105 | KA-53-F-5319 | Electric AC | Koramangala Depot | 0
+   | 33 | KA-04-F-8943 | Electric AC | Kengeri Depot | 0
    | 106 | KA-05-F-5920 | Electric AC | Koramangala Depot | 0
+   | 102 | KA-41-F-5110 | Vajra AC | Koramangala Depot | 0
    | 103 | KA-01-F-4351 | Vajra AC | Koramangala Depot | 0
-   | 94 | KA-02-F-3134 | Electric AC | Peenya Depot | 0
+   | 105 | KA-53-F-5319 | Electric AC | Koramangala Depot | 0
    | 93 | KA-51-F-7550 | Electric AC | Peenya Depot | 0
-   | 91 | KA-51-F-4740 | Vajra AC | Peenya Depot | 0
    | 90 | KA-01-F-8723 | Vajra AC | Peenya Depot | 0
+   | 94 | KA-02-F-3134 | Electric AC | Peenya Depot | 0
+   | 91 | KA-51-F-4740 | Vajra AC | Peenya Depot | 0
    | 8 | KA-01-F-1419 | Vayu Vajra | Shanthinagar Depot | 0
-   | 68 | KA-01-F-8714 | Vayu Vajra | Whitefield Depot | 0
+   | 71 | KA-05-F-6057 | Midi Feeder | Whitefield Depot | 0
    | ... 4 more rows
 
 > WITH trip_stats AS ( SELECT ROUTE_ID, COUNT(*) AS TRIPS, COUNT_IF(TRIP_STATUS = 'COMPLETED') AS COMPLETED, SUM(PASSENGER_COUNT) AS PASSENGER
@@ -267,8 +267,8 @@
    | KA-57-F-9436 | Ordinary | LITRE | 1149 | 2.75 | 3.15 | -12.7 | INVESTIGATE | 32.30
    | KA-05-F-6978 | Midi Feeder | LITRE | 749 | 3.55 | 4.04 | -12.1 | INVESTIGATE | 25.19
    | KA-02-F-1611 | Ordinary | LITRE | 760 | 2.82 | 3.15 | -10.6 | INVESTIGATE | 31.44
-   | KA-53-F-6547 | Midi Feeder | LITRE | 668 | 3.65 | 4.04 | -9.6 | NORMAL | 24.08
    | KA-57-F-1770 | Ordinary | LITRE | 389 | 2.85 | 3.15 | -9.6 | NORMAL | 31.41
+   | KA-53-F-6547 | Midi Feeder | LITRE | 668 | 3.65 | 4.04 | -9.6 | NORMAL | 24.08
    | KA-41-F-7131 | Ordinary | LITRE | 412 | 2.90 | 3.15 | -8.1 | NORMAL | 30.63
    | KA-51-F-9892 | Vajra AC | LITRE | 1397 | 2.12 | 2.29 | -7.5 | NORMAL | 41.93
    | KA-53-F-7347 | Ordinary | LITRE | 795 | 2.92 | 3.15 | -7.4 | NORMAL | 30.17
@@ -276,8 +276,8 @@
    | KA-51-F-5744 | Midi Feeder | LITRE | 612 | 3.76 | 4.04 | -6.9 | NORMAL | 23.75
    | KA-41-F-7374 | Electric AC | KWH | 210 | 0.96 | 1.03 | -6.8 | NORMAL | 9.90
    | KA-53-F-6465 | Midi Feeder | LITRE | 353 | 3.79 | 4.04 | -6.0 | NORMAL | 23.51
-   | KA-04-F-9416 | Ordinary | LITRE | 563 | 2.98 | 3.15 | -5.5 | NORMAL | 29.83
    | KA-57-F-3209 | Ordinary | LITRE | 569 | 2.98 | 3.15 | -5.5 | NORMAL | 30.14
+   | KA-04-F-9416 | Ordinary | LITRE | 563 | 2.98 | 3.15 | -5.5 | NORMAL | 29.83
    | KA-04-F-3217 | Vajra AC | LITRE | 807 | 2.17 | 2.29 | -5.2 | NORMAL | 40.73
    | KA-51-F-3878 | Midi Feeder | LITRE | 401 | 3.83 | 4.04 | -5.1 | NORMAL | 23.49
    | KA-41-F-6852 | Ordinary | LITRE | 2213 | 3.00 | 3.15 | -4.9 | NORMAL | 29.63
@@ -311,30 +311,30 @@
 
 > SELECT BUS_ID, MAINTENANCE_DATE, MAINTENANCE_TYPE, DATEDIFF(DAY, LAG(MAINTENANCE_DATE) OVER (PARTITION BY BUS_ID ORDER BY MAINTENANCE_DATE),
    | BUS_ID | MAINTENANCE_DATE | MAINTENANCE_TYPE | DAYS_SINCE_PREVIOUS
+   | 43 | 2026-07-30 | Body Work | 0
+   | 35 | 2026-07-24 | Preventive Service | 0
    | 51 | 2026-02-02 | Preventive Service | 0
-   | 35 | 2026-07-24 | Engine Repair | 0
-   | 43 | 2026-07-30 | Engine Repair | 0
-   | 39 | 2025-11-04 | Electrical Fault | 1
-   | 77 | 2026-02-05 | Preventive Service | 1
-   | 84 | 2026-06-10 | Electrical Fault | 1
-   | 2 | 2026-01-19 | Body Work | 1
    | 39 | 2026-07-20 | Body Work | 1
-   | 47 | 2025-11-13 | Brake Repair | 1
-   | 44 | 2026-08-28 | Preventive Service | 1
-   | 97 | 2026-04-01 | Electrical Fault | 1
+   | 2 | 2026-01-19 | Body Work | 1
+   | 65 | 2026-05-05 | Preventive Service | 1
+   | 84 | 2026-06-10 | Electrical Fault | 1
+   | 43 | 2026-09-25 | Preventive Service | 1
    | 116 | 2026-06-05 | Preventive Service | 1
    | 40 | 2026-03-15 | Engine Repair | 1
-   | 65 | 2026-05-05 | Preventive Service | 1
-   | 43 | 2026-09-25 | Preventive Service | 1
+   | 97 | 2026-04-01 | Electrical Fault | 1
+   | 44 | 2026-08-28 | Preventive Service | 1
+   | 77 | 2026-02-05 | Preventive Service | 1
+   | 39 | 2025-11-04 | Electrical Fault | 1
+   | 47 | 2025-11-13 | Brake Repair | 1
    | 83 | 2025-12-14 | Brake Repair | 2
    | 114 | 2026-09-16 | Preventive Service | 2
    | 40 | 2026-03-11 | Preventive Service | 2
-   | 12 | 2026-06-22 | Brake Repair | 3
-   | 99 | 2026-04-26 | Brake Repair | 3
-   | 52 | 2026-10-10 | Electrical Fault | 3
    | 11 | 2026-08-17 | Engine Repair | 3
-   | 40 | 2026-03-14 | Brake Repair | 3
    | 23 | 2026-09-02 | Preventive Service | 3
+   | 52 | 2026-10-10 | Electrical Fault | 3
+   | 99 | 2026-04-26 | Brake Repair | 3
+   | 40 | 2026-03-14 | Brake Repair | 3
+   | 12 | 2026-06-22 | Brake Repair | 3
    | 113 | 2026-07-03 | Electrical Fault | 4
    | ... 60 more rows
 
@@ -359,7 +359,7 @@
    | Yeshwanthpur Depot | EMP00036 | Harish Pai | 42 | 825.8 | 1
    | Shanthinagar Depot | EMP00003 | Anitha Iyer | 41 | 775.4 | 1
    | Koramangala Depot | EMP00242 | Ravi Swamy | 38 | 826.8 | 1
-   | Peenya Depot | EMP00222 | Bhavya Sharma | 37 | 614.2 | 1
    | Kengeri Depot | EMP00068 | Manjunath Kumar | 37 | 691.1 | 1
+   | Peenya Depot | EMP00222 | Bhavya Sharma | 37 | 614.2 | 1
    | Electronic City Depot | EMP00191 | Raghavendra Kulkarni | 36 | 429.5 | 1
    | Banashankari Depot | EMP00126 | Sunil Patil | 25 | 616.6 | 1

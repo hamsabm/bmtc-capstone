@@ -1,4 +1,4 @@
-# Execution log for 06_views.sql (2026-11-08 20:48:16)
+# Execution log for 06_views.sql (2026-11-08 23:39:20)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -54,7 +54,7 @@
 
 > SHOW MATERIALIZED VIEWS IN SCHEMA TRIP; -- @optional
    | created_on | name | reserved | database_name | schema_name | cluster_by | rows | bytes | source_database_name | source_schema_name | source_table_name | refreshed_on | compacted_on | owner | invalid | invalid_reason | behind_by | comment | text | is_secure | automatic_clustering | owner_role_type
-   | 2026-11-08 07:18:20.397000-08:00 | MV_DAILY_ROUTE_REVENUE |  | BMTC_DW | TRIP |  | 3263 | 26112 | BMTC_DW | TRIP | TICKET_DATA | 2026-11-08 07:16:36.291000-08:00 | 2026-11-08 07:16:36.291000-08:00 | ACCOUNTADMIN | false | NULL | 0s | Materialized daily ticket revenue per route (Enterprise feat | CREATE OR REPLACE MATERIALIZED VIEW TRIP.MV_DAILY_ROUTE_REVE | false | OFF | ROLE
+   | 2026-11-08 10:09:25.796000-08:00 | MV_DAILY_ROUTE_REVENUE |  | BMTC_DW | TRIP |  | 3263 | 26112 | BMTC_DW | TRIP | TICKET_DATA | 2026-11-08 10:07:41.017000-08:00 | 2026-11-08 10:07:41.017000-08:00 | ACCOUNTADMIN | false | NULL | 0s | Materialized daily ticket revenue per route (Enterprise feat | CREATE OR REPLACE MATERIALIZED VIEW TRIP.MV_DAILY_ROUTE_REVE | false | OFF | ROLE
 
 > SELECT TICKET_DATE, SUM(REVENUE) AS REVENUE FROM TRIP.MV_DAILY_ROUTE_REVENUE WHERE TICKET_DATE >= '2026-10-25' GROUP BY TICKET_DATE ORDER BY
    | TICKET_DATE | REVENUE
@@ -91,11 +91,11 @@
 
 > SHOW VIEWS IN DATABASE BMTC_DW
    | created_on | name | reserved | database_name | schema_name | owner | comment | text | is_secure | is_materialized | owner_role_type | change_tracking
-   | 2026-11-08 07:00:29.672000-08:00 | SV_DEPOT_PAYROLL_SUMMARY |  | BMTC_DW | BUS | ACCOUNTADMIN | Aggregated payroll per depot and role - no individual salari | CREATE OR REPLACE SECURE VIEW BUS.SV_DEPOT_PAYROLL_SUMMARY
+   | 2026-11-08 07:20:16.239000-08:00 | SV_DEPOT_PAYROLL_SUMMARY |  | BMTC_DW | BUS | ACCOUNTADMIN | Aggregated payroll per depot and role - no individual salari | CREATE OR REPLACE SECURE VIEW BUS.SV_DEPOT_PAYROLL_SUMMARY
 c | true | false | ROLE | OFF
-   | 2026-11-08 07:00:29.331000-08:00 | SV_EMPLOYEE_DIRECTORY |  | BMTC_DW | BUS | ACCOUNTADMIN | Workforce directory without contact details or salary (secur | CREATE OR REPLACE SECURE VIEW BUS.SV_EMPLOYEE_DIRECTORY
+   | 2026-11-08 07:20:15.769000-08:00 | SV_EMPLOYEE_DIRECTORY |  | BMTC_DW | BUS | ACCOUNTADMIN | Workforce directory without contact details or salary (secur | CREATE OR REPLACE SECURE VIEW BUS.SV_EMPLOYEE_DIRECTORY
 comm | true | false | ROLE | OFF
-   | 2026-11-08 07:18:19.426000-08:00 | V_BUS_SUMMARY |  | BMTC_DW | BUS | ACCOUNTADMIN | Per-bus utilisation, fuel efficiency and maintenance burden | CREATE OR REPLACE VIEW BUS.V_BUS_SUMMARY
+   | 2026-11-08 10:09:24.841000-08:00 | V_BUS_SUMMARY |  | BMTC_DW | BUS | ACCOUNTADMIN | Per-bus utilisation, fuel efficiency and maintenance burden | CREATE OR REPLACE VIEW BUS.V_BUS_SUMMARY
 comment = 'Per-bus  | false | false | ROLE | OFF
    | 1969-12-31 16:00:00-08:00 | APPLICABLE_ROLES |  | BMTC_DW | INFORMATION_SCHEMA |  | The roles that can be applied to the current user. |  | false | false |  | OFF
    | 1969-12-31 16:00:00-08:00 | APPLICATION_CONFIGURATIONS |  | BMTC_DW | INFORMATION_SCHEMA |  | The configurations currently defined in the current applicat |  | false | false |  | OFF

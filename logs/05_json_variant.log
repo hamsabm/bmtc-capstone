@@ -1,4 +1,4 @@
-# Execution log for 05_json_variant.sql (2026-11-08 20:48:13)
+# Execution log for 05_json_variant.sql (2026-11-08 23:39:17)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -54,7 +54,6 @@
 
 > SELECT COMPLAINT_ID, SUBMITTED_AT, PAYLOAD:description::VARCHAR AS DESCRIPTION, PAYLOAD:resolution.status::VARCHAR AS STATUS FROM PASSENGER.
    | COMPLAINT_ID | SUBMITTED_AT | DESCRIPTION | STATUS
-   | CMP-000477 | 2026-10-30 22:19:00 | Door open while moving on route MF-473 near HSR Layout. | Open
    | CMP-000016 | 2025-11-26 08:45:00 | Door open while moving on route 442A near Hebbal. | Open
    | CMP-000018 | 2025-11-28 16:07:00 | Rash driving on route V-468E near Banashankari TTMC. | Open
    | CMP-000071 | 2026-01-17 02:49:00 | Door open while moving on route 244C near Nagawara. | In Progress
@@ -62,6 +61,7 @@
    | CMP-000188 | 2026-04-24 05:33:00 | Harassment reported on route 458D near JP Nagar. | In Progress
    | CMP-000297 | 2026-07-03 17:18:00 | Harassment reported on route 595A near Rajajinagar. | In Progress
    | CMP-000360 | 2026-08-10 02:59:00 | Door open while moving on route 244C near Yelahanka. | Open
+   | CMP-000477 | 2026-10-30 22:19:00 | Door open while moving on route MF-473 near HSR Layout. | Open
 
 > SELECT PAYLOAD:category::VARCHAR AS CATEGORY, COUNT(*) AS COMPLAINTS, COUNT_IF(PAYLOAD:priority::VARCHAR = 'High') AS HIGH_PRIORITY, ROUND(1
    | CATEGORY | COMPLAINTS | HIGH_PRIORITY | RESOLVED_PCT | AVG_RESOLUTION_DAYS | AVG_SATISFACTION
@@ -142,26 +142,23 @@
    | ROUTE_COMPLAINT_DOC
    | {
   "categories": [
-    "Delay",
-    "Staff Behaviour",
-    
-   | {
-  "categories": [
-    "Cleanliness",
+    "Ticketing",
     "Overcrowding",
- 
+   
    | {
   "categories": [
-    "Overcrowding",
-    "Delay",
-    "Cl
-   | {
-  "categories": [
-    "Overcrowding",
-    "Safety",
-    "C
-   | {
-  "categories": [
-    "Cleanliness",
     "Bus Condition",
-
+    "Staff Behaviou
+   | {
+  "categories": [
+    "Staff Behaviour",
+    "Overcrowding
+   | {
+  "categories": [
+    "Staff Behaviour",
+    "Cleanliness"
+   | {
+  "categories": [
+    "Bus Condition",
+    "Safety",
+    "

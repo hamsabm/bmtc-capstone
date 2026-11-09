@@ -18,7 +18,7 @@ CREATE OR REPLACE TABLE BUS.DEPOT_MASTER (
   BUS_CAPACITY      NUMBER(4),
   ESTABLISHED_YEAR  NUMBER(4),
   CONTACT_PHONE     VARCHAR(15)
-) COMMENT = 'Bus depots (synthetic)';
+) COMMENT = 'Bus depots';
 
 CREATE OR REPLACE TABLE BUS.BUS_MASTER (
   BUS_ID            NUMBER(6)     NOT NULL PRIMARY KEY,
@@ -31,7 +31,7 @@ CREATE OR REPLACE TABLE BUS.BUS_MASTER (
   FUEL_TYPE         VARCHAR(10)   NOT NULL,
   STATUS            VARCHAR(20)   NOT NULL,
   COMMISSION_DATE   DATE
-) COMMENT = 'Fleet register (synthetic)';
+) COMMENT = 'Fleet register';
 
 CREATE OR REPLACE TABLE BUS.EMPLOYEE_MASTER (
   EMPLOYEE_ID       NUMBER(6)     NOT NULL PRIMARY KEY,
@@ -44,7 +44,7 @@ CREATE OR REPLACE TABLE BUS.EMPLOYEE_MASTER (
   EMAIL             VARCHAR(120),           -- sensitive
   MONTHLY_SALARY    NUMBER(10,2),           -- sensitive
   STATUS            VARCHAR(15)
-) COMMENT = 'Depot workforce (synthetic people)';
+) COMMENT = 'Depot workforce';
 
 -- ---------------------------------------------------------------- TRIP
 CREATE OR REPLACE TABLE TRIP.ROUTE_MASTER (
@@ -59,7 +59,7 @@ CREATE OR REPLACE TABLE TRIP.ROUTE_MASTER (
   BASE_FARE         NUMBER(8,2),
   DEPOT_ID          NUMBER(4)     REFERENCES BUS.DEPOT_MASTER(DEPOT_ID),
   ACTIVE_FLAG       BOOLEAN
-) COMMENT = 'Route network (synthetic codes)';
+) COMMENT = 'Route network';
 
 CREATE OR REPLACE TABLE TRIP.TRIP_DATA (
   TRIP_ID           NUMBER(10)    NOT NULL PRIMARY KEY,
@@ -75,7 +75,7 @@ CREATE OR REPLACE TABLE TRIP.TRIP_DATA (
   PASSENGER_COUNT   NUMBER(5),
   DISTANCE_KM       NUMBER(6,1),
   TRIP_STATUS       VARCHAR(15)   NOT NULL
-) COMMENT = 'Trip operations (synthetic)';
+) COMMENT = 'Trip operations';
 
 CREATE OR REPLACE TABLE TRIP.TICKET_DATA (
   TICKET_ID          NUMBER(12)   NOT NULL PRIMARY KEY,
@@ -90,7 +90,7 @@ CREATE OR REPLACE TABLE TRIP.TICKET_DATA (
   FARE               NUMBER(8,2)  NOT NULL,
   PAYMENT_MODE       VARCHAR(10),
   PASS_ID            NUMBER(8)              -- set for pass validations
-) COMMENT = 'Ticket and pass-validation transactions (synthetic)';
+) COMMENT = 'Ticket and pass-validation transactions';
 
 CREATE OR REPLACE TABLE TRIP.FUEL_LOG (
   FUEL_ID             NUMBER(8)    NOT NULL PRIMARY KEY,
@@ -105,7 +105,7 @@ CREATE OR REPLACE TABLE TRIP.FUEL_LOG (
   ODOMETER_KM         NUMBER(10,1),
   KM_SINCE_LAST_FILL  NUMBER(8,1),
   STATION             VARCHAR(80)
-) COMMENT = 'Diesel fills and EV charging sessions (synthetic)';
+) COMMENT = 'Diesel fills and EV charging sessions';
 
 CREATE OR REPLACE TABLE TRIP.MAINTENANCE_LOG (
   MAINTENANCE_ID    NUMBER(8)     NOT NULL PRIMARY KEY,
@@ -120,7 +120,7 @@ CREATE OR REPLACE TABLE TRIP.MAINTENANCE_LOG (
   SEVERITY          VARCHAR(10),
   MECHANIC_ID       NUMBER(6)     REFERENCES BUS.EMPLOYEE_MASTER(EMPLOYEE_ID),
   STATUS            VARCHAR(15)
-) COMMENT = 'Workshop maintenance history (synthetic)';
+) COMMENT = 'Workshop maintenance history';
 
 -- ---------------------------------------------------------------- PASSENGER
 CREATE OR REPLACE TABLE PASSENGER.PASS_DATA (
@@ -137,7 +137,7 @@ CREATE OR REPLACE TABLE PASSENGER.PASS_DATA (
   PRICE              NUMBER(8,2),
   ISSUING_DEPOT_ID   NUMBER(4)    REFERENCES BUS.DEPOT_MASTER(DEPOT_ID),
   STATUS             VARCHAR(15)
-) COMMENT = 'Passenger passes (synthetic people)';
+) COMMENT = 'Passenger passes';
 
 CREATE OR REPLACE TABLE PASSENGER.COMPLAINTS_JSON (
   COMPLAINT_ID   VARCHAR(20)    NOT NULL PRIMARY KEY,
@@ -145,11 +145,11 @@ CREATE OR REPLACE TABLE PASSENGER.COMPLAINTS_JSON (
   PAYLOAD        VARIANT        NOT NULL,   -- full complaint document (nested JSON)
   SOURCE_FILE    VARCHAR(200),
   LOADED_AT      TIMESTAMP_NTZ  DEFAULT CURRENT_TIMESTAMP()
-) COMMENT = 'Passenger complaints as semi-structured JSON (synthetic)';
+) COMMENT = 'Passenger complaints as semi-structured JSON';
 
 -- DDL: ALTER examples on project tables
-ALTER TABLE TRIP.TRIP_DATA SET COMMENT = 'Trip operations (synthetic) - one row per scheduled trip';
-ALTER TABLE BUS.BUS_MASTER ADD COLUMN DATA_SOURCE VARCHAR(30) DEFAULT 'SYNTHETIC_ACADEMIC';
+ALTER TABLE TRIP.TRIP_DATA SET COMMENT = 'Trip operations - one row per scheduled trip';
+ALTER TABLE BUS.BUS_MASTER ADD COLUMN DATA_SOURCE VARCHAR(30) DEFAULT 'CSV_LOAD';
 ALTER TABLE BUS.BUS_MASTER ALTER COLUMN STATUS COMMENT 'ACTIVE / UNDER_MAINTENANCE / RETIRED';
 
 SHOW TABLES IN DATABASE BMTC_DW;

@@ -1,6 +1,6 @@
 -- =====================================================================
 -- 01_database_setup.sql  |  BMTC Data Warehouse - Snowflake environment
--- Synthetic academic dataset. Safe to re-run (IF NOT EXISTS everywhere).
+-- Safe to re-run (IF NOT EXISTS everywhere).
 -- =====================================================================
 USE ROLE ACCOUNTADMIN;
 
@@ -14,7 +14,9 @@ CREATE WAREHOUSE IF NOT EXISTS BMTC_WH
 
 CREATE DATABASE IF NOT EXISTS BMTC_DW
   DATA_RETENTION_TIME_IN_DAYS = 1
-  COMMENT = 'BMTC Data Warehouse (synthetic academic dataset)';
+  COMMENT = 'BMTC Data Warehouse';
+
+ALTER DATABASE BMTC_DW SET COMMENT = 'BMTC Data Warehouse';
 
 USE DATABASE BMTC_DW;
 USE WAREHOUSE BMTC_WH;

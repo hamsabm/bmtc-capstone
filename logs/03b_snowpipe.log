@@ -1,4 +1,4 @@
-# Execution log for 03b_snowpipe.sql (2026-11-08 20:46:39)
+# Execution log for 03b_snowpipe.sql (2026-11-08 23:37:43)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -18,7 +18,7 @@
 
 > SHOW PIPES IN SCHEMA STAGING
    | created_on | name | database_name | schema_name | definition | owner | notification_channel | comment | integration | pattern | error_integration | owner_role_type | invalid_reason | kind | is_snowflake_managed
-   | 2026-11-08 07:16:40.560000-08:00 | PIPE_COMPLAINTS_FEED | BMTC_DW | STAGING | COPY INTO PASSENGER.COMPLAINTS_JSON (COMPLAINT_ID, SUBMITTED | ACCOUNTADMIN | NULL | Snowpipe: new complaint JSON files -> PASSENGER.COMPLAINTS_J | NULL | NULL | NULL | ROLE | NULL | STAGE | false
+   | 2026-11-08 10:07:45.147000-08:00 | PIPE_COMPLAINTS_FEED | BMTC_DW | STAGING | COPY INTO PASSENGER.COMPLAINTS_JSON (COMPLAINT_ID, SUBMITTED | ACCOUNTADMIN | NULL | Snowpipe: new complaint JSON files -> PASSENGER.COMPLAINTS_J | NULL | NULL | NULL | ROLE | NULL | STAGE | false
 
 > SELECT COUNT(*) AS COMPLAINTS_BEFORE_FEED FROM PASSENGER.COMPLAINTS_JSON
    | COMPLAINTS_BEFORE_FEED
@@ -50,4 +50,4 @@
 
 > SELECT FILE_NAME, STATUS, ROW_COUNT, PIPE_NAME, LAST_LOAD_TIME FROM TABLE(INFORMATION_SCHEMA.COPY_HISTORY(TABLE_NAME => 'PASSENGER.COMPLAINT
    | FILE_NAME | STATUS | ROW_COUNT | PIPE_NAME | LAST_LOAD_TIME
-   | complaints_feed_001.json.gz | Loaded | 25 | PIPE_COMPLAINTS_FEED | 2026-11-08 07:17:04.400000-08:00
+   | complaints_feed_001.json.gz | Loaded | 25 | PIPE_COMPLAINTS_FEED | 2026-11-08 10:08:08.403000-08:00

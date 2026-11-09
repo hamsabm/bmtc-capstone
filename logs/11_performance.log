@@ -1,4 +1,4 @@
-# Execution log for 11_performance.sql (2026-11-08 20:50:58)
+# Execution log for 11_performance.sql (2026-11-08 23:42:03)
 
 > USE ROLE ACCOUNTADMIN
    | status
@@ -18,7 +18,7 @@
 
 > SHOW WAREHOUSES LIKE 'BMTC_WH'
    | name | state | type | size | min_cluster_count | max_cluster_count | started_clusters | running | queued | is_default | is_current | auto_suspend | auto_resume | available | provisioning | quiescing | other | created_on | resumed_on | updated_on | owner | comment | enable_query_acceleration | query_acceleration_max_scale_factor | resource_monitor | actives | pendings | failed | suspended | uuid | scaling_policy | owner_role_type | resource_constraint | generation | query_throughput_multiplier | max_query_performance_level | disabled_reasons | tables
-   | BMTC_WH | STARTED | STANDARD | X-Small | 1 | 1 | 1 | 0 | 0 | N | Y | 60 | true |  100 | 0 | 0 | 0 | 2026-11-08 06:41:47.982000-08:00 | 2026-11-08 06:41:47.987000-08:00 | 2026-11-08 07:20:59.579000-08:00 | ACCOUNTADMIN | BMTC capstone compute - XSMALL, auto-suspend 60s | true | 8 | BMTC_RM | 1 | 0 | 0 | 0 | 51120724 | STANDARD | ROLE | STANDARD_GEN_2 | 2 | NULL | NULL | NULL | NULL
+   | BMTC_WH | STARTED | STANDARD | X-Small | 1 | 1 | 1 | 0 | 0 | N | Y | 60 | true |  100 | 0 | 0 | 0 | 2026-11-08 06:41:47.982000-08:00 | 2026-11-08 06:41:47.987000-08:00 | 2026-11-08 10:12:05.153000-08:00 | ACCOUNTADMIN | BMTC capstone compute - XSMALL, auto-suspend 60s | true | 8 | BMTC_RM | 1 | 0 | 0 | 0 | 51120724 | STANDARD | ROLE | STANDARD_GEN_2 | 2 | NULL | NULL | NULL | NULL
 
 > CREATE OR REPLACE RESOURCE MONITOR BMTC_RM WITH CREDIT_QUOTA = 5 FREQUENCY = MONTHLY START_TIMESTAMP = IMMEDIATELY TRIGGERS ON 75 PERCENT DO
    | status
@@ -30,13 +30,13 @@
 
 > SHOW RESOURCE MONITORS LIKE 'BMTC_RM'; -- @optional
    | name | credit_quota | used_credits | remaining_credits | level | frequency | start_time | end_time | notify_at | suspend_at | suspend_immediately_at | created_on | owner | comment | notify_users
-   | BMTC_RM | 5.00 | 0.00 | 5.00 | WAREHOUSE | MONTHLY | 2026-11-08 07:21:00.188000-08:00 | NULL | 75% | 100% | 110% | 2026-11-08 07:21:00.177000-08:00 | ACCOUNTADMIN | NULL | 
+   | BMTC_RM | 5.00 | 0.00 | 5.00 | WAREHOUSE | MONTHLY | 2026-11-08 10:12:05.812000-08:00 | NULL | 75% | 100% | 110% | 2026-11-08 10:12:05.786000-08:00 | ACCOUNTADMIN | NULL | 
 
 > SELECT TABLE_SCHEMA, TABLE_NAME, ROW_COUNT, BYTES, ROUND(BYTES / 1024 / 1024, 2) AS MB, RETENTION_TIME, IS_TRANSIENT FROM INFORMATION_SCHEMA
    | TABLE_SCHEMA | TABLE_NAME | ROW_COUNT | BYTES | MB | RETENTION_TIME | IS_TRANSIENT
    | TRIP | TICKET_DATA | 120718 | 2896384 | 2.76 | 1 | NO
    | TRIP | TRIP_DATA | 3945 | 134656 | 0.13 | 1 | NO
-   | PASSENGER | PASS_DATA | 1500 | 57344 | 0.05 | 1 | NO
+   | PASSENGER | PASS_DATA | 1500 | 56832 | 0.05 | 1 | NO
    | PASSENGER | COMPLAINTS_JSON | 485 | 51712 | 0.05 | 1 | NO
    | TRIP | TRIP_ANALYTICS_SUMMARY | 3348 | 20992 | 0.02 | 1 | NO
    | TRIP | MAINTENANCE_LOG | 713 | 16896 | 0.02 | 1 | NO
@@ -44,11 +44,11 @@
    | TRIP | FUEL_LOG | 383 | 9216 | 0.01 | 1 | NO
    | BUS | BUS_MASTER | 120 | 4096 | 0.00 | 1 | NO
    | BUS | BUS_MASTER_CLONE | 120 | 4096 | 0.00 | 1 | NO
-   | TRIP | ROUTE_MASTER_PRE_FARE_ERROR | 40 | 3584 | 0.00 | 1 | NO
    | TRIP | ROUTE_MASTER | 40 | 3072 | 0.00 | 1 | NO
+   | TRIP | ROUTE_MASTER_PRE_FARE_ERROR | 40 | 3072 | 0.00 | 1 | NO
    | BUS | DEPOT_MASTER | 10 | 2048 | 0.00 | 1 | NO
    | BUS | BUS_STATUS_AUDIT | 5 | 1536 | 0.00 | 1 | NO
-   | TRIP | FLEET_HEALTH_SNAPSHOT | 20 | 1536 | 0.00 | 1 | NO
+   | TRIP | FLEET_HEALTH_SNAPSHOT | 30 | 1536 | 0.00 | 1 | NO
    | TRIP | TASK_RUN_LOG | 2 | 1024 | 0.00 | 1 | NO
 
 > SELECT SYSTEM$CLUSTERING_INFORMATION('TRIP.TICKET_DATA', '(TICKET_DATE)') AS TICKET_DATE_CLUSTERING
@@ -69,31 +69,31 @@
 
 > SELECT ROUTE_ID, COUNT(*) AS TICKETS, SUM(FARE) AS REVENUE FROM TRIP.TICKET_DATA WHERE TICKET_DATE BETWEEN '2026-10-01' AND '2026-10-31' GRO
    | ROUTE_ID | TICKETS | REVENUE
-   | 26 | 381 | 2005.00
-   | 13 | 141 | 2116.00
-   | 10 | 290 | 2172.00
-   | 22 | 414 | 2718.00
-   | 24 | 325 | 7936.00
-   | 23 | 625 | 4667.00
-   | 36 | 343 | 2640.00
-   | 15 | 355 | 3814.00
-   | 11 | 279 | 1140.00
-   | 3 | 221 | 1922.00
-   | 12 | 183 | 2740.00
-   | 35 | 469 | 4152.00
-   | 28 | 104 | 585.00
-   | 21 | 443 | 8920.00
-   | 40 | 281 | 11255.00
-   | 14 | 847 | 4910.00
-   | 39 | 306 | 2592.00
-   | 20 | 262 | 3172.00
    | 5 | 296 | 2969.00
-   | 29 | 162 | 2061.00
-   | 30 | 45 | 8743.00
-   | 1 | 207 | 5312.00
+   | 20 | 262 | 3172.00
+   | 22 | 414 | 2718.00
+   | 3 | 221 | 1922.00
+   | 24 | 325 | 7936.00
+   | 25 | 67 | 1156.00
+   | 23 | 625 | 4667.00
    | 27 | 180 | 1545.00
-   | 32 | 40 | 209.00
+   | 15 | 355 | 3814.00
+   | 1 | 207 | 5312.00
+   | 35 | 469 | 4152.00
+   | 21 | 443 | 8920.00
+   | 14 | 847 | 4910.00
    | 7 | 52 | 368.00
+   | 16 | 867 | 7720.00
+   | 6 | 79 | 761.00
+   | 19 | 28 | 655.00
+   | 37 | 286 | 3929.00
+   | 31 | 200 | 937.00
+   | 26 | 381 | 2005.00
+   | 36 | 343 | 2640.00
+   | 4 | 191 | 1731.00
+   | 2 | 40 | 301.00
+   | 39 | 306 | 2592.00
+   | 34 | 25 | 2795.00
    | ... 13 more rows
 
 > SET q_filtered = LAST_QUERY_ID()
@@ -188,11 +188,11 @@
 
 > SELECT QUERY_ID, LEFT(QUERY_TEXT, 70) AS QUERY, TOTAL_ELAPSED_TIME AS ELAPSED_MS, BYTES_SCANNED, ROWS_PRODUCED FROM TABLE(INFORMATION_SCHEMA
    | QUERY_ID | QUERY | ELAPSED_MS | BYTES_SCANNED | ROWS_PRODUCED
-   | 01c846b9-000e-2a43-0003-0c0a000175b6 | SELECT ROUTE_ID, COUNT(*) AS TICKETS, SUM(FARE) AS REVENUE
-F | 103 | 2896384 | 38
-   | 01c846b9-000e-2a76-0003-0c0a0001a1b2 | SELECT TICKET_DATE, SUM(FARE) FROM TRIP.TICKET_DATA GROUP BY | 69 | 2896384 | 365
-   | 01c846b9-000e-2a43-0003-0c0a000175c2 | SELECT TICKET_DATE, SUM(REVENUE) FROM TRIP.MV_DAILY_ROUTE_RE | 98 | 26112 | 365
-   | 01c846b9-000e-2a43-0003-0c0a000175ca | SELECT COUNT(*) FROM TRIP.TICKET_DATA WHERE PAYMENT_MODE = ' | 24 | 0 | 1
+   | 01c84764-000e-2a43-0003-0c0a000230da | SELECT ROUTE_ID, COUNT(*) AS TICKETS, SUM(FARE) AS REVENUE
+F | 85 | 2896384 | 38
+   | 01c84764-000e-2a97-0003-0c0a00022942 | SELECT TICKET_DATE, SUM(FARE) FROM TRIP.TICKET_DATA GROUP BY | 68 | 2896384 | 365
+   | 01c84764-000e-2a97-0003-0c0a00022946 | SELECT TICKET_DATE, SUM(REVENUE) FROM TRIP.MV_DAILY_ROUTE_RE | 108 | 26112 | 365
+   | 01c84764-000e-2a97-0003-0c0a00022952 | SELECT COUNT(*) FROM TRIP.TICKET_DATA WHERE PAYMENT_MODE = ' | 45 | 0 | 1
 
 > EXPLAIN SELECT ROUTE_CODE, REVENUE FROM TRIP.V_ROUTE_PERFORMANCE ORDER BY REVENUE DESC LIMIT 10
    | step | id | parentOperators | operation | objects | alias | expressions | partitionsTotal | partitionsAssigned | bytesAssigned
