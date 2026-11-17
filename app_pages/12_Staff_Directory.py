@@ -1,11 +1,12 @@
 import streamlit as st
 
-from utils.auth import get_current_user, render_role_switcher_banner
+from utils.auth import enforce_role_access, get_current_user, render_role_switcher_banner
 from utils.db import execute, query
 from utils.ui import chart, money, num, page, show_table
 
 page("Staff & Workforce Directory", "Employee roster by role and depot with role-based privacy masking")
 
+enforce_role_access("Staff Directory", "Depot Manager", "Supervisor")
 render_role_switcher_banner()
 
 user = get_current_user()

@@ -3,10 +3,45 @@ import datetime as dt
 import streamlit as st
 
 from utils import queries as Q
+from utils.auth import get_assigned_routes, get_current_user, render_role_switcher_banner
 from utils.db import query
 from utils.ui import chart, money, num, page, show_table
 
 page("Routes & Trips", "Route network, route performance (TRIP.V_ROUTE_PERFORMANCE) and the trip log")
+
+render_role_switcher_banner()
+
+user = get_current_user()
+role = user.get("role", "Admin")
+emp_id = user.get("employee_id")
+
+role_scope = "All BMTC Routes"
+if role == "Driver":
+    st.markdown(
+        f"""
+        <div style="background: rgba(5,150,105,0.08); border-left: 4px solid #059669; border-radius: 10px; padding: 12px 18px; margin-bottom: 12px;">
+          <div style="font-weight: 800; color: #065f46; font-size: 0.95rem;">🚌 Driver Route View &bull; {user.get('name')} ({user.get('employee_code')})</div>
+          <div style="font-size: 0.82rem; color: #047857; margin-top: 2px;">
+            Displaying routes assigned to your shift. Switch below to view all network routes.
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    role_scope = st.segmented_control("Filter Scope", ["My Assigned Routes", "All BMTC Routes"], default="My Assigned Routes", key="driver_routes_scope")
+elif role == "Conductor":
+    st.markdown(
+        f"""
+        <div style="background: rgba(217,119,6,0.08); border-left: 4px solid #d97706; border-radius: 10px; padding: 12px 18px; margin-bottom: 12px;">
+          <div style="font-weight: 800; color: #78350f; font-size: 0.95rem;">🎟️ Conductor Route View &bull; {user.get('name')} ({user.get('employee_code')})</div>
+          <div style="font-size: 0.82rem; color: #92400e; margin-top: 2px;">
+            Displaying routes assigned to your transit manifest. Switch below to view all network routes.
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    role_scope = st.segmented_control("Filter Scope", ["My Assigned Routes", "All BMTC Routes"], default="My Assigned Routes", key="conductor_routes_scope")
 
 cats = query(Q.ROUTE_CATEGORIES)
 f1, f2 = st.columns([3, 2])
@@ -14,6 +49,11 @@ search = f1.text_input("Search route code, name or stop", max_chars=40, placehol
 cat = f2.selectbox("Route category", ["All"] + (cats["ROUTE_CATEGORY"].tolist() if not cats.empty else []))
 
 where, params = ["1 = 1"], {}
+if role in ["Driver", "Conductor"] and role_scope == "My Assigned Routes" and not search.strip():
+    assigned = get_assigned_routes(emp_id, role)
+    if not assigned.empty:
+        rids = ", ".join(str(int(x)) for x in assigned["ROUTE_ID"].unique())
+        where.append(f"ROUTE_ID IN ({rids})")
 if search.strip():
     where.append("(ROUTE_CODE ILIKE %(q)s OR ROUTE_NAME ILIKE %(q)s)")
     params["q"] = f"%{search.strip()}%"
@@ -79,6 +119,10 @@ sql = """SELECT TRIP_ID, TRIP_DATE, START_HOUR, PERIOD, ROUTE_CODE, REGISTRATION
 if status != "All":
     sql += " AND TRIP_STATUS = %(st)s"
     p["st"] = status
+if role == "Driver" and role_scope == "My Assigned Routes":
+    sql += f" AND TRIP_ID IN (SELECT TRIP_ID FROM BMTC_DW.TRIP.TRIP_DATA WHERE DRIVER_ID = {emp_id})"
+elif role == "Conductor" and role_scope == "My Assigned Routes":
+    sql += f" AND TRIP_ID IN (SELECT TRIP_ID FROM BMTC_DW.TRIP.TRIP_DATA WHERE CONDUCTOR_ID = {emp_id})"
 trips = query(sql + " ORDER BY TRIP_DATE DESC, TRIP_ID DESC LIMIT 2000", p)
 st.caption(f"{len(trips)} trips (max 2,000 shown)")
 show_table(trips, height=320)

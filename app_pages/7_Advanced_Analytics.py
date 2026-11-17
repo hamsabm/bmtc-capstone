@@ -1,11 +1,15 @@
 import streamlit as st
 
+from utils.auth import enforce_role_access, render_role_switcher_banner
 from utils.db import query
 from utils.queries import ADVANCED
 from utils.ui import chart, page, show_table
 
 page("Advanced Analytics",
      "Joins, subqueries, CTEs, aggregates, GROUP BY / HAVING, CASE and window functions on live data")
+
+enforce_role_access("Advanced Analytics", "Admin", "Supervisor")
+render_role_switcher_banner()
 
 name = st.selectbox("Analysis", list(ADVANCED))
 sql = ADVANCED[name]

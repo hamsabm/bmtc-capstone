@@ -4,12 +4,13 @@ import pandas as pd
 import streamlit as st
 
 from utils import queries as Q
-from utils.auth import get_current_user, render_role_switcher_banner
+from utils.auth import enforce_role_access, get_current_user, render_role_switcher_banner
 from utils.db import execute, query
 from utils.ui import chart, money, num, page, show_table
 
 page("Depot Operations Command", "Depot morning turnout, crew & fleet dispatch, and depot-level KPI monitoring")
 
+enforce_role_access("Depot Command", "Depot Manager", "Supervisor")
 render_role_switcher_banner()
 
 user = get_current_user()

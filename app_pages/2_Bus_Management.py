@@ -1,10 +1,14 @@
 import streamlit as st
 
 from utils import queries as Q
+from utils.auth import enforce_role_access, render_role_switcher_banner
 from utils.db import execute, query
 from utils.ui import chart, money, num, page, show_table
 
 page("Bus Management", "Fleet register with utilisation, fuel and maintenance (BUS.V_BUS_SUMMARY)")
+
+enforce_role_access("Bus Management", "Admin", "Depot Manager", "Mechanic")
+render_role_switcher_banner()
 
 depots = query(Q.DEPOTS)
 types = query(Q.BUS_TYPES)

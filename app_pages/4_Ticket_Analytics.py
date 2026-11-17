@@ -3,10 +3,14 @@ import datetime as dt
 import streamlit as st
 
 from utils import queries as Q
+from utils.auth import enforce_role_access, render_role_switcher_banner
 from utils.db import query
 from utils.ui import chart, money, num, page, show_table
 
 page("Ticket Analytics", "Ticket and pass-validation transactions (TRIP.TICKET_DATA)")
+
+enforce_role_access("Ticket Analytics", "Admin", "Supervisor")
+render_role_switcher_banner()
 
 cats = query(Q.ROUTE_CATEGORIES)
 f1, f2, f3 = st.columns(3)

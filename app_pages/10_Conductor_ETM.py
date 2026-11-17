@@ -4,49 +4,86 @@ import random
 import pandas as pd
 import streamlit as st
 
-from utils.auth import get_current_user, render_role_switcher_banner
+from utils.auth import enforce_role_access, get_assigned_routes, get_current_user, render_role_switcher_banner
 from utils.db import execute, query
 from utils.ui import chart, money, num, page, show_table
 
 page("Conductor ETM Portal", "Electronic Ticketing Machine (ETM), Shakti scheme pass/ticket generation, and QR validator")
 
+enforce_role_access("Conductor ETM", "Conductor", "Depot Manager", "Supervisor")
 render_role_switcher_banner()
 
 user = get_current_user()
+is_conductor = (user.get("role") == "Conductor")
 curr_emp_id = user.get("employee_id", 13)
 
-# Conductor selection: defaults to logged-in conductor, with switcher for testing
-conductors_df = query("""
-    SELECT EMPLOYEE_ID, EMPLOYEE_CODE, EMPLOYEE_NAME, DEPOT_ID, STATUS
-    FROM BMTC_DW.BUS.EMPLOYEE_MASTER
-    WHERE ROLE = 'Conductor'
-    ORDER BY EMPLOYEE_ID
-""")
-
-if not conductors_df.empty:
-    default_idx = 0
-    if curr_emp_id in conductors_df["EMPLOYEE_ID"].values:
-        default_idx = int(conductors_df[conductors_df["EMPLOYEE_ID"] == curr_emp_id].index[0])
-
-    col_c1, col_c2 = st.columns([3, 1])
-    selected_label = col_c1.selectbox(
-        "Conductor profile",
-        (conductors_df["EMPLOYEE_CODE"] + " - " + conductors_df["EMPLOYEE_NAME"] + " (" + conductors_df["STATUS"] + ")").tolist(),
-        index=default_idx,
-    )
-    conductor_emp_code = selected_label.split(" - ")[0]
-    active_conductor = conductors_df[conductors_df["EMPLOYEE_CODE"] == conductor_emp_code].iloc[0]
-    conductor_id = int(active_conductor.EMPLOYEE_ID)
-else:
+# Conductor selection: If logged in as conductor, lock to authenticated profile; otherwise allow managers to audit
+if is_conductor:
     conductor_id = curr_emp_id
+    conductor_emp_code = user.get("employee_code", "EMP00013")
+    st.markdown(
+        f"""
+        <div style="background: linear-gradient(135deg, rgba(217,119,6,0.09) 0%, rgba(245,158,11,0.04) 100%); border: 1px solid #f59e0b; border-left: 5px solid #d97706; border-radius: 12px; padding: 14px 20px; margin: 8px 0 16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.4rem;">🎟️</span>
+                <span style="font-weight: 800; font-size: 1.15rem; color: #78350f;">{user.get('name')}</span>
+                <span style="background: #d97706; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">ACTIVE CONDUCTOR</span>
+                <span style="background: #e2e8f0; color: #334155; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700;"><code>{user.get('employee_code')}</code></span>
+              </div>
+              <div style="font-size: 0.82rem; color: #92400e; margin-top: 5px;">
+                📍 Base Depot: <b>{user.get('depot_name')}</b> &bull; Assigned Routes: <b>146B, MF-167B, V-114A, MF-106B</b>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 0.72rem; color: #92400e; text-transform: uppercase; font-weight: 700;">ETM Device Status</div>
+              <div style="font-weight: 800; color: #78350f; font-size: 1rem;">🟢 CONNECTED &bull; ETM-BLR-013</div>
+            </div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+else:
+    conductors_df = query("""
+        SELECT EMPLOYEE_ID, EMPLOYEE_CODE, EMPLOYEE_NAME, DEPOT_ID, STATUS
+        FROM BMTC_DW.BUS.EMPLOYEE_MASTER
+        WHERE ROLE = 'Conductor'
+        ORDER BY EMPLOYEE_ID
+    """)
+    if not conductors_df.empty:
+        default_idx = 0
+        if curr_emp_id in conductors_df["EMPLOYEE_ID"].values:
+            default_idx = int(conductors_df[conductors_df["EMPLOYEE_ID"] == curr_emp_id].index[0])
+
+        col_c1, col_c2 = st.columns([3, 1])
+        selected_label = col_c1.selectbox(
+            "Conductor profile (Auditor View)",
+            (conductors_df["EMPLOYEE_CODE"] + " - " + conductors_df["EMPLOYEE_NAME"] + " (" + conductors_df["STATUS"] + ")").tolist(),
+            index=default_idx,
+        )
+        conductor_emp_code = selected_label.split(" - ")[0]
+        active_conductor = conductors_df[conductors_df["EMPLOYEE_CODE"] == conductor_emp_code].iloc[0]
+        conductor_id = int(active_conductor.EMPLOYEE_ID)
+    else:
+        conductor_id = curr_emp_id
+        conductor_emp_code = "EMP00013"
 
 # ------------------------------------------------ Session state for live ETM tickets
 if "etm_tickets" not in st.session_state:
     st.session_state["etm_tickets"] = []
 
-# Fetch active route data
+# Fetch active route data with assigned route prioritization
+assigned_routes_df = get_assigned_routes(conductor_id, "Conductor")
+assigned_codes = assigned_routes_df["ROUTE_CODE"].unique().tolist() if not assigned_routes_df.empty else []
+
 routes = query("SELECT ROUTE_ID, ROUTE_CODE, ROUTE_NAME, ROUTE_CATEGORY, BASE_FARE, DISTANCE_KM FROM BMTC_DW.TRIP.ROUTE_MASTER WHERE ACTIVE_FLAG = 'Y' ORDER BY ROUTE_CODE")
-routes_list = (routes["ROUTE_CODE"] + " - " + routes["ROUTE_NAME"]).tolist() if not routes.empty else []
+raw_routes_list = (routes["ROUTE_CODE"] + " - " + routes["ROUTE_NAME"]).tolist() if not routes.empty else []
+
+assigned_options = [r for r in raw_routes_list if any(r.startswith(c + " ") for c in assigned_codes)]
+other_options = [r for r in raw_routes_list if not any(r.startswith(c + " ") for c in assigned_codes)]
+routes_list = assigned_options + other_options
 
 # Fetch buses
 buses = query("SELECT BUS_ID, REGISTRATION_NO FROM BMTC_DW.BUS.BUS_MASTER WHERE STATUS = 'ACTIVE' ORDER BY REGISTRATION_NO")
@@ -64,8 +101,9 @@ k2.metric("Total revenue collected", money(cash_coll + upi_coll + 980), delta=f"
 k3.metric("Shakti free rides", num(shakti_count + 18), "Zero fare for women")
 k4.metric("Pass validations", "34", "100% verified")
 
-etm_tab, pass_tab, recon_tab, incident_tab = st.tabs([
+etm_tab, myroutes_tab, pass_tab, recon_tab, incident_tab = st.tabs([
     "🎟️ Issue Digital Ticket (ETM)",
+    "🗺️ My Assigned Routes & Manifest",
     "🔍 QR Bus Pass Validator",
     "📊 Shift Collections & Reconciliation",
     "⚠️ Onboard Incident Report",
@@ -200,7 +238,44 @@ with etm_tab:
         else:
             st.info("No tickets issued yet in this session. Submit the form on the left to generate the first ticket slip.")
 
-# ------------------------------------------------ Tab 2: Bus Pass Scanner
+# ------------------------------------------------ Tab 2: My Assigned Routes & Manifest
+with myroutes_tab:
+    st.subheader("My assigned routes & transit manifest")
+    st.caption("Active transit lines allocated to your ticketing duty schedule.")
+
+    if assigned_routes_df.empty:
+        st.info("No active route assignments recorded for this conductor.")
+    else:
+        unique_croutes = (
+            assigned_routes_df[["ROUTE_ID", "ROUTE_CODE", "ROUTE_NAME", "ROUTE_CATEGORY", "DISTANCE_KM", "BASE_FARE", "DEPOT_NAME"]]
+            .drop_duplicates()
+        )
+        for _, r in unique_croutes.iterrows():
+            buses_on_route = (
+                assigned_routes_df[assigned_routes_df["ROUTE_CODE"] == r["ROUTE_CODE"]]["REGISTRATION_NO"]
+                .unique()
+                .tolist()
+            )
+            with st.container(border=True):
+                rc1, rc2, rc3, rc4 = st.columns([1.5, 3.2, 2, 2.3])
+                with rc1:
+                    st.markdown(
+                        f"""<div style="font-size: 1.35rem; font-weight: 800; color: #d97706; letter-spacing: -0.01em;">{r['ROUTE_CODE']}</div>
+                        <span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">{r['ROUTE_CATEGORY']}</span>""",
+                        unsafe_allow_html=True,
+                    )
+                with rc2:
+                    st.markdown(f"**{r['ROUTE_NAME']}**")
+                    st.caption(f"📏 Distance: **{r['DISTANCE_KM']} km** &bull; Stage Base Fare: **₹{r['BASE_FARE']:.0f}**")
+                with rc3:
+                    st.markdown(f"📍 Depot: **{r['DEPOT_NAME']}**")
+                    st.markdown('<span style="color: #d97706; font-weight: 700; font-size: 0.82rem;">🟡 ETM Active Route</span>', unsafe_allow_html=True)
+                with rc4:
+                    st.markdown("**Scheduled Fleet Buses:**")
+                    bus_badges = " ".join(f"`{b}`" for b in buses_on_route[:3])
+                    st.markdown(bus_badges if bus_badges else "None")
+
+# ------------------------------------------------ Tab 3: Bus Pass Scanner
 with pass_tab:
     st.subheader("Bus pass scanner & instant verification")
     st.caption("Verifies smart passes against PASSENGER.SV_PASS_HOLDERS secure view with privacy protection.")

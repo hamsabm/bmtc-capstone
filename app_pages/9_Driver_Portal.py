@@ -3,43 +3,70 @@ import datetime as dt
 import pandas as pd
 import streamlit as st
 
-from utils.auth import get_current_user, render_role_switcher_banner
+from utils.auth import enforce_role_access, get_assigned_routes, get_current_user, render_role_switcher_banner
 from utils.db import execute, query
 from utils.ui import chart, num, page, show_table
 
 page("Driver Portal", "Personal duty schedule, vehicle pre-trip safety checklist, and live trip logger")
 
+enforce_role_access("Driver Portal", "Driver", "Depot Manager", "Supervisor")
 render_role_switcher_banner()
 
 user = get_current_user()
 is_driver = (user.get("role") == "Driver")
 curr_emp_id = user.get("employee_id", 1)
 
-# Driver selection: defaults to logged-in driver, but allows selecting any driver for demonstration
-driver_df = query("""
-    SELECT EMPLOYEE_ID, EMPLOYEE_CODE, EMPLOYEE_NAME, DEPOT_ID, STATUS
-    FROM BMTC_DW.BUS.EMPLOYEE_MASTER
-    WHERE ROLE = 'Driver'
-    ORDER BY EMPLOYEE_ID
-""")
-
-if not driver_df.empty:
-    default_idx = 0
-    if curr_emp_id in driver_df["EMPLOYEE_ID"].values:
-        default_idx = int(driver_df[driver_df["EMPLOYEE_ID"] == curr_emp_id].index[0])
-    
-    col_d1, col_d2 = st.columns([3, 1])
-    selected_driver_label = col_d1.selectbox(
-        "Driver profile",
-        (driver_df["EMPLOYEE_CODE"] + " - " + driver_df["EMPLOYEE_NAME"] + " (" + driver_df["STATUS"] + ")").tolist(),
-        index=default_idx,
-        help="Select a driver to view their assigned duties and driving record",
-    )
-    selected_emp_code = selected_driver_label.split(" - ")[0]
-    active_driver = driver_df[driver_df["EMPLOYEE_CODE"] == selected_emp_code].iloc[0]
-    driver_id = int(active_driver.EMPLOYEE_ID)
-else:
+# Driver selection: If logged in as driver, lock to authenticated profile; otherwise allow managers to audit
+if is_driver:
     driver_id = curr_emp_id
+    st.markdown(
+        f"""
+        <div style="background: linear-gradient(135deg, rgba(5,150,105,0.09) 0%, rgba(16,185,129,0.04) 100%); border: 1px solid #10b981; border-left: 5px solid #059669; border-radius: 12px; padding: 14px 20px; margin: 8px 0 16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.4rem;">🚌</span>
+                <span style="font-weight: 800; font-size: 1.15rem; color: #065f46;">{user.get('name')}</span>
+                <span style="background: #059669; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">ACTIVE DRIVER</span>
+                <span style="background: #e2e8f0; color: #334155; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700;"><code>{user.get('employee_code')}</code></span>
+              </div>
+              <div style="font-size: 0.82rem; color: #047857; margin-top: 5px;">
+                📍 Base Depot: <b>{user.get('depot_name')}</b> &bull; Assigned Routes: <b>146B, MF-167B, V-114A, MF-106B</b>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 0.72rem; color: #047857; text-transform: uppercase; font-weight: 700;">Shift Status</div>
+              <div style="font-weight: 800; color: #065f46; font-size: 1rem;">🟢 ON DUTY &bull; SHIFT 1</div>
+            </div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+else:
+    driver_df = query("""
+        SELECT EMPLOYEE_ID, EMPLOYEE_CODE, EMPLOYEE_NAME, DEPOT_ID, STATUS
+        FROM BMTC_DW.BUS.EMPLOYEE_MASTER
+        WHERE ROLE = 'Driver'
+        ORDER BY EMPLOYEE_ID
+    """)
+    if not driver_df.empty:
+        default_idx = 0
+        if curr_emp_id in driver_df["EMPLOYEE_ID"].values:
+            default_idx = int(driver_df[driver_df["EMPLOYEE_ID"] == curr_emp_id].index[0])
+
+        col_d1, col_d2 = st.columns([3, 1])
+        selected_driver_label = col_d1.selectbox(
+            "Driver profile (Auditor View)",
+            (driver_df["EMPLOYEE_CODE"] + " - " + driver_df["EMPLOYEE_NAME"] + " (" + driver_df["STATUS"] + ")").tolist(),
+            index=default_idx,
+            help="Select a driver to view their assigned duties and driving record",
+        )
+        selected_emp_code = selected_driver_label.split(" - ")[0]
+        active_driver = driver_df[driver_df["EMPLOYEE_CODE"] == selected_emp_code].iloc[0]
+        driver_id = int(active_driver.EMPLOYEE_ID)
+    else:
+        driver_id = curr_emp_id
 
 # ------------------------------------------------ Driver KPIs
 driver_kpis = query(f"""
@@ -65,8 +92,9 @@ c2.metric("Kilometers driven", f"{num(total_km)} km")
 c3.metric("On-time punctuality", f"{on_time}%", delta="+2.4% vs depot avg")
 c4.metric("Safety rating", "4.9 ★", "Zero incident record")
 
-tab_duty, tab_inspect, tab_perf = st.tabs([
+tab_duty, tab_routes, tab_inspect, tab_perf = st.tabs([
     "📋 Assigned Duty & Trip Logger",
+    "🗺️ My Assigned Routes & Fleet",
     "🛡️ Pre-Trip Safety Inspection",
     "📈 Performance & Trip History",
 ])
@@ -134,7 +162,45 @@ with tab_duty:
                 except Exception as exc:  # noqa: BLE001
                     st.error(f"Could not update trip: {exc}")
 
-# ------------------------------------------------ Tab 2: Pre-Trip Safety Inspection
+# ------------------------------------------------ Tab 2: My Assigned Routes & Fleet
+with tab_routes:
+    st.subheader("My assigned routes & fleet vehicles")
+    st.caption("Active transit routes and fleet buses officially assigned to your driving duty roster.")
+
+    assigned_routes = get_assigned_routes(driver_id, "Driver")
+    if assigned_routes.empty:
+        st.info("No active route assignments found for this driver ID.")
+    else:
+        unique_routes = (
+            assigned_routes[["ROUTE_ID", "ROUTE_CODE", "ROUTE_NAME", "ROUTE_CATEGORY", "DISTANCE_KM", "BASE_FARE", "DEPOT_NAME"]]
+            .drop_duplicates()
+        )
+        for _, r in unique_routes.iterrows():
+            buses_on_route = (
+                assigned_routes[assigned_routes["ROUTE_CODE"] == r["ROUTE_CODE"]]["REGISTRATION_NO"]
+                .unique()
+                .tolist()
+            )
+            with st.container(border=True):
+                rc1, rc2, rc3, rc4 = st.columns([1.5, 3.2, 2, 2.3])
+                with rc1:
+                    st.markdown(
+                        f"""<div style="font-size: 1.35rem; font-weight: 800; color: #059669; letter-spacing: -0.01em;">{r['ROUTE_CODE']}</div>
+                        <span style="background: #e2e8f0; color: #334155; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">{r['ROUTE_CATEGORY']}</span>""",
+                        unsafe_allow_html=True,
+                    )
+                with rc2:
+                    st.markdown(f"**{r['ROUTE_NAME']}**")
+                    st.caption(f"📏 Route Distance: **{r['DISTANCE_KM']} km** &bull; Base Fare: **₹{r['BASE_FARE']:.0f}**")
+                with rc3:
+                    st.markdown(f"📍 Base Depot: **{r['DEPOT_NAME']}**")
+                    st.markdown('<span style="color: #059669; font-weight: 700; font-size: 0.82rem;">🟢 Active Operational Schedule</span>', unsafe_allow_html=True)
+                with rc4:
+                    st.markdown("**Assigned Fleet Buses:**")
+                    bus_badges = " ".join(f"`{b}`" for b in buses_on_route[:3])
+                    st.markdown(bus_badges if bus_badges else "None")
+
+# ------------------------------------------------ Tab 3: Pre-Trip Safety Inspection
 with tab_inspect:
     st.subheader("Pre-trip vehicle safety checklist (DVIR)")
     st.caption("Mandatory daily vehicle inspection report before leaving the depot per BMTC safety regulations.")

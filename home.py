@@ -4,7 +4,7 @@ import html
 import streamlit as st
 
 from utils import queries as Q
-from utils.auth import render_role_switcher_banner
+from utils.auth import get_current_user, render_role_switcher_banner
 from utils.db import connection_ok, query
 from utils.ui import money, num, page, show_table
 
@@ -49,6 +49,74 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 st.success(f"Connected to Snowflake &mdash; {info}", icon=":material/verified:")
+
+# ------------------------------------------------ Active Role Quick Action Card
+curr_user = get_current_user()
+curr_role = curr_user.get("role", "Admin")
+
+if curr_role == "Driver":
+    st.markdown(
+        f"""
+        <div style="background: linear-gradient(135deg, rgba(5,150,105,0.08) 0%, rgba(16,185,129,0.03) 100%); border: 1px solid #10b981; border-left: 5px solid #059669; border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="font-weight: 800; font-size: 1.15rem; color: #065f46;">
+                🚌 Welcome back, {curr_user.get('name')} (<code>{curr_user.get('employee_code')}</code>)
+              </div>
+              <div style="font-size: 0.88rem; color: #047857; margin-top: 4px;">
+                Base Depot: <b>{curr_user.get('depot_name')}</b> &bull; Assigned Routes: <b>146B, MF-167B, V-114A, MF-106B</b>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <span style="background: #059669; color: white; padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.82rem;">🟢 DRIVER DUTY ACTIVE</span>
+            </div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+elif curr_role == "Conductor":
+    st.markdown(
+        f"""
+        <div style="background: linear-gradient(135deg, rgba(217,119,6,0.08) 0%, rgba(245,158,11,0.03) 100%); border: 1px solid #f59e0b; border-left: 5px solid #d97706; border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="font-weight: 800; font-size: 1.15rem; color: #78350f;">
+                🎟️ Welcome back, {curr_user.get('name')} (<code>{curr_user.get('employee_code')}</code>)
+              </div>
+              <div style="font-size: 0.88rem; color: #92400e; margin-top: 4px;">
+                Base Depot: <b>{curr_user.get('depot_name')}</b> &bull; Terminal: <b>ETM-BLR-013</b> &bull; Assigned Routes: <b>146B, MF-167B, V-114A, MF-106B</b>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <span style="background: #d97706; color: white; padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.82rem;">🟡 ETM SESSION READY</span>
+            </div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+elif curr_role == "Depot Manager":
+    st.markdown(
+        f"""
+        <div style="background: linear-gradient(135deg, rgba(234,88,12,0.08) 0%, rgba(249,115,22,0.03) 100%); border: 1px solid #fb923c; border-left: 5px solid #ea580c; border-radius: 14px; padding: 18px 22px; margin-bottom: 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="font-weight: 800; font-size: 1.15rem; color: #7c2d12;">
+                🏢 Depot Command Center &bull; {curr_user.get('name')}
+              </div>
+              <div style="font-size: 0.88rem; color: #9a3412; margin-top: 4px;">
+                Facility: <b>{curr_user.get('depot_name')}</b> &bull; Morning Turnout: <b>100% On-Schedule</b>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <span style="background: #ea580c; color: white; padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.82rem;">🟠 DEPOT 01 COMMAND</span>
+            </div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 # ------------------------------------------------ Portals & Modules Section
 st.subheader("System Portals & Operations Modules")

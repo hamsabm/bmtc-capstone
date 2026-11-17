@@ -1,11 +1,15 @@
 import streamlit as st
 
+from utils.auth import enforce_role_access, render_role_switcher_banner
 from utils.db import query
 from utils.ui import chart, page, show_table
 
 page("Data Management", "Read-only view of Snowflake platform features. Destructive operations stay in "
                         "reviewed SQL scripts (sql/07, sql/08) - nothing on this page modifies project data, "
                         "except running the fleet-health procedure, which only appends a snapshot row.")
+
+enforce_role_access("Data Platform Console", "Admin")
+render_role_switcher_banner()
 
 tabs = st.tabs(["Time Travel", "Zero-copy clone", "Stream & Task", "Snowpipe", "Python procedure",
                 "Security", "Warehouse & storage"])

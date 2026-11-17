@@ -3,11 +3,15 @@ import json
 
 import streamlit as st
 
+from utils.auth import enforce_role_access, render_role_switcher_banner
 from utils.db import execute, query
 from utils.ui import chart, num, page, show_table
 
 page("Passengers & Complaints",
      "Passes via secure view PASSENGER.SV_PASS_HOLDERS; complaints from JSON (VARIANT) documents")
+
+enforce_role_access("Passenger Grievances", "Admin", "Supervisor")
+render_role_switcher_banner()
 
 pass_tab, comp_tab, new_tab = st.tabs(["Passenger passes", "Complaints", "Register a complaint"])
 

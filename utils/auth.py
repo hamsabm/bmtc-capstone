@@ -127,6 +127,118 @@ def has_role(*allowed_roles: str) -> bool:
     return role in allowed_roles
 
 
+# Role-based page authorization matrix
+ROLE_PERMISSIONS = {
+    "Admin": ["*"],
+    "Depot Manager": [
+        "home.py",
+        "1_Dashboard.py",
+        "2_Bus_Management.py",
+        "3_Routes_Trips.py",
+        "5_Fuel_Maintenance.py",
+        "11_Depot_Operations.py",
+        "12_Staff_Directory.py",
+    ],
+    "Driver": [
+        "home.py",
+        "9_Driver_Portal.py",
+        "3_Routes_Trips.py",
+    ],
+    "Conductor": [
+        "home.py",
+        "10_Conductor_ETM.py",
+        "3_Routes_Trips.py",
+    ],
+    "Mechanic": [
+        "home.py",
+        "2_Bus_Management.py",
+        "5_Fuel_Maintenance.py",
+    ],
+    "Supervisor": [
+        "home.py",
+        "1_Dashboard.py",
+        "3_Routes_Trips.py",
+        "4_Ticket_Analytics.py",
+        "6_Passenger_Complaints.py",
+        "12_Staff_Directory.py",
+    ],
+}
+
+
+def can_access_page(page_name: str, role: str | None = None) -> bool:
+    """Return True if role has permission to access page_name."""
+    if role is None:
+        user = get_current_user()
+        role = user.get("role", "Admin")
+    if role == "Admin":
+        return True
+    allowed = ROLE_PERMISSIONS.get(role, [])
+    if "*" in allowed:
+        return True
+    base = page_name.replace("\\", "/").split("/")[-1]
+    return any(base == a or base == a.split("/")[-1] for a in allowed)
+
+
+def enforce_role_access(page_name: str, *allowed_roles: str) -> None:
+    """Guard a page by checking role access.
+
+    If unauthorized, displays an enterprise access restricted message and stops execution.
+    Admin always bypasses this check.
+    """
+    user = get_current_user()
+    role = user.get("role", "Admin")
+    if role == "Admin" or role in allowed_roles:
+        return
+
+    st.markdown(f"""
+    <div style="background: #fff1f2; border: 1px solid #fecdd3; border-left: 4px solid #e11d48; border-radius: 14px; padding: 22px 24px; margin: 20px 0; box-shadow: 0 4px 14px rgba(225,29,72,0.06);">
+      <div style="display: flex; align-items: flex-start; gap: 14px;">
+        <div style="font-size: 2.2rem; line-height: 1;">🔒</div>
+        <div>
+          <div style="font-weight: 800; font-size: 1.15rem; color: #9f1239; letter-spacing: -0.01em;">
+            Restricted Operational Access
+          </div>
+          <div style="color: #be123c; font-size: 0.92rem; margin-top: 4px; line-height: 1.45;">
+            The <b>{page_name}</b> portal is restricted to authorized roles: <b>{', '.join(allowed_roles)}</b>.
+          </div>
+          <div style="font-size: 0.8rem; color: #64748b; margin-top: 8px;">
+            Active Session: <b>{user.get('name')}</b> ({user.get('employee_code')}) &bull; Current Role: <span style="background: #e2e8f0; color: #0f172a; padding: 2px 7px; border-radius: 4px; font-weight: 700;">{role}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    c1, c2 = st.columns([1.5, 3])
+    if allowed_roles:
+        target_role = allowed_roles[0].lower().replace(" ", "").replace("depotmanager", "manager")
+        if target_role in DEMO_ACCOUNTS:
+            if c1.button(f"Switch to {allowed_roles[0]} Role", key=f"switch_to_{target_role}", use_container_width=True):
+                login_as(target_role)
+                st.rerun()
+    st.info("Use the role switcher bar at the top or in the sidebar to simulate another identity.", icon=":material/badge:")
+    st.stop()
+
+
+def get_assigned_routes(employee_id: int, role: str = "Driver"):
+    """Fetch assigned routes for a Driver or Conductor from TRIP_DATA."""
+    from utils.db import query
+    col = "DRIVER_ID" if role == "Driver" else "CONDUCTOR_ID"
+    sql = f"""
+    SELECT DISTINCT 
+        r.ROUTE_ID, r.ROUTE_CODE, r.ROUTE_NAME, r.ROUTE_CATEGORY, r.DISTANCE_KM, r.BASE_FARE,
+        b.BUS_ID, b.REGISTRATION_NO, b.BUS_TYPE, d.DEPOT_NAME
+    FROM BMTC_DW.TRIP.TRIP_DATA t
+    JOIN BMTC_DW.TRIP.ROUTE_MASTER r ON r.ROUTE_ID = t.ROUTE_ID
+    JOIN BMTC_DW.BUS.BUS_MASTER b ON b.BUS_ID = t.BUS_ID
+    JOIN BMTC_DW.BUS.DEPOT_MASTER d ON d.DEPOT_ID = b.DEPOT_ID
+    WHERE t.{col} = {employee_id}
+    ORDER BY r.ROUTE_CODE
+    """
+    return query(sql)
+
+
+
 def render_role_switcher_banner() -> None:
     """Enterprise role switcher card displayed on Home and Portals."""
     curr = get_current_user()

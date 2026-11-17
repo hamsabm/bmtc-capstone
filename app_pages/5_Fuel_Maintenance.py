@@ -3,10 +3,14 @@ import datetime as dt
 import streamlit as st
 
 from utils import queries as Q
+from utils.auth import enforce_role_access, render_role_switcher_banner
 from utils.db import execute, query
 from utils.ui import chart, money, num, page, show_table
 
 page("Fuel & Maintenance", "Fuel efficiency (Python UDF classification) and workshop history")
+
+enforce_role_access("Fuel & Maintenance", "Admin", "Mechanic", "Depot Manager")
+render_role_switcher_banner()
 
 depots = query(Q.DEPOTS)
 depot_names = depots["DEPOT_NAME"].tolist() if not depots.empty else []
