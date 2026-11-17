@@ -103,6 +103,8 @@ def page(title: str, caption: str = "") -> None:
     if caption:
         st.markdown(f'<div class="subtitle"><b>&#9679;</b>&nbsp; {html.escape(caption)}</div>', unsafe_allow_html=True)
     with st.sidebar:
+        from utils.auth import render_sidebar_user_profile
+        render_sidebar_user_profile()
         st.caption("BMTC Data Warehouse · Snowflake BMTC_DW")
         if st.button("Refresh data", help="Clear cached query results and reload from Snowflake"):
             st.cache_data.clear()

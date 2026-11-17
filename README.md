@@ -115,10 +115,27 @@ Tests:
 .\venv\Scripts\python.exe tests\test_interactions.py         # filters, injection, forms (self-cleaning)
 ```
 
+## Role-Based Access Control (RBAC) & Dedicated Portals
+
+The application implements authentic role-based access tailored to BMTC transport operations with real staff identities mapped from `BUS.EMPLOYEE_MASTER`. Users can instantly switch roles via the 1-click **Role Switcher** bar or the sidebar selector:
+
+| Role | Demo Identity & Depot | Dedicated Features & Portals |
+|---|---|---|
+| **👑 Platform Admin** | BMTC Central HQ (`ADMIN001`) | Full DW access, platform governance, Time Travel, zero-copy clone, streams/tasks, staff & security directory |
+| **🏢 Depot Manager** | Shivakumar Gowda (`EMP00030`, Depot-01) | **Depot Operations Command:** Morning turnout, fleet bus readiness, driver & conductor crew dispatch, depot workshop & fuel KPIs |
+| **🚌 Driver** | Rekha Reddy (`EMP00001`, Depot-01) | **Driver Portal:** Assigned duty schedule, live trip status logger (start/complete/delays), mandatory 8-point pre-trip vehicle safety inspection (DVIR), driver punctuality stats |
+| **🎟️ Conductor** | Shwetha Kulkarni (`EMP00013`, Depot-01) | **Conductor ETM Portal:** Digital Electronic Ticketing Machine, Shakti Scheme free women travel ticketing, QR pass scanner & validator (`PASSENGER.SV_PASS_HOLDERS`), shift cash reconciliation |
+| **🔧 Mechanic** | Vinay Patil (`EMP00024`, Depot-01) | **Workshop & Maintenance:** Workshop job queue, repair work order logging, downtime & parts tracking, vehicle diagnostics |
+| **📋 Supervisor** | Shivakumar Murthy (`EMP00027`, Depot-01) | **Traffic Supervision & Grievances:** Route punctuality audits, passenger grievance triage queue (Python UDF urgency score), line checking |
+
 ## Major features
 
 | Area | Where |
 |---|---|
+| Driver Portal: assigned trips, live trip logger, pre-trip safety checklist, driving performance | app → Driver Portal |
+| Conductor ETM: digital ticketing, fare calculator, Shakti scheme, QR pass scanner, shift waybill | app → Conductor ETM |
+| Depot Command: morning turnout, fleet readiness, crew & bus dispatch, depot fuel/maintenance | app → Depot Command |
+| Staff Directory: employee roster by role/depot, headcount breakdown, secure masked payroll | app → Staff Directory |
 | Dashboard: live KPIs with monthly sparklines, a period switch (3/6/12 months) and 6 charts | app → Dashboard |
 | Fleet search/filters, depot & type analysis, **change bus status** (transaction + audit) | Bus Management |
 | Route search and detail, top/bottom routes, trip log | Routes & Trips |
