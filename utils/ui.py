@@ -1,4 +1,4 @@
-"""Shared page chrome and chart helpers (validated categorical palette, fixed order)."""
+"""Shared page chrome, enterprise design system, and chart helpers for BMTC Analytics."""
 from __future__ import annotations
 
 import html
@@ -7,164 +7,489 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-# Validated reference categorical palette (dataviz skill), always assigned in this order.
-PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
+# Enterprise BMTC Palette (validated reference categorical palette)
+PALETTE = ["#2563eb", "#ea580c", "#059669", "#d97706", "#db2777", "#16a34a", "#7c3aed", "#dc2626"]
 PRIMARY = PALETTE[0]
-SEQUENTIAL = ["#cde2fb", "#86b6ef", "#3987e5", "#256abf", "#184f95", "#0d366b"]
-
+SECONDARY = "#059669"
+NEUTRAL_DARK = "#0f172a"
+NEUTRAL_MUTED = "#64748b"
+BG_LIGHT = "#f8fafc"
+CARD_BG = "#ffffff"
+BORDER_COLOR = "#e2e8f0"
 
 _CSS = """
 <style>
-/* page canvas */
-.stApp {background: radial-gradient(1200px 380px at 15% -80px, #dbe9ff 0%, rgba(219,233,255,0) 70%),
-                    radial-gradient(900px 320px at 95% -60px, #d9f6ea 0%, rgba(217,246,234,0) 70%), #f6f8fc;}
-.block-container {padding-top: 2.2rem;}
-/* gradient page titles */
-h1 {font-weight: 800 !important; letter-spacing: -.02em;
-    background: linear-gradient(90deg, #1e3a8a 0%, #2a78d6 45%, #1baf7a 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent !important;}
-h2, h3 {color: #1e3a8a !important; font-weight: 700 !important;}
-/* sidebar */
-[data-testid="stSidebar"] {background: linear-gradient(180deg, #0f1f4b 0%, #16377a 55%, #0e5d58 100%);}
-[data-testid="stSidebar"] * {color: #e9effd !important;}
-[data-testid="stSidebarNavLink"] {border-radius: 10px; margin: 1px 0;}
-[data-testid="stSidebarNavLink"]:hover {background: rgba(255,255,255,.10) !important;}
-[data-testid="stSidebarNavLink"][aria-current="page"] {background: linear-gradient(90deg, rgba(42,120,214,.55), rgba(27,175,122,.35)) !important;}
-[data-testid="stSidebar"] code {background: rgba(255,255,255,.16) !important; color: #ffffff !important;}
-[data-testid="stSidebar"] button {background: rgba(255,255,255,.12) !important; border: 1px solid rgba(255,255,255,.35) !important;}
-/* KPI cards: colour stripe cycles blue / orange / aqua / amber */
-[data-testid="stMetric"] {background: #ffffff; border: 1px solid #e2e8f3; border-left: 6px solid var(--kpi, #2a78d6);
-    border-radius: 14px; padding: 14px 16px; box-shadow: 0 6px 18px rgba(30,58,138,.07);}
-[data-testid="stColumn"]:nth-child(4n+1) [data-testid="stMetric"] {--kpi: #2a78d6;}
-[data-testid="stColumn"]:nth-child(4n+2) [data-testid="stMetric"] {--kpi: #eb6834;}
-[data-testid="stColumn"]:nth-child(4n+3) [data-testid="stMetric"] {--kpi: #1baf7a;}
-[data-testid="stColumn"]:nth-child(4n+4) [data-testid="stMetric"] {--kpi: #eda100;}
-[data-testid="stMetricLabel"] p {font-weight: 600; color: #475569 !important; text-transform: uppercase;
-    font-size: .74rem !important; letter-spacing: .05em;}
-[data-testid="stMetricValue"] {font-size: 1.75rem; font-weight: 800; color: #0f172a;}
-/* white cards for bordered containers (charts, module tiles) */
-[data-testid="stVerticalBlockBorderWrapper"]:has(> div > [data-testid="stVerticalBlock"]) {background: #ffffff;
-    border-radius: 16px !important; border-color: #e2e8f3 !important; box-shadow: 0 6px 18px rgba(30,58,138,.06);}
-/* tabs */
-.stTabs [data-baseweb="tab"] {font-weight: 600;}
-.stTabs [aria-selected="true"] {color: #2a78d6 !important;}
-/* hero banner (Home) */
-.hero {border-radius: 22px; padding: 34px 38px; color: #fff; margin: 4px 0 18px;
-    background: linear-gradient(120deg, #0f1f4b 0%, #1d4fb3 45%, #1baf7a 100%);
-    box-shadow: 0 14px 34px rgba(15,31,75,.25); position: relative; overflow: hidden;}
-.hero:after {content: ""; position: absolute; right: -60px; top: -60px; width: 260px; height: 260px;
-    border-radius: 50%; background: rgba(255,255,255,.08);}
-.hero .badge {display: inline-block; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3);
-    padding: 4px 12px; border-radius: 999px; font-size: .8rem; letter-spacing: .04em;}
-.hero .headline {font-size: 2.1rem; font-weight: 800; line-height: 1.15; margin: 14px 0 8px;}
-.hero .sub {font-size: 1.02rem; opacity: .92; max-width: 760px;}
-.hero .chips {margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;}
-.hero .chip {background: rgba(255,255,255,.95); color: #0f1f4b; border-radius: 12px; padding: 8px 14px;
-    font-weight: 700; font-size: .95rem;}
-.hero .chip span {display: block; font-size: .68rem; font-weight: 600; color: #64748b; text-transform: uppercase;
-    letter-spacing: .05em;}
-.tile-title {font-weight: 700; font-size: 1.02rem; color: #0f172a; margin-top: 4px;}
-.tile-icon {width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.3rem; color: #fff;}
-.tile-desc {color: #64748b; font-size: .86rem; min-height: 2.6em;}
-/* ---- motion & interaction ---- */
-@keyframes heroShift {0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;}}
-@keyframes fadeUp {from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: none;}}
-.hero {background-size: 220% 220% !important; animation: heroShift 16s ease infinite;}
-[data-testid="stMainBlockContainer"] {animation: fadeUp .45s ease-out;}
-[data-testid="stMetric"], [data-testid="stVerticalBlockBorderWrapper"] {transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;}
-[data-testid="stMetric"]:hover {transform: translateY(-3px); box-shadow: 0 14px 28px rgba(30,58,138,.15);}
+/* -------------------------------- Base Canvas & Typography -------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+.stApp {
+    background: radial-gradient(1200px 420px at 15% -60px, #e2edff 0%, rgba(226,237,255,0) 70%),
+                radial-gradient(900px 380px at 95% -40px, #e0f8ee 0%, rgba(224,248,238,0) 70%),
+                #f8fafc !important;
+    color: #0f172a;
+}
+
+.block-container {
+    padding-top: 1.8rem !important;
+    padding-bottom: 3.5rem !important;
+    max-width: 1400px;
+}
+
+/* -------------------------------- Page Headings & Subtitles -------------------------------- */
+h1 {
+    font-weight: 800 !important;
+    letter-spacing: -0.03em !important;
+    font-size: 2.15rem !important;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0d9488 100%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    margin-bottom: 0.25rem !important;
+}
+
+h2 {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    font-size: 1.45rem !important;
+    letter-spacing: -0.02em;
+    margin-top: 1rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+h3 {
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem !important;
+    letter-spacing: -0.01em;
+}
+
+.subtitle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin: -4px 0 16px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+}
+.subtitle b {
+    color: #2563eb;
+    font-size: 0.95rem;
+}
+
+/* -------------------------------- Sidebar Enterprise Redesign -------------------------------- */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #090d16 0%, #0f172a 45%, #131d36 100%) !important;
+    border-right: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+[data-testid="stSidebar"] * {
+    color: #f1f5f9 !important;
+}
+
+[data-testid="stSidebarHeader"] {
+    padding-bottom: 0.5rem;
+}
+
+[data-testid="stSidebarNavLink"] {
+    border-radius: 10px;
+    margin: 2px 0;
+    padding: 6px 12px;
+    transition: all 0.18s ease;
+}
+
+[data-testid="stSidebarNavLink"]:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateX(2px);
+}
+
+[data-testid="stSidebarNavLink"][aria-current="page"] {
+    background: linear-gradient(90deg, rgba(37,99,235,0.45) 0%, rgba(13,148,136,0.3) 100%) !important;
+    border-left: 3px solid #38bdf8 !important;
+    font-weight: 700 !important;
+}
+
+[data-testid="stSidebar"] code {
+    background: rgba(255,255,255,0.12) !important;
+    color: #ffffff !important;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Sidebar button styling */
+[data-testid="stSidebar"] button {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    color: #f8fafc !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    transition: all 0.15s ease !important;
+}
+[data-testid="stSidebar"] button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+/* -------------------------------- Enterprise KPI Cards -------------------------------- */
+[data-testid="stMetric"] {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-left: 5px solid var(--kpi, #2563eb) !important;
+    border-radius: 14px !important;
+    padding: 16px 18px !important;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.04) !important;
+    transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+[data-testid="stColumn"]:nth-child(4n+1) [data-testid="stMetric"] {--kpi: #2563eb;}
+[data-testid="stColumn"]:nth-child(4n+2) [data-testid="stMetric"] {--kpi: #ea580c;}
+[data-testid="stColumn"]:nth-child(4n+3) [data-testid="stMetric"] {--kpi: #059669;}
+[data-testid="stColumn"]:nth-child(4n+4) [data-testid="stMetric"] {--kpi: #d97706;}
+
+[data-testid="stMetric"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(15,23,42,0.08) !important;
+}
+
+[data-testid="stMetricLabel"] p {
+    font-weight: 700 !important;
+    color: #64748b !important;
+    text-transform: uppercase !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.06em !important;
+    margin-bottom: 4px !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 1.85rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    letter-spacing: -0.02em !important;
+}
+
+/* -------------------------------- Card Containers & Panels -------------------------------- */
+[data-testid="stVerticalBlockBorderWrapper"]:has(> div > [data-testid="stVerticalBlock"]) {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 16px rgba(15,23,42,0.04) !important;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
 [data-testid="stVerticalBlockBorderWrapper"]:has(> div > [data-testid="stVerticalBlock"]):hover {
-    box-shadow: 0 14px 30px rgba(30,58,138,.12); border-color: #b9cdf0 !important;}
-[data-testid="stMain"] .stButton button, [data-testid="stMain"] [data-testid="stFormSubmitButton"] button {
-    background: linear-gradient(90deg, #2a78d6, #1baf7a); color: #fff !important; border: 0; border-radius: 10px;
-    font-weight: 600; box-shadow: 0 6px 14px rgba(42,120,214,.25); transition: filter .15s ease, transform .15s ease;}
-[data-testid="stMain"] .stButton button:hover, [data-testid="stMain"] [data-testid="stFormSubmitButton"] button:hover {
-    filter: brightness(1.08); transform: translateY(-1px);}
-[data-testid="stPageLink"] a {border-radius: 10px; background: #eef4fd; font-weight: 600;}
-[data-testid="stPageLink"] a:hover {background: #dce9fb;}
-.subtitle {display: inline-block; background: #ffffff; border: 1px solid #dbe5f4; color: #334155; border-radius: 999px;
-    padding: 5px 14px; font-size: .88rem; margin: -6px 0 12px; box-shadow: 0 2px 8px rgba(30,58,138,.05);}
-.subtitle b {color: #1d4fb3;}
-[data-testid="stDataFrame"] {border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(30,58,138,.06);}
-@media (prefers-reduced-motion: reduce) {.hero, [data-testid="stMainBlockContainer"] {animation: none;}
-    [data-testid="stMetric"]:hover {transform: none;}}
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 8px 24px rgba(15,23,42,0.07) !important;
+}
+
+/* -------------------------------- Tabs -------------------------------- */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 2px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    font-weight: 600 !important;
+    font-size: 0.92rem !important;
+    padding: 8px 18px !important;
+    border-radius: 8px 8px 0 0 !important;
+    color: #64748b !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #1e40af !important;
+    font-weight: 700 !important;
+    border-bottom: 3px solid #2563eb !important;
+}
+
+/* -------------------------------- Form Controls & Buttons -------------------------------- */
+[data-testid="stMain"] .stButton button,
+[data-testid="stMain"] [data-testid="stFormSubmitButton"] button {
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #0d9488 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    font-size: 0.92rem !important;
+    padding: 0.5rem 1.25rem !important;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.25) !important;
+    transition: all 0.18s ease !important;
+}
+
+[data-testid="stMain"] .stButton button:hover,
+[data-testid="stMain"] [data-testid="stFormSubmitButton"] button:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37,99,235,0.35) !important;
+}
+
+/* Page links */
+[data-testid="stPageLink"] a {
+    border-radius: 10px !important;
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+    transition: all 0.15s ease !important;
+}
+[data-testid="stPageLink"] a:hover {
+    background: #e2e8f0 !important;
+    border-color: #cbd5e1 !important;
+    transform: translateY(-1px);
+}
+
+/* Dataframes */
+[data-testid="stDataFrame"] {
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 10px rgba(15,23,42,0.03) !important;
+}
+
+/* -------------------------------- Home Hero Banner -------------------------------- */
+.hero {
+    border-radius: 20px;
+    padding: 36px 42px;
+    color: #ffffff;
+    margin: 4px 0 22px;
+    background: linear-gradient(135deg, #090d16 0%, #0f1f4b 35%, #1e40af 70%, #0d9488 100%);
+    box-shadow: 0 16px 38px rgba(15,23,42,0.22);
+    position: relative;
+    overflow: hidden;
+    background-size: 200% 200% !important;
+    animation: heroGradientShift 18s ease infinite;
+}
+
+.hero:before {
+    content: "";
+    position: absolute;
+    right: -40px;
+    top: -40px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%);
+}
+
+.hero .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.hero .headline {
+    font-size: 2.35rem;
+    font-weight: 800;
+    line-height: 1.18;
+    margin: 14px 0 10px;
+    letter-spacing: -0.025em;
+}
+
+.hero .sub {
+    font-size: 1.05rem;
+    opacity: 0.92;
+    max-width: 820px;
+    line-height: 1.5;
+}
+
+.hero .chips {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero .chip {
+    background: rgba(255, 255, 255, 0.95);
+    color: #0f172a;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.8);
+}
+
+.hero .chip span {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+/* Module Tiles */
+.tile-title {
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: #0f172a;
+    margin-top: 6px;
+}
+.tile-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.tile-desc {
+    color: #64748b;
+    font-size: 0.85rem;
+    min-height: 2.8em;
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+/* Keyframes */
+@keyframes heroGradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+[data-testid="stMainBlockContainer"] {
+    animation: pageFadeIn 0.35s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero, [data-testid="stMainBlockContainer"] { animation: none !important; }
+}
 </style>
 """
 
 
 def page(title: str, caption: str = "") -> None:
-    """Common page header + sidebar. Stops the page with one clear message if Snowflake is unreachable."""
-    from utils.db import connection_ok  # local import avoids a circular import
+    """Common page header + enterprise sidebar with user profile and health check."""
+    from utils.db import connection_ok
 
     st.set_page_config(page_title=f"BMTC | {title}", page_icon=":material/directions_bus:", layout="wide")
     st.markdown(_CSS, unsafe_allow_html=True)
     st.title(title)
     if caption:
         st.markdown(f'<div class="subtitle"><b>&#9679;</b>&nbsp; {html.escape(caption)}</div>', unsafe_allow_html=True)
+
     with st.sidebar:
+        # BMTC Enterprise Branding Header
+        st.markdown("""
+        <div style="padding: 6px 4px 14px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="background: linear-gradient(135deg, #2563eb, #059669); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 4px 12px rgba(37,99,235,0.35);">
+              🚌
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: #ffffff;">BMTC ANALYTICS</div>
+              <div style="font-size: 0.72rem; color: #94a3b8; font-weight: 600; letter-spacing: 0.04em;">ENTERPRISE DATA PLATFORM</div>
+            </div>
+          </div>
+        </div>
+        """, unsafe_allow_html=True)
+
         from utils.auth import render_sidebar_user_profile
         render_sidebar_user_profile()
-        st.caption("BMTC Data Warehouse · Snowflake BMTC_DW")
-        if st.button("Refresh data", help="Clear cached query results and reload from Snowflake"):
+
+        st.caption("Snowflake DW · BMTC_DW (XSMALL)")
+        if st.button("🔄 Refresh Data Cache", help="Invalidate cached query results and reload fresh data from Snowflake", use_container_width=True):
             st.cache_data.clear()
             st.rerun()
+
     ok, info = connection_ok()
     if not ok:
-        st.error("Cannot reach Snowflake, so live data cannot be shown.", icon=":material/cloud_off:")
+        st.error("Cannot reach Snowflake warehouse, live operational data cannot be retrieved.", icon=":material/cloud_off:")
         st.caption(f"Details: {info}")
         from utils.snowflake_connection import config_sources
         st.caption(f"Settings found: {config_sources()}")
-        st.markdown("Check the Snowflake settings in `.env` (or the deployment secrets) and that warehouse "
-                    "`BMTC_WH` and database `BMTC_DW` exist, then press **Refresh data**.")
+        st.markdown("Verify the Snowflake credentials in `.env` (or Streamlit deployment secrets) and that warehouse `BMTC_WH` is running, then press **Refresh Data Cache**.")
         st.stop()
 
 
 def money(v) -> str:
+    """Format currency values cleanly into Crores, Lakhs or Thousands."""
     try:
         v = float(v)
     except (TypeError, ValueError):
         return "-"
     if abs(v) >= 1e7:
-        return f"Rs {v / 1e7:.2f} Cr"
+        return f"₹{v / 1e7:.2f} Cr"
     if abs(v) >= 1e5:
-        return f"Rs {v / 1e5:.2f} L"
-    return f"Rs {v:,.0f}"
+        return f"₹{v / 1e5:.2f} L"
+    return f"₹{v:,.0f}"
 
 
 def num(v) -> str:
+    """Format numeric values with comma separators."""
     try:
         return f"{float(v):,.0f}"
     except (TypeError, ValueError):
         return "-"
 
 
-def show_table(df: pd.DataFrame, empty: str = "No rows match the current filters.", height: int | None = None) -> None:
+def show_table(df: pd.DataFrame, empty: str = "No records match the active filters.", height: int | None = None) -> None:
+    """Render an enterprise styled table or informative message if empty."""
     if df is None or df.empty:
-        st.info(empty)
+        st.info(empty, icon=":material/info:")
     else:
         kw = {"height": height} if height else {}
         st.dataframe(df, width="stretch", hide_index=True, **kw)
 
 
 def _style(fig, height: int = 360, legend: bool = True):
-    fig.update_layout(height=height, margin=dict(l=10, r=10, t=40, b=10), bargap=0.25,
-                      legend_title_text="", showlegend=legend, hovermode="closest")
-    fig.update_xaxes(showgrid=False)
-    # readable axis titles: DEPOT_NAME -> Depot Name; category axes of horizontal bars need no title
+    """Apply unified enterprise Plotly theme with dark slate labels and subtle grids."""
+    fig.update_layout(
+        height=height,
+        margin=dict(l=10, r=10, t=44, b=10),
+        bargap=0.28,
+        legend_title_text="",
+        showlegend=legend,
+        hovermode="closest",
+        font=dict(family="Plus Jakarta Sans, sans-serif", size=12, color="#334155"),
+    )
+    fig.update_xaxes(showgrid=False, tickfont=dict(color="#475569"))
     for ax in list(fig.select_xaxes()) + list(fig.select_yaxes()):
         t = ax.title.text
         if t:
-            ax.title.text = "" if (ax.type == "category" or t.endswith(("_NAME", "_CODE", "_NO"))) else                 t.replace("_", " ").title().replace("Km", "km").replace("Pct", "%")
-    fig.update_yaxes(gridcolor="rgba(128,128,128,0.18)", zeroline=False)
+            ax.title.text = "" if (ax.type == "category" or t.endswith(("_NAME", "_CODE", "_NO"))) else \
+                t.replace("_", " ").title().replace("Km", "km").replace("Pct", "%")
+            ax.title.font = dict(size=12, color="#475569")
+    fig.update_yaxes(gridcolor="rgba(148, 163, 184, 0.16)", zeroline=False, tickfont=dict(color="#475569"))
     return fig
 
 
 def chart(df: pd.DataFrame, kind: str, x: str, y: str, title: str, color: str | None = None,
           height: int = 360, horizontal: bool = False, **kw) -> None:
-    """Render a Plotly chart, or an info box if there is no data."""
+    """Render a Plotly chart inside a styled card container, or an info banner if empty."""
     if df is None or df.empty or x not in df or y not in df:
-        st.info(f"{title}: no data for the current selection.")
+        st.info(f"{title}: No records available for the active selection.", icon=":material/info:")
         return
     common = dict(title=title, color_discrete_sequence=PALETTE)
     if color:
@@ -177,7 +502,7 @@ def chart(df: pd.DataFrame, kind: str, x: str, y: str, title: str, color: str | 
             fig.update_yaxes(categoryorder="total ascending")
     elif kind == "line":
         fig = px.line(df, x=x, y=y, **common, **kw)
-        fig.update_traces(line_width=2)
+        fig.update_traces(line_width=2.5)
         fig.update_layout(hovermode="x unified")
     elif kind == "area":
         fig = px.area(df, x=x, y=y, **common, **kw)
@@ -191,7 +516,10 @@ def chart(df: pd.DataFrame, kind: str, x: str, y: str, title: str, color: str | 
     else:
         raise ValueError(kind)
     _style(fig, height, legend=bool(color) or kind == "pie")
-    fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                      title_font=dict(size=16, color="#1e3a8a"))
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        title_font=dict(size=15, color="#0f172a", family="Plus Jakarta Sans, sans-serif"),
+    )
     with st.container(border=True):
         st.plotly_chart(fig, width="stretch")
