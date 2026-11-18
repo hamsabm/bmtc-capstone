@@ -2,7 +2,14 @@ r"""BMTC Data Warehouse & Analytics System - Streamlit entry point (role-based n
 
 Run:  .\venv\Scripts\python.exe -m streamlit run app.py
 """
+import importlib
 import streamlit as st
+
+import utils.auth
+
+# Ensure in-memory module cache is refreshed on Streamlit hot-reloads
+if not hasattr(utils.auth, "verify_credentials"):
+    importlib.reload(utils.auth)
 
 from utils.auth import get_current_user
 
