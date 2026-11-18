@@ -10,22 +10,7 @@ page("BMTC Data Intelligence Platform", "Operational intelligence for Bengaluru'
 
 ok, info = connection_ok()
 
-# ------------------------------------------------ System Status & Role Bar
-st.markdown("""
-<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
-  <div style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; font-size: 0.75rem; color: #475569;">
-    <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #10b981;"></span>
-    <span style="font-weight: 700; color: #0f172a;">System Operational</span>
-    <span style="color: #cbd5e1;">&bull;</span>
-    <span>Snowflake BMTC_DW</span>
-    <span style="color: #cbd5e1;">&bull;</span>
-    <span>Warehouse BMTC_WH (X-Small)</span>
-    <span style="color: #cbd5e1;">&bull;</span>
-    <span style="color: #64748b;">Sync: Live</span>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
+# ------------------------------------------------ System Telemetry & Persona Control
 render_role_switcher_banner()
 
 # ------------------------------------------------ 1. Network Overview KPIs

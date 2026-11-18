@@ -66,17 +66,11 @@ h3 {
 }
 
 .subtitle {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    color: #475569;
-    border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    margin: 0 0 16px 0;
+    color: #64748b !important;
+    font-size: 0.92rem !important;
+    font-weight: 400 !important;
+    margin: -6px 0 16px 0 !important;
+    line-height: 1.45 !important;
 }
 
 /* -------------------------------- Enterprise Sidebar -------------------------------- */
@@ -85,8 +79,51 @@ h3 {
     border-right: 1px solid #1e293b !important;
 }
 
-[data-testid="stSidebar"] * {
+[data-testid="stSidebar"] .stMarkdown,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] div[data-testid="stCaptionContainer"] {
+    color: #e2e8f0 !important;
+}
+
+/* Dark styled selectbox and inputs for sidebar */
+[data-testid="stSidebar"] div[data-baseweb="select"] {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-radius: 6px !important;
+}
+
+[data-testid="stSidebar"] div[data-baseweb="select"] > div {
+    background-color: #1e293b !important;
+    border-color: transparent !important;
+    color: #ffffff !important;
+}
+
+[data-testid="stSidebar"] div[data-baseweb="select"] * {
+    color: #ffffff !important;
+}
+
+[data-testid="stSidebar"] div[data-baseweb="select"] svg {
+    fill: #94a3b8 !important;
+}
+
+/* Dropdown popover list styling */
+div[data-baseweb="popover"] ul[role="listbox"] {
+    background-color: #0f172a !important;
+    border: 1px solid #334155 !important;
+    border-radius: 6px !important;
+}
+
+div[data-baseweb="popover"] ul[role="listbox"] li {
+    background-color: #0f172a !important;
     color: #f1f5f9 !important;
+}
+
+div[data-baseweb="popover"] ul[role="listbox"] li:hover,
+div[data-baseweb="popover"] ul[role="listbox"] li[aria-selected="true"] {
+    background-color: #1e3a8a !important;
+    color: #ffffff !important;
 }
 
 [data-testid="stSidebarHeader"] {
@@ -260,12 +297,16 @@ def page(title: str, caption: str = "") -> None:
     with st.sidebar:
         # BMTC Enterprise Branding
         st.markdown("""
-        <div style="padding: 10px 4px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px;">
-          <div style="font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #94a3b8; font-weight: 700;">BANGALORE METROPOLITAN</div>
-          <div style="font-size: 1.15rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; margin-top: 2px;">BMTC INTELLIGENCE</div>
-          <div style="display: flex; align-items: center; gap: 6px; margin-top: 6px;">
-            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
-            <span style="font-size: 0.72rem; color: #cbd5e1; font-weight: 500;">Snowflake DW &bull; Online</span>
+        <div style="padding: 6px 4px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; border-radius: 8px; background: linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%); color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.82rem; letter-spacing: 0.04em; border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0;">
+            BMTC
+          </div>
+          <div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #ffffff; letter-spacing: -0.01em; line-height: 1.2;">BMTC INTELLIGENCE</div>
+            <div style="display: flex; align-items: center; gap: 5px; margin-top: 3px;">
+              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
+              <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 600;">Snowflake DW &bull; Online</span>
+            </div>
           </div>
         </div>
         """, unsafe_allow_html=True)

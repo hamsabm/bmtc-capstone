@@ -239,38 +239,39 @@ def render_role_switcher_banner() -> None:
     curr_role = curr.get("role", "Admin")
 
     with st.container(border=True):
-        c_id, c_switch = st.columns([3.4, 2.6])
-        with c_id:
+        c_status, c_pop = st.columns([3.8, 2.2], vertical_alignment="center")
+        with c_status:
             st.markdown(
                 f"""
-                <div style="display:flex; align-items:center; gap:12px; padding: 2px 0;">
-                  <div style="width: 36px; height: 36px; border-radius: 6px; background: #0f172a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; border: 1px solid #334155;">
-                    {curr.get("avatar", "US")}
-                  </div>
-                  <div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <span style="font-weight: 700; font-size: 0.95rem; color: #0f172a;">{curr.get("name", "User")}</span>
-                      <span style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 1px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;">
-                        {curr_role.upper()}
-                      </span>
-                    </div>
-                    <div style="font-size: 0.78rem; color: #64748b; margin-top: 1px;">
-                      <span>{curr.get("depot_name", "All Depots")}</span> &bull; <code>{curr.get("employee_code", "")}</code>
-                    </div>
-                  </div>
+                <div style="display:flex; align-items:center; flex-wrap:wrap; gap:10px; font-size:0.8rem; color:#475569; padding: 2px 0;">
+                  <span style="display:inline-flex; align-items:center; gap:6px; font-weight:700; color:#0f172a;">
+                    <span style="width:8px; height:8px; border-radius:50%; background:#10b981; display:inline-block; box-shadow:0 0 0 2px rgba(16,185,129,0.2);"></span>
+                    System Operational
+                  </span>
+                  <span style="color:#cbd5e1;">&bull;</span>
+                  <span>Snowflake <b>BMTC_DW</b></span>
+                  <span style="color:#cbd5e1;">&bull;</span>
+                  <span>Warehouse <b>BMTC_WH</b> (X-Small)</span>
+                  <span style="color:#cbd5e1;">&bull;</span>
+                  <span style="color:#0284c7; font-weight:600;">Sync: Live</span>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
 
-        with c_switch:
-            with st.popover(f"Viewing as: {curr_role} ▾", use_container_width=True):
-                st.caption("Select an operational role profile to simulate permissions & views:")
+        with c_pop:
+            with st.popover(f"Role: {curr_role} ({curr.get('name', 'User')}) ▾", use_container_width=True):
+                st.markdown("""
+                <div style="margin-bottom:8px;">
+                  <div style="font-weight:700; font-size:0.9rem; color:#0f172a;">Operational Persona Simulator</div>
+                  <div style="font-size:0.75rem; color:#64748b;">Simulate authentic RBAC permissions, assigned routes, and operational portals:</div>
+                </div>
+                """, unsafe_allow_html=True)
                 for key, acc in DEMO_ACCOUNTS.items():
                     is_active = (acc["role"] == curr_role)
                     prefix = "✓ " if is_active else ""
                     if st.button(
-                        f"{prefix}{acc['role']} &bull; {acc['name']}",
+                        f"{prefix}{acc['role']} &bull; {acc['name']} ({acc['employee_code']})",
                         key=f"pop_role_{key}",
                         disabled=is_active,
                         help=acc["description"],
@@ -312,11 +313,11 @@ def render_sidebar_user_profile() -> None:
 
         role_keys = {
             "Admin (Full System)": "admin",
-            "Depot Manager": "manager",
-            "Driver": "driver",
-            "Conductor": "conductor",
-            "Mechanic": "mechanic",
-            "Supervisor": "supervisor",
+            "Depot Manager (Operations)": "manager",
+            "Driver (Duty Schedule)": "driver",
+            "Conductor (ETM & Passes)": "conductor",
+            "Mechanic (Workshop & Repairs)": "mechanic",
+            "Supervisor (Line & Grievances)": "supervisor",
         }
         labels = list(role_keys.keys())
         current_idx = 0
