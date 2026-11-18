@@ -2,7 +2,7 @@
 import streamlit as st
 
 from utils import queries as Q
-from utils.auth import get_current_user, render_role_switcher_banner
+from utils.auth import get_current_user, login_as, render_role_switcher_banner
 from utils.db import connection_ok, query
 from utils.ui import chart, money, num, page, show_table
 
@@ -39,7 +39,10 @@ with cp1:
         user_role = get_current_user().get("role")
         if st.button("Open Driver Portal", key="home_go_driver", use_container_width=True, type="primary" if user_role == "Driver" else "secondary"):
             login_as("driver")
-            st.switch_page("app_pages/9_Driver_Portal.py")
+            try:
+                st.switch_page("app_pages/9_Driver_Portal.py")
+            except Exception:
+                st.rerun()
 
 with cp2:
     with st.container(border=True):
@@ -58,7 +61,10 @@ with cp2:
         user_role = get_current_user().get("role")
         if st.button("Open Conductor ETM", key="home_go_conductor", use_container_width=True, type="primary" if user_role == "Conductor" else "secondary"):
             login_as("conductor")
-            st.switch_page("app_pages/10_Conductor_ETM.py")
+            try:
+                st.switch_page("app_pages/10_Conductor_ETM.py")
+            except Exception:
+                st.rerun()
 
 st.divider()
 

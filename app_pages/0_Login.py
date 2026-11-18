@@ -73,12 +73,18 @@ with col_driver:
             if submit_driver:
                 login_as("driver")
                 st.success("Authenticated as Driver Rekha Reddy. Redirecting to Driver Portal...")
-                st.switch_page("app_pages/9_Driver_Portal.py")
+                try:
+                    st.switch_page("app_pages/9_Driver_Portal.py")
+                except Exception:
+                    st.rerun()
 
         if curr_role == "Driver":
             st.info("You are currently authenticated as Driver. Data is locked to your employee ID.", icon=":material/lock:")
             if st.button("Open Driver Portal Now", key="go_driver_btn", use_container_width=True):
-                st.switch_page("app_pages/9_Driver_Portal.py")
+                try:
+                    st.switch_page("app_pages/9_Driver_Portal.py")
+                except Exception:
+                    st.rerun()
 
 # =====================================================================
 # 2. CONDUCTOR LOGIN PORTAL
@@ -114,12 +120,18 @@ with col_conductor:
             if submit_conductor:
                 login_as("conductor")
                 st.success("Authenticated as Conductor Shwetha Kulkarni. Redirecting to ETM Terminal...")
-                st.switch_page("app_pages/10_Conductor_ETM.py")
+                try:
+                    st.switch_page("app_pages/10_Conductor_ETM.py")
+                except Exception:
+                    st.rerun()
 
         if curr_role == "Conductor":
             st.info("You are currently authenticated as Conductor. Data is locked to your employee ID.", icon=":material/lock:")
             if st.button("Open Conductor ETM Now", key="go_conductor_btn", use_container_width=True):
-                st.switch_page("app_pages/10_Conductor_ETM.py")
+                try:
+                    st.switch_page("app_pages/10_Conductor_ETM.py")
+                except Exception:
+                    st.rerun()
 
 st.divider()
 
@@ -133,7 +145,10 @@ with st.expander("Faculty Evaluation / Central Platform Administration Access", 
         if st.button("Sign In as Platform Administrator", key="login_admin_btn", use_container_width=True):
             login_as("admin")
             st.success("Authenticated as Central Platform Admin.")
-            st.switch_page("home.py")
+            try:
+                st.switch_page("home.py")
+            except Exception:
+                st.rerun()
     with c_ad2:
         st.markdown("""
         <div style="font-size: 0.8rem; color: #64748b; padding-top: 6px;">

@@ -217,7 +217,10 @@ def enforce_role_access(page_name: str, *allowed_roles: str) -> None:
                 login_as(target_role)
                 st.rerun()
     if c2.button("Go to Crew Sign-In Portal", key=f"goto_login_{page_name.replace(' ', '_')}"):
-        st.switch_page("app_pages/0_Login.py")
+        try:
+            st.switch_page("app_pages/0_Login.py")
+        except Exception:
+            st.rerun()
     st.info("BMTC security policy enforces strict separation between Driver safety/duty logs and Conductor ticketing/revenue collections.", icon=":material/lock:")
     st.stop()
 
@@ -373,4 +376,7 @@ def render_sidebar_user_profile() -> None:
             st.rerun()
 
         if st.button("Crew Sign-In Portal", key="sidebar_goto_login_btn", use_container_width=True):
-            st.switch_page("app_pages/0_Login.py")
+            try:
+                st.switch_page("app_pages/0_Login.py")
+            except Exception:
+                st.rerun()
