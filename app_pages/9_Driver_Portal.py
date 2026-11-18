@@ -9,8 +9,15 @@ from utils.ui import chart, num, page, show_table
 
 page("Driver Portal", "Personal duty schedule, vehicle pre-trip safety checklist, and live trip logger")
 
-enforce_role_access("Driver Portal", "Driver", "Depot Manager", "Supervisor")
+enforce_role_access("Driver Portal", "Driver")
 render_role_switcher_banner()
+
+st.markdown("""
+<div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 6px 12px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; color: #166534;">
+  <span>🛡️ <b>Confidential Driver Workspace:</b> Vehicle inspection logs & assigned shift records are restricted strictly to Driver.</span>
+  <span style="background: #dcfce7; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.7rem;">RESTRICTED TO DRIVER</span>
+</div>
+""", unsafe_allow_html=True)
 
 user = get_current_user()
 is_driver = (user.get("role") == "Driver")

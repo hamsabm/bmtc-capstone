@@ -16,6 +16,7 @@ home_page = st.Page("home.py", title="Platform Overview", icon=":material/space_
 dashboard_page = st.Page("app_pages/1_Dashboard.py", url_path="dashboard", title="Executive Dashboard", icon=":material/monitoring:")
 
 # Operational Portals
+login_page = st.Page("app_pages/0_Login.py", url_path="login", title="Crew Sign-In", icon=":material/lock:")
 driver_page = st.Page("app_pages/9_Driver_Portal.py", url_path="driver-portal", title="Driver Portal", icon=":material/badge:", default=(role == "Driver"))
 conductor_page = st.Page("app_pages/10_Conductor_ETM.py", url_path="conductor-etm", title="Conductor ETM", icon=":material/confirmation_number:", default=(role == "Conductor"))
 depot_page = st.Page("app_pages/11_Depot_Operations.py", url_path="depot-operations", title="Depot Command", icon=":material/domain:", default=(role == "Depot Manager"))
@@ -35,42 +36,42 @@ data_page = st.Page("app_pages/8_Data_Management.py", url_path="data-management"
 # Role-specific enterprise navigation
 if role == "Driver":
     nav_dict = {
-        "My Duty": [driver_page],
-        "Transit Operations": [routes_page],
-        "System Overview": [home_page],
+        "Driver Workspace": [driver_page],
+        "Assigned Duty": [routes_page],
+        "Account & Security": [login_page, home_page],
     }
 elif role == "Conductor":
     nav_dict = {
-        "ETM & Ticketing": [conductor_page],
-        "Transit Operations": [routes_page],
-        "System Overview": [home_page],
+        "ETM Terminal": [conductor_page],
+        "Assigned Manifest": [routes_page],
+        "Account & Security": [login_page, home_page],
     }
 elif role == "Mechanic":
     nav_dict = {
         "Workshop Operations": [fuel_page],
         "Fleet Register": [bus_page],
-        "System Overview": [home_page],
+        "System Overview": [home_page, login_page],
     }
 elif role == "Depot Manager":
     nav_dict = {
         "Depot Command": [depot_page, dashboard_page],
         "Fleet & Crew": [bus_page, staff_page, fuel_page],
         "Transit Operations": [routes_page],
-        "System Overview": [home_page],
+        "System Overview": [home_page, login_page],
     }
 elif role == "Supervisor":
     nav_dict = {
         "Quality & Grievances": [passengers_page],
         "Operations Oversight": [routes_page, ticket_page, dashboard_page],
         "Staff Directory": [staff_page],
-        "System Overview": [home_page],
+        "System Overview": [home_page, login_page],
     }
-else:  # Admin / Default (full DW governance and analytics)
+else:  # Admin / Evaluation Mode (Full DW governance and analytics)
     nav_dict = {
         "Overview": [dashboard_page, home_page],
+        "Crew Portals": [driver_page, conductor_page, login_page],
         "Operations": [bus_page, routes_page, ticket_page, fuel_page],
-        "People & Crew": [driver_page, conductor_page, staff_page],
-        "Depot & Field": [depot_page],
+        "Depot & Field": [depot_page, staff_page],
         "Passenger Intelligence": [passengers_page],
         "Platform Governance": [advanced_page, data_page],
     }

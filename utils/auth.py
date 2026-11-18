@@ -130,8 +130,21 @@ def has_role(*allowed_roles: str) -> bool:
 # Role-based page authorization matrix
 ROLE_PERMISSIONS = {
     "Admin": ["*"],
+    "Driver": [
+        "home.py",
+        "0_Login.py",
+        "9_Driver_Portal.py",
+        "3_Routes_Trips.py",
+    ],
+    "Conductor": [
+        "home.py",
+        "0_Login.py",
+        "10_Conductor_ETM.py",
+        "3_Routes_Trips.py",
+    ],
     "Depot Manager": [
         "home.py",
+        "0_Login.py",
         "1_Dashboard.py",
         "2_Bus_Management.py",
         "3_Routes_Trips.py",
@@ -139,23 +152,15 @@ ROLE_PERMISSIONS = {
         "11_Depot_Operations.py",
         "12_Staff_Directory.py",
     ],
-    "Driver": [
-        "home.py",
-        "9_Driver_Portal.py",
-        "3_Routes_Trips.py",
-    ],
-    "Conductor": [
-        "home.py",
-        "10_Conductor_ETM.py",
-        "3_Routes_Trips.py",
-    ],
     "Mechanic": [
         "home.py",
+        "0_Login.py",
         "2_Bus_Management.py",
         "5_Fuel_Maintenance.py",
     ],
     "Supervisor": [
         "home.py",
+        "0_Login.py",
         "1_Dashboard.py",
         "3_Routes_Trips.py",
         "4_Ticket_Analytics.py",
@@ -192,11 +197,11 @@ def enforce_role_access(page_name: str, *allowed_roles: str) -> None:
 
     st.markdown(f"""
     <div style="background: #fff1f2; border: 1px solid #fecdd3; border-left: 4px solid #e11d48; border-radius: 8px; padding: 18px 20px; margin: 16px 0;">
-      <div style="font-weight: 700; font-size: 1.05rem; color: #9f1239; margin-bottom: 4px;">
-        Restricted Operational Access
+      <div style="font-weight: 700; font-size: 1.05rem; color: #9f1239; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+        <span>🔒</span> Confidential Operational Boundary
       </div>
       <div style="color: #be123c; font-size: 0.88rem; line-height: 1.45;">
-        The <b>{page_name}</b> workspace is restricted to authorized roles: <b>{', '.join(allowed_roles)}</b>.
+        The <b>{page_name}</b> workspace contains private, confidential operational data restricted strictly to authorized crew roles: <b>{', '.join(allowed_roles)}</b>.
       </div>
       <div style="font-size: 0.8rem; color: #64748b; margin-top: 8px;">
         Active Session: <b>{user.get('name')}</b> ({user.get('employee_code')}) &bull; Current Role: <span style="background: #e2e8f0; color: #0f172a; padding: 1px 6px; border-radius: 4px; font-weight: 600;">{role}</span>
@@ -208,10 +213,12 @@ def enforce_role_access(page_name: str, *allowed_roles: str) -> None:
     if allowed_roles:
         target_role = allowed_roles[0].lower().replace(" ", "").replace("depotmanager", "manager")
         if target_role in DEMO_ACCOUNTS:
-            if c1.button(f"Switch to {allowed_roles[0]} Role", key=f"switch_to_{target_role}", use_container_width=True):
+            if c1.button(f"Sign In as {allowed_roles[0]}", key=f"switch_to_{target_role}", use_container_width=True):
                 login_as(target_role)
                 st.rerun()
-    st.info("Use the role switcher at the top or in the sidebar to simulate another identity.", icon=":material/badge:")
+    if c2.button("Go to Crew Sign-In Portal", key=f"goto_login_{page_name.replace(' ', '_')}"):
+        st.switch_page("app_pages/0_Login.py")
+    st.info("BMTC security policy enforces strict separation between Driver safety/duty logs and Conductor ticketing/revenue collections.", icon=":material/lock:")
     st.stop()
 
 
@@ -263,22 +270,51 @@ def render_role_switcher_banner() -> None:
             with st.popover(f"Role: {curr_role} ({curr.get('name', 'User')}) ▾", use_container_width=True):
                 st.markdown("""
                 <div style="margin-bottom:8px;">
-                  <div style="font-weight:700; font-size:0.9rem; color:#0f172a;">Operational Persona Simulator</div>
-                  <div style="font-size:0.75rem; color:#64748b;">Simulate authentic RBAC permissions, assigned routes, and operational portals:</div>
+                  <div style="font-weight:700; font-size:0.9rem; color:#0f172a;">Operational Crew Authentication</div>
+                  <div style="font-size:0.75rem; color:#64748b;">Confidential field access for Driver and Conductor roles:</div>
                 </div>
                 """, unsafe_allow_html=True)
-                for key, acc in DEMO_ACCOUNTS.items():
-                    is_active = (acc["role"] == curr_role)
-                    prefix = "✓ " if is_active else ""
-                    if st.button(
-                        f"{prefix}{acc['role']} &bull; {acc['name']} ({acc['employee_code']})",
-                        key=f"pop_role_{key}",
-                        disabled=is_active,
-                        help=acc["description"],
-                        use_container_width=True,
-                    ):
-                        login_as(key)
-                        st.rerun()
+
+                # Primary Role 1: Driver
+                acc_drv = DEMO_ACCOUNTS["driver"]
+                is_drv = (curr_role == "Driver")
+                if st.button(
+                    f"{'✓ ' if is_drv else ''}🚌 Driver &bull; {acc_drv['name']} ({acc_drv['employee_code']})",
+                    key="pop_role_driver",
+                    disabled=is_drv,
+                    help=acc_drv["description"],
+                    use_container_width=True,
+                ):
+                    login_as("driver")
+                    st.rerun()
+
+                # Primary Role 2: Conductor
+                acc_cd = DEMO_ACCOUNTS["conductor"]
+                is_cd = (curr_role == "Conductor")
+                if st.button(
+                    f"{'✓ ' if is_cd else ''}🎟️ Conductor &bull; {acc_cd['name']} ({acc_cd['employee_code']})",
+                    key="pop_role_conductor",
+                    disabled=is_cd,
+                    help=acc_cd["description"],
+                    use_container_width=True,
+                ):
+                    login_as("conductor")
+                    st.rerun()
+
+                st.markdown("<hr style='margin: 8px 0; border: none; border-top: 1px solid #e2e8f0;'>", unsafe_allow_html=True)
+
+                # Evaluator Mode: Admin
+                acc_admin = DEMO_ACCOUNTS["admin"]
+                is_admin = (curr_role == "Admin")
+                if st.button(
+                    f"{'✓ ' if is_admin else ''}⚙️ Admin (Faculty Evaluation Mode)",
+                    key="pop_role_admin",
+                    disabled=is_admin,
+                    help="Full data warehouse and multi-role administrative review",
+                    use_container_width=True,
+                ):
+                    login_as("admin")
+                    st.rerun()
 
 
 def render_sidebar_user_profile() -> None:
@@ -312,12 +348,9 @@ def render_sidebar_user_profile() -> None:
         """, unsafe_allow_html=True)
 
         role_keys = {
-            "Admin (Full System)": "admin",
-            "Depot Manager (Operations)": "manager",
-            "Driver (Duty Schedule)": "driver",
-            "Conductor (ETM & Passes)": "conductor",
-            "Mechanic (Workshop & Repairs)": "mechanic",
-            "Supervisor (Line & Grievances)": "supervisor",
+            "Driver (Rekha Reddy • EMP00001)": "driver",
+            "Conductor (Shwetha Kulkarni • EMP00013)": "conductor",
+            "Admin (Evaluation Mode)": "admin",
         }
         labels = list(role_keys.keys())
         current_idx = 0
@@ -338,3 +371,6 @@ def render_sidebar_user_profile() -> None:
         if DEMO_ACCOUNTS[selected_key]["role"] != curr_role:
             login_as(selected_key)
             st.rerun()
+
+        if st.button("Crew Sign-In Portal", key="sidebar_goto_login_btn", use_container_width=True):
+            st.switch_page("app_pages/0_Login.py")

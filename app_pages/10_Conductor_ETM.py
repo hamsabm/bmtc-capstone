@@ -10,8 +10,15 @@ from utils.ui import chart, money, num, page, show_table
 
 page("Conductor ETM Portal", "Electronic Ticketing Machine (ETM), Shakti scheme pass/ticket generation, and QR validator")
 
-enforce_role_access("Conductor ETM", "Conductor", "Depot Manager", "Supervisor")
+enforce_role_access("Conductor ETM", "Conductor")
 render_role_switcher_banner()
+
+st.markdown("""
+<div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 6px 12px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; color: #92400e;">
+  <span>🛡️ <b>Confidential Conductor Workspace:</b> ETM ticketing registers, Shakti zero-fare tallies, and cash collections are restricted strictly to Conductor.</span>
+  <span style="background: #fef3c7; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.7rem;">RESTRICTED TO CONDUCTOR</span>
+</div>
+""", unsafe_allow_html=True)
 
 user = get_current_user()
 is_conductor = (user.get("role") == "Conductor")

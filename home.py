@@ -13,6 +13,55 @@ ok, info = connection_ok()
 # ------------------------------------------------ System Telemetry & Persona Control
 render_role_switcher_banner()
 
+# ------------------------------------------------ Confidential Crew Portals
+st.markdown("""
+<div style="margin: 8px 0 8px;">
+  <span style="font-weight: 700; font-size: 0.95rem; color: #0f172a;">Operational Crew Workspaces (Confidential Portals)</span>
+  <span style="font-size: 0.78rem; color: #64748b; margin-left: 8px;">Separate authentication and data boundaries for Driver and Conductor</span>
+</div>
+""", unsafe_allow_html=True)
+
+cp1, cp2 = st.columns(2)
+with cp1:
+    with st.container(border=True):
+        st.markdown("""
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.15rem;">🚌</span>
+            <span style="font-weight: 700; font-size: 0.95rem; color: #065f46;">Driver Portal</span>
+          </div>
+          <span style="font-size: 0.7rem; font-weight: 700; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 1px 6px; border-radius: 4px;">CONFIDENTIAL</span>
+        </div>
+        <div style="font-size: 0.8rem; color: #475569; min-height: 2.6em;">
+          Personal duty roster, assigned bus & route schedule, 8-point pre-trip DVIR safety checklist, and live trip status logging.
+        </div>
+        """, unsafe_allow_html=True)
+        user_role = get_current_user().get("role")
+        if st.button("Open Driver Portal", key="home_go_driver", use_container_width=True, type="primary" if user_role == "Driver" else "secondary"):
+            login_as("driver")
+            st.switch_page("app_pages/9_Driver_Portal.py")
+
+with cp2:
+    with st.container(border=True):
+        st.markdown("""
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.15rem;">🎟️</span>
+            <span style="font-weight: 700; font-size: 0.95rem; color: #92400e;">Conductor ETM Terminal</span>
+          </div>
+          <span style="font-size: 0.7rem; font-weight: 700; background: #fffbeb; color: #92400e; border: 1px solid #fde68a; padding: 1px 6px; border-radius: 4px;">CONFIDENTIAL</span>
+        </div>
+        <div style="font-size: 0.8rem; color: #475569; min-height: 2.6em;">
+          Electronic Ticketing Machine (ETM), route distance tickets, Shakti Scheme zero-fare pink passes, and shift cash reconciliation.
+        </div>
+        """, unsafe_allow_html=True)
+        user_role = get_current_user().get("role")
+        if st.button("Open Conductor ETM", key="home_go_conductor", use_container_width=True, type="primary" if user_role == "Conductor" else "secondary"):
+            login_as("conductor")
+            st.switch_page("app_pages/10_Conductor_ETM.py")
+
+st.divider()
+
 # ------------------------------------------------ 1. Network Overview KPIs
 st.subheader("Network Overview")
 kpi = query(Q.KPIS)
