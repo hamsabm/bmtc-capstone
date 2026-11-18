@@ -22,9 +22,9 @@ DEMO_ACCOUNTS = {
         "depot_id": 0,
         "depot_name": "BMTC Central Headquarters",
         "email": "admin@bmtc.karnataka.gov.in",
-        "avatar": "👑",
-        "color": "#1e40af",
-        "description": "Full system administrator with database, time travel, clone, security & analytics access.",
+        "avatar": "AD",
+        "color": "#1e3a8a",
+        "description": "Full platform administration, data warehouse governance, security & enterprise analytics.",
     },
     "manager": {
         "employee_id": 30,
@@ -34,8 +34,8 @@ DEMO_ACCOUNTS = {
         "depot_id": 1,
         "depot_name": "Shanthinagar Depot-01",
         "email": "shivakumar.gowda30@bmtc-demo.example",
-        "avatar": "🏢",
-        "color": "#ea580c",
+        "avatar": "DM",
+        "color": "#0284c7",
         "description": "Depot manager overseeing morning turnout, crew dispatch, and fleet readiness.",
     },
     "driver": {
@@ -46,9 +46,9 @@ DEMO_ACCOUNTS = {
         "depot_id": 1,
         "depot_name": "Shanthinagar Depot-01",
         "email": "rekha.reddy1@bmtc-demo.example",
-        "avatar": "🚌",
+        "avatar": "DR",
         "color": "#059669",
-        "description": "Senior BMTC driver. Views assigned trips, conducts safety inspections, logs trips.",
+        "description": "Senior BMTC driver. Views assigned trips, conducts safety inspections, logs trip status.",
     },
     "conductor": {
         "employee_id": 13,
@@ -58,7 +58,7 @@ DEMO_ACCOUNTS = {
         "depot_id": 1,
         "depot_name": "Shanthinagar Depot-01",
         "email": "shwetha.kulkarni13@bmtc-demo.example",
-        "avatar": "🎟️",
+        "avatar": "CD",
         "color": "#d97706",
         "description": "BMTC conductor operating Electronic Ticketing Machine (ETM) and bus pass scanner.",
     },
@@ -70,8 +70,8 @@ DEMO_ACCOUNTS = {
         "depot_id": 1,
         "depot_name": "Shanthinagar Depot-01",
         "email": "vinay.patil24@bmtc-demo.example",
-        "avatar": "🔧",
-        "color": "#db2777",
+        "avatar": "ME",
+        "color": "#7c3aed",
         "description": "Workshop technician logging repair jobs, downtime hours, and preventive maintenance.",
     },
     "supervisor": {
@@ -82,8 +82,8 @@ DEMO_ACCOUNTS = {
         "depot_id": 1,
         "depot_name": "Shanthinagar Depot-01",
         "email": "shivakumar.murthy27@bmtc-demo.example",
-        "avatar": "📋",
-        "color": "#7c3aed",
+        "avatar": "SV",
+        "color": "#475569",
         "description": "Traffic inspector monitoring route punctuality and resolving passenger grievances.",
     },
 }
@@ -105,16 +105,16 @@ def get_current_user() -> dict:
 
 def login_as(key_or_role: str) -> None:
     """Switch active session to one of the demo role profiles."""
-    key = key_or_role.lower()
+    key = key_or_role.lower().replace(" ", "").replace("depotmanager", "manager")
     for acc_key, acc in DEMO_ACCOUNTS.items():
-        if acc_key == key or acc["role"].lower() == key:
+        if acc_key == key or acc["role"].lower().replace(" ", "") == key:
             st.session_state["user"] = dict(acc)
             return
     st.session_state["user"] = dict(DEMO_ACCOUNTS["admin"])
 
 
 def logout() -> None:
-    """Reset session state to admin (or public preview)."""
+    """Reset session state to admin."""
     st.session_state["user"] = dict(DEMO_ACCOUNTS["admin"])
 
 
@@ -191,20 +191,15 @@ def enforce_role_access(page_name: str, *allowed_roles: str) -> None:
         return
 
     st.markdown(f"""
-    <div style="background: #fff1f2; border: 1px solid #fecdd3; border-left: 4px solid #e11d48; border-radius: 14px; padding: 22px 24px; margin: 20px 0; box-shadow: 0 4px 14px rgba(225,29,72,0.06);">
-      <div style="display: flex; align-items: flex-start; gap: 14px;">
-        <div style="font-size: 2.2rem; line-height: 1;">🔒</div>
-        <div>
-          <div style="font-weight: 800; font-size: 1.15rem; color: #9f1239; letter-spacing: -0.01em;">
-            Restricted Operational Access
-          </div>
-          <div style="color: #be123c; font-size: 0.92rem; margin-top: 4px; line-height: 1.45;">
-            The <b>{page_name}</b> portal is restricted to authorized roles: <b>{', '.join(allowed_roles)}</b>.
-          </div>
-          <div style="font-size: 0.8rem; color: #64748b; margin-top: 8px;">
-            Active Session: <b>{user.get('name')}</b> ({user.get('employee_code')}) &bull; Current Role: <span style="background: #e2e8f0; color: #0f172a; padding: 2px 7px; border-radius: 4px; font-weight: 700;">{role}</span>
-          </div>
-        </div>
+    <div style="background: #fff1f2; border: 1px solid #fecdd3; border-left: 4px solid #e11d48; border-radius: 8px; padding: 18px 20px; margin: 16px 0;">
+      <div style="font-weight: 700; font-size: 1.05rem; color: #9f1239; margin-bottom: 4px;">
+        Restricted Operational Access
+      </div>
+      <div style="color: #be123c; font-size: 0.88rem; line-height: 1.45;">
+        The <b>{page_name}</b> workspace is restricted to authorized roles: <b>{', '.join(allowed_roles)}</b>.
+      </div>
+      <div style="font-size: 0.8rem; color: #64748b; margin-top: 8px;">
+        Active Session: <b>{user.get('name')}</b> ({user.get('employee_code')}) &bull; Current Role: <span style="background: #e2e8f0; color: #0f172a; padding: 1px 6px; border-radius: 4px; font-weight: 600;">{role}</span>
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -216,7 +211,7 @@ def enforce_role_access(page_name: str, *allowed_roles: str) -> None:
             if c1.button(f"Switch to {allowed_roles[0]} Role", key=f"switch_to_{target_role}", use_container_width=True):
                 login_as(target_role)
                 st.rerun()
-    st.info("Use the role switcher bar at the top or in the sidebar to simulate another identity.", icon=":material/badge:")
+    st.info("Use the role switcher at the top or in the sidebar to simulate another identity.", icon=":material/badge:")
     st.stop()
 
 
@@ -238,105 +233,90 @@ def get_assigned_routes(employee_id: int, role: str = "Driver"):
     return query(sql)
 
 
-
 def render_role_switcher_banner() -> None:
-    """Enterprise role switcher card displayed on Home and Portals."""
+    """Compact, enterprise-grade identity and role switcher control."""
     curr = get_current_user()
     curr_role = curr.get("role", "Admin")
-    role_color = curr.get("color", "#1e40af")
 
     with st.container(border=True):
-        c1, c2 = st.columns([2.6, 4.4])
-        with c1:
+        c_id, c_switch = st.columns([3.4, 2.6])
+        with c_id:
             st.markdown(
                 f"""
-                <div style="font-size: 0.72rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">
-                  Active Identity & Session
-                </div>
-                <div style="display: flex; align-items: center; gap: 12px;">
-                  <div style="font-size: 1.85rem; width: 48px; height: 48px; border-radius: 12px; background: {role_color}18; border: 2px solid {role_color}40; display: flex; align-items: center; justify-content: center;">
-                    {curr.get("avatar", "👤")}
+                <div style="display:flex; align-items:center; gap:12px; padding: 2px 0;">
+                  <div style="width: 36px; height: 36px; border-radius: 6px; background: #0f172a; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; border: 1px solid #334155;">
+                    {curr.get("avatar", "US")}
                   </div>
                   <div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                      <span style="color: #0f172a; font-size: 1.12rem; font-weight: 800;">{curr.get("name", "User")}</span>
-                      <span style="background: {role_color}; color: #ffffff; padding: 2px 9px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-weight: 700; font-size: 0.95rem; color: #0f172a;">{curr.get("name", "User")}</span>
+                      <span style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 1px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;">
                         {curr_role.upper()}
                       </span>
                     </div>
-                    <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">
-                      🏢 {curr.get("depot_name", "All Depots")} &bull; 🆔 <code>{curr.get("employee_code", "")}</code>
+                    <div style="font-size: 0.78rem; color: #64748b; margin-top: 1px;">
+                      <span>{curr.get("depot_name", "All Depots")}</span> &bull; <code>{curr.get("employee_code", "")}</code>
                     </div>
                   </div>
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
-        with c2:
-            st.markdown(
-                """
-                <div style="font-size: 0.72rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">
-                  Instant Role Simulation (1-Click Switcher)
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-            cols = st.columns(6)
-            roles = [
-                ("Admin", "admin", "👑"),
-                ("Depot Mgr", "manager", "🏢"),
-                ("Driver", "driver", "🚌"),
-                ("Conductor", "conductor", "🎟️"),
-                ("Mechanic", "mechanic", "🔧"),
-                ("Supervisor", "supervisor", "📋"),
-            ]
-            for col, (lbl, key, icon) in zip(cols, roles):
-                is_curr = (DEMO_ACCOUNTS[key]["role"] == curr_role)
-                btn_label = f"✓ {lbl}" if is_curr else f"{icon} {lbl}"
-                if col.button(btn_label, key=f"role_btn_{key}", disabled=is_curr, use_container_width=True,
-                              help=DEMO_ACCOUNTS[key]["description"]):
-                    login_as(key)
-                    st.rerun()
+
+        with c_switch:
+            with st.popover(f"Viewing as: {curr_role} ▾", use_container_width=True):
+                st.caption("Select an operational role profile to simulate permissions & views:")
+                for key, acc in DEMO_ACCOUNTS.items():
+                    is_active = (acc["role"] == curr_role)
+                    prefix = "✓ " if is_active else ""
+                    if st.button(
+                        f"{prefix}{acc['role']} &bull; {acc['name']}",
+                        key=f"pop_role_{key}",
+                        disabled=is_active,
+                        help=acc["description"],
+                        use_container_width=True,
+                    ):
+                        login_as(key)
+                        st.rerun()
 
 
 def render_sidebar_user_profile() -> None:
-    """Render the active user profile card inside Streamlit sidebar with role switcher."""
+    """Render the active user profile card inside Streamlit sidebar with role selector."""
     curr = get_current_user()
     curr_role = curr.get("role", "Admin")
-    role_color = curr.get("color", "#38bdf8")
 
     with st.sidebar:
         st.markdown(f"""
-        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-left: 4px solid {role_color}; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
           <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="font-size: 1.5rem; background: rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.18);">
-              {curr.get("avatar", "👤")}
+            <div style="font-size: 0.85rem; font-weight: 700; background: #0f172a; width: 34px; height: 34px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #38bdf8; border: 1px solid #334155;">
+              {curr.get("avatar", "US")}
             </div>
             <div style="overflow: hidden; flex: 1;">
-              <div style="font-weight: 700; font-size: 0.94rem; color: #ffffff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+              <div style="font-weight: 600; font-size: 0.9rem; color: #ffffff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                 {curr.get("name", "User")}
               </div>
               <div style="display: flex; align-items: center; gap: 6px; margin-top: 1px;">
-                <span style="background: {role_color}; color: #ffffff; padding: 1px 7px; border-radius: 4px; font-size: 0.68rem; font-weight: 800;">
+                <span style="background: #0284c7; color: #ffffff; padding: 1px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 700;">
                   {curr_role}
                 </span>
-                <span style="font-size: 0.72rem; color: #94a3b8;">{curr.get("employee_code", "")}</span>
+                <span style="font-size: 0.7rem; color: #94a3b8;">{curr.get("employee_code", "")}</span>
               </div>
             </div>
           </div>
-          <div style="font-size: 0.72rem; color: #cbd5e1; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 6px;">
-            📍 {curr.get("depot_name", "BMTC Central")}
+          <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 6px;">
+            Depot: {curr.get("depot_name", "BMTC Central")}
           </div>
         </div>
         """, unsafe_allow_html=True)
 
         role_keys = {
-            "👑 Admin (Full System)": "admin",
-            "🏢 Depot Manager": "manager",
-            "🚌 Driver": "driver",
-            "🎟️ Conductor": "conductor",
-            "🔧 Mechanic": "mechanic",
-            "📋 Supervisor": "supervisor",
+            "Admin (Full System)": "admin",
+            "Depot Manager": "manager",
+            "Driver": "driver",
+            "Conductor": "conductor",
+            "Mechanic": "mechanic",
+            "Supervisor": "supervisor",
         }
         labels = list(role_keys.keys())
         current_idx = 0
@@ -346,7 +326,7 @@ def render_sidebar_user_profile() -> None:
                 break
 
         selected_role_label = st.selectbox(
-            "Active Role Identity",
+            "Simulate Role",
             labels,
             index=current_idx,
             key="sidebar_role_selector",

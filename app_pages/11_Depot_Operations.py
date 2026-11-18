@@ -58,10 +58,10 @@ d3.metric("Under maintenance", num(maint_fleet), "In depot workshop", delta_colo
 d4.metric("Assigned workforce", num(query(f"SELECT COUNT(*) AS CNT FROM BMTC_DW.BUS.EMPLOYEE_MASTER WHERE DEPOT_ID = {depot_id}").iloc[0, 0]), "Drivers, Conductors, Techs")
 
 turnout_tab, dispatch_tab, maint_tab, energy_tab = st.tabs([
-    "🚌 Morning Turnout & Bus Readiness",
-    "🧑‍✈️ Crew & Fleet Dispatch Roster",
-    "🔧 Workshop & Defect Queue",
-    "⛽ Depot Fuel & EV Efficiency",
+    "Morning Turnout & Fleet Readiness",
+    "Crew & Fleet Dispatch Roster",
+    "Workshop & Defect Queue",
+    "Fuel & Energy Efficiency",
 ])
 
 # ------------------------------------------------ Tab 1: Morning Turnout

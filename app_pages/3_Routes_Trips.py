@@ -19,10 +19,10 @@ role_scope = "All BMTC Routes"
 if role == "Driver":
     st.markdown(
         f"""
-        <div style="background: rgba(5,150,105,0.08); border-left: 4px solid #059669; border-radius: 10px; padding: 12px 18px; margin-bottom: 12px;">
-          <div style="font-weight: 800; color: #065f46; font-size: 0.95rem;">🚌 Driver Route View &bull; {user.get('name')} ({user.get('employee_code')})</div>
-          <div style="font-size: 0.82rem; color: #047857; margin-top: 2px;">
-            Displaying routes assigned to your shift. Switch below to view all network routes.
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #059669; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px;">
+          <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">Driver Route Scope &bull; {user.get('name')} ({user.get('employee_code')})</div>
+          <div style="font-size: 0.8rem; color: #64748b; margin-top: 2px;">
+            Displaying transit lines assigned to your shift. Switch below to search all network routes.
           </div>
         </div>
         """,
@@ -32,10 +32,10 @@ if role == "Driver":
 elif role == "Conductor":
     st.markdown(
         f"""
-        <div style="background: rgba(217,119,6,0.08); border-left: 4px solid #d97706; border-radius: 10px; padding: 12px 18px; margin-bottom: 12px;">
-          <div style="font-weight: 800; color: #78350f; font-size: 0.95rem;">🎟️ Conductor Route View &bull; {user.get('name')} ({user.get('employee_code')})</div>
-          <div style="font-size: 0.82rem; color: #92400e; margin-top: 2px;">
-            Displaying routes assigned to your transit manifest. Switch below to view all network routes.
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #d97706; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px;">
+          <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">Conductor Route Scope &bull; {user.get('name')} ({user.get('employee_code')})</div>
+          <div style="font-size: 0.8rem; color: #64748b; margin-top: 2px;">
+            Displaying transit lines assigned to your shift manifest. Switch below to search all network routes.
           </div>
         </div>
         """,

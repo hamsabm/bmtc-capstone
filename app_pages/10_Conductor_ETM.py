@@ -23,22 +23,21 @@ if is_conductor:
     conductor_emp_code = user.get("employee_code", "EMP00013")
     st.markdown(
         f"""
-        <div style="background: linear-gradient(135deg, rgba(217,119,6,0.09) 0%, rgba(245,158,11,0.04) 100%); border: 1px solid #f59e0b; border-left: 5px solid #d97706; border-radius: 12px; padding: 14px 20px; margin: 8px 0 16px;">
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #d97706; border-radius: 8px; padding: 14px 18px; margin: 8px 0 16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-size:1.4rem;">🎟️</span>
-                <span style="font-weight: 800; font-size: 1.15rem; color: #78350f;">{user.get('name')}</span>
-                <span style="background: #d97706; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">ACTIVE CONDUCTOR</span>
-                <span style="background: #e2e8f0; color: #334155; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700;"><code>{user.get('employee_code')}</code></span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-weight: 700; font-size: 1.05rem; color: #0f172a;">{user.get('name')}</span>
+                <span style="background: #fffbeb; color: #92400e; border: 1px solid #fde68a; padding: 1px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">ACTIVE CONDUCTOR</span>
+                <span style="background: #f1f5f9; color: #334155; padding: 1px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;"><code>{user.get('employee_code')}</code></span>
               </div>
-              <div style="font-size: 0.82rem; color: #92400e; margin-top: 5px;">
-                📍 Base Depot: <b>{user.get('depot_name')}</b> &bull; Assigned Routes: <b>146B, MF-167B, V-114A, MF-106B</b>
+              <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+                Base Depot: <b>{user.get('depot_name')}</b> &bull; Assigned Routes: <b>146B, MF-167B, V-114A, MF-106B</b>
               </div>
             </div>
             <div style="text-align: right;">
-              <div style="font-size: 0.72rem; color: #92400e; text-transform: uppercase; font-weight: 700;">ETM Device Status</div>
-              <div style="font-weight: 800; color: #78350f; font-size: 1rem;">🟢 CONNECTED &bull; ETM-BLR-013</div>
+              <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #10b981; margin-right: 4px;"></span>
+              <span style="font-size: 0.82rem; font-weight: 600; color: #92400e;">TERMINAL ONLINE &bull; ETM-BLR-013</span>
             </div>
           </div>
         </div>
@@ -59,7 +58,7 @@ else:
 
         col_c1, col_c2 = st.columns([3, 1])
         selected_label = col_c1.selectbox(
-            "Conductor profile (Auditor View)",
+            "Conductor Profile (Supervisor / Manager View)",
             (conductors_df["EMPLOYEE_CODE"] + " - " + conductors_df["EMPLOYEE_NAME"] + " (" + conductors_df["STATUS"] + ")").tolist(),
             index=default_idx,
         )
@@ -96,17 +95,17 @@ upi_coll = sum(t["fare"] for t in st.session_state["etm_tickets"] if t["payment"
 shakti_count = sum(1 for t in st.session_state["etm_tickets"] if "Shakti" in t["category"])
 
 k1, k2, k3, k4 = st.columns(4)
-k1.metric("Shift tickets issued", num(total_issued + 42), delta=f"+{total_issued} this session")
-k2.metric("Total revenue collected", money(cash_coll + upi_coll + 980), delta=f"UPI: {money(upi_coll)}")
-k3.metric("Shakti free rides", num(shakti_count + 18), "Zero fare for women")
-k4.metric("Pass validations", "34", "100% verified")
+k1.metric("Shift Tickets Issued", num(total_issued + 42), delta=f"+{total_issued} this session")
+k2.metric("Total Fare Revenue", money(cash_coll + upi_coll + 980), delta=f"UPI: {money(upi_coll)}")
+k3.metric("Shakti Zero-Fare Rides", num(shakti_count + 18), "State concession")
+k4.metric("Pass Validations", "34", "100% verified")
 
 etm_tab, myroutes_tab, pass_tab, recon_tab, incident_tab = st.tabs([
-    "🎟️ Issue Digital Ticket (ETM)",
-    "🗺️ My Assigned Routes & Manifest",
-    "🔍 QR Bus Pass Validator",
-    "📊 Shift Collections & Reconciliation",
-    "⚠️ Onboard Incident Report",
+    "Issue Digital Ticket (ETM)",
+    "My Assigned Routes & Manifest",
+    "Bus Pass Verification",
+    "Shift Collections & Reconciliation",
+    "Onboard Incident Report",
 ])
 
 # ------------------------------------------------ Tab 1: ETM Ticketing
@@ -260,18 +259,18 @@ with myroutes_tab:
                 rc1, rc2, rc3, rc4 = st.columns([1.5, 3.2, 2, 2.3])
                 with rc1:
                     st.markdown(
-                        f"""<div style="font-size: 1.35rem; font-weight: 800; color: #d97706; letter-spacing: -0.01em;">{r['ROUTE_CODE']}</div>
-                        <span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">{r['ROUTE_CATEGORY']}</span>""",
+                        f"""<div style="font-size: 1.25rem; font-weight: 700; color: #0f172a; letter-spacing: -0.01em;">{r['ROUTE_CODE']}</div>
+                        <span style="background: #f1f5f9; color: #334155; padding: 1px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;">{r['ROUTE_CATEGORY']}</span>""",
                         unsafe_allow_html=True,
                     )
                 with rc2:
                     st.markdown(f"**{r['ROUTE_NAME']}**")
-                    st.caption(f"📏 Distance: **{r['DISTANCE_KM']} km** &bull; Stage Base Fare: **₹{r['BASE_FARE']:.0f}**")
+                    st.caption(f"Distance: **{r['DISTANCE_KM']} km** &bull; Stage Base Fare: **₹{r['BASE_FARE']:.0f}**")
                 with rc3:
-                    st.markdown(f"📍 Depot: **{r['DEPOT_NAME']}**")
-                    st.markdown('<span style="color: #d97706; font-weight: 700; font-size: 0.82rem;">🟡 ETM Active Route</span>', unsafe_allow_html=True)
+                    st.markdown(f"Depot: **{r['DEPOT_NAME']}**")
+                    st.markdown('<span style="color: #0284c7; font-weight: 600; font-size: 0.78rem;">Status: Assigned Active</span>', unsafe_allow_html=True)
                 with rc4:
-                    st.markdown("**Scheduled Fleet Buses:**")
+                    st.markdown("**Assigned Fleet:**")
                     bus_badges = " ".join(f"`{b}`" for b in buses_on_route[:3])
                     st.markdown(bus_badges if bus_badges else "None")
 

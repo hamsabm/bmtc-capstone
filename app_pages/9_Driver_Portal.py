@@ -21,22 +21,21 @@ if is_driver:
     driver_id = curr_emp_id
     st.markdown(
         f"""
-        <div style="background: linear-gradient(135deg, rgba(5,150,105,0.09) 0%, rgba(16,185,129,0.04) 100%); border: 1px solid #10b981; border-left: 5px solid #059669; border-radius: 12px; padding: 14px 20px; margin: 8px 0 16px;">
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #059669; border-radius: 8px; padding: 14px 18px; margin: 8px 0 16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-size:1.4rem;">🚌</span>
-                <span style="font-weight: 800; font-size: 1.15rem; color: #065f46;">{user.get('name')}</span>
-                <span style="background: #059669; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">ACTIVE DRIVER</span>
-                <span style="background: #e2e8f0; color: #334155; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700;"><code>{user.get('employee_code')}</code></span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-weight: 700; font-size: 1.05rem; color: #0f172a;">{user.get('name')}</span>
+                <span style="background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 1px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">ACTIVE DRIVER</span>
+                <span style="background: #f1f5f9; color: #334155; padding: 1px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;"><code>{user.get('employee_code')}</code></span>
               </div>
-              <div style="font-size: 0.82rem; color: #047857; margin-top: 5px;">
-                📍 Base Depot: <b>{user.get('depot_name')}</b> &bull; Assigned Routes: <b>146B, MF-167B, V-114A, MF-106B</b>
+              <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+                Base Depot: <b>{user.get('depot_name')}</b> &bull; Assigned Routes: <b>146B, MF-167B, V-114A, MF-106B</b>
               </div>
             </div>
             <div style="text-align: right;">
-              <div style="font-size: 0.72rem; color: #047857; text-transform: uppercase; font-weight: 700;">Shift Status</div>
-              <div style="font-weight: 800; color: #065f46; font-size: 1rem;">🟢 ON DUTY &bull; SHIFT 1</div>
+              <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #10b981; margin-right: 4px;"></span>
+              <span style="font-size: 0.82rem; font-weight: 600; color: #065f46;">ON DUTY &bull; SHIFT 1</span>
             </div>
           </div>
         </div>
@@ -57,7 +56,7 @@ else:
 
         col_d1, col_d2 = st.columns([3, 1])
         selected_driver_label = col_d1.selectbox(
-            "Driver profile (Auditor View)",
+            "Driver Profile (Supervisor / Manager View)",
             (driver_df["EMPLOYEE_CODE"] + " - " + driver_df["EMPLOYEE_NAME"] + " (" + driver_df["STATUS"] + ")").tolist(),
             index=default_idx,
             help="Select a driver to view their assigned duties and driving record",
@@ -87,16 +86,16 @@ on_time = k.get("ON_TIME_PCT", 95.0) or 95.0
 avg_delay = k.get("AVG_DELAY_MIN", 3.2) or 3.2
 
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Trips operated", num(total_trips))
-c2.metric("Kilometers driven", f"{num(total_km)} km")
-c3.metric("On-time punctuality", f"{on_time}%", delta="+2.4% vs depot avg")
-c4.metric("Safety rating", "4.9 ★", "Zero incident record")
+c1.metric("Trips Operated", num(total_trips))
+c2.metric("Kilometers Driven", f"{num(total_km)} km")
+c3.metric("On-Time Punctuality", f"{on_time}%", delta="+2.4% vs depot avg")
+c4.metric("Safety Rating", "4.9 / 5.0", "Zero incidents on file")
 
 tab_duty, tab_routes, tab_inspect, tab_perf = st.tabs([
-    "📋 Assigned Duty & Trip Logger",
-    "🗺️ My Assigned Routes & Fleet",
-    "🛡️ Pre-Trip Safety Inspection",
-    "📈 Performance & Trip History",
+    "Assigned Duty & Trip Logger",
+    "My Assigned Routes & Fleet",
+    "Pre-Trip Vehicle Inspection (DVIR)",
+    "Driver Performance & History",
 ])
 
 # ------------------------------------------------ Tab 1: Assigned Duty & Trip Logger
@@ -185,18 +184,18 @@ with tab_routes:
                 rc1, rc2, rc3, rc4 = st.columns([1.5, 3.2, 2, 2.3])
                 with rc1:
                     st.markdown(
-                        f"""<div style="font-size: 1.35rem; font-weight: 800; color: #059669; letter-spacing: -0.01em;">{r['ROUTE_CODE']}</div>
-                        <span style="background: #e2e8f0; color: #334155; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">{r['ROUTE_CATEGORY']}</span>""",
+                        f"""<div style="font-size: 1.25rem; font-weight: 700; color: #0f172a; letter-spacing: -0.01em;">{r['ROUTE_CODE']}</div>
+                        <span style="background: #f1f5f9; color: #334155; padding: 1px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;">{r['ROUTE_CATEGORY']}</span>""",
                         unsafe_allow_html=True,
                     )
                 with rc2:
                     st.markdown(f"**{r['ROUTE_NAME']}**")
-                    st.caption(f"📏 Route Distance: **{r['DISTANCE_KM']} km** &bull; Base Fare: **₹{r['BASE_FARE']:.0f}**")
+                    st.caption(f"Distance: **{r['DISTANCE_KM']} km** &bull; Stage Base Fare: **₹{r['BASE_FARE']:.0f}**")
                 with rc3:
-                    st.markdown(f"📍 Base Depot: **{r['DEPOT_NAME']}**")
-                    st.markdown('<span style="color: #059669; font-weight: 700; font-size: 0.82rem;">🟢 Active Operational Schedule</span>', unsafe_allow_html=True)
+                    st.markdown(f"Depot: **{r['DEPOT_NAME']}**")
+                    st.markdown('<span style="color: #059669; font-weight: 600; font-size: 0.78rem;">Status: Scheduled Active</span>', unsafe_allow_html=True)
                 with rc4:
-                    st.markdown("**Assigned Fleet Buses:**")
+                    st.markdown("**Assigned Fleet:**")
                     bus_badges = " ".join(f"`{b}`" for b in buses_on_route[:3])
                     st.markdown(bus_badges if bus_badges else "None")
 
