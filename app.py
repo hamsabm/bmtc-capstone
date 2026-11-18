@@ -12,7 +12,7 @@ user = get_current_user()
 role = user.get("role", "Admin")
 
 # Core pages
-home_page = st.Page("home.py", title="Platform Overview", icon=":material/space_dashboard:", default=(role == "Admin"))
+home_page = st.Page("home.py", title="Platform Overview", icon=":material/space_dashboard:", default=(role in ["Admin", "Guest"]))
 dashboard_page = st.Page("app_pages/1_Dashboard.py", url_path="dashboard", title="Executive Dashboard", icon=":material/monitoring:")
 
 # Operational Portals
@@ -65,6 +65,11 @@ elif role == "Supervisor":
         "Operations Oversight": [routes_page, ticket_page, dashboard_page],
         "Staff Directory": [staff_page],
         "System Overview": [home_page, login_page],
+    }
+elif role == "Guest":
+    nav_dict = {
+        "Public Portal": [home_page, dashboard_page],
+        "Crew Authentication": [login_page],
     }
 else:  # Admin / Evaluation Mode (Full DW governance and analytics)
     nav_dict = {

@@ -26,18 +26,6 @@ DEMO_ACCOUNTS = {
         "color": "#1e3a8a",
         "description": "Full platform administration, data warehouse governance, security & enterprise analytics.",
     },
-    "manager": {
-        "employee_id": 30,
-        "employee_code": "EMP00030",
-        "name": "Shivakumar Gowda",
-        "role": "Depot Manager",
-        "depot_id": 1,
-        "depot_name": "Shanthinagar Depot-01",
-        "email": "shivakumar.gowda30@bmtc-demo.example",
-        "avatar": "DM",
-        "color": "#0284c7",
-        "description": "Depot manager overseeing morning turnout, crew dispatch, and fleet readiness.",
-    },
     "driver": {
         "employee_id": 1,
         "employee_code": "EMP00001",
@@ -61,6 +49,18 @@ DEMO_ACCOUNTS = {
         "avatar": "CD",
         "color": "#d97706",
         "description": "BMTC conductor operating Electronic Ticketing Machine (ETM) and bus pass scanner.",
+    },
+    "manager": {
+        "employee_id": 30,
+        "employee_code": "EMP00030",
+        "name": "Shivakumar Gowda",
+        "role": "Depot Manager",
+        "depot_id": 1,
+        "depot_name": "Shanthinagar Depot-01",
+        "email": "shivakumar.gowda30@bmtc-demo.example",
+        "avatar": "DM",
+        "color": "#0284c7",
+        "description": "Depot manager overseeing morning turnout, crew dispatch, and fleet readiness.",
     },
     "mechanic": {
         "employee_id": 24,
@@ -86,9 +86,69 @@ DEMO_ACCOUNTS = {
         "color": "#475569",
         "description": "Traffic inspector monitoring route punctuality and resolving passenger grievances.",
     },
+    "guest": {
+        "employee_id": 0,
+        "employee_code": "GUEST",
+        "name": "Unauthenticated Visitor",
+        "role": "Guest",
+        "depot_id": 0,
+        "depot_name": "BMTC Public Terminal",
+        "email": "guest@bmtc.karnataka.gov.in",
+        "avatar": "GU",
+        "color": "#64748b",
+        "description": "Unauthenticated visitor. Confidential crew duties and operational logs are strictly locked.",
+    },
 }
 
-ALL_ROLES = ["Admin", "Depot Manager", "Driver", "Conductor", "Mechanic", "Supervisor"]
+# Official credentials store for strict employee verification
+CREDENTIALS = {
+    "driver": {
+        "valid_codes": ["EMP00001", "EMP00001@BMTC-DEMO.EXAMPLE", "1", "REKHA", "REKHA.REDDY1@BMTC-DEMO.EXAMPLE"],
+        "valid_pins": ["1001", "bmtc1001", "7410", "1234"],
+        "account_key": "driver",
+    },
+    "conductor": {
+        "valid_codes": ["EMP00013", "EMP00013@BMTC-DEMO.EXAMPLE", "13", "SHWETHA", "SHWETHA.KULKARNI13@BMTC-DEMO.EXAMPLE"],
+        "valid_pins": ["1301", "bmtc1301", "8520", "1234"],
+        "account_key": "conductor",
+    },
+    "admin": {
+        "valid_codes": ["ADMIN001", "ADMIN@BMTC.KARNATAKA.GOV.IN", "ADMIN", "9999"],
+        "valid_pins": ["9999", "admin123", "bmtc@admin", "admin"],
+        "account_key": "admin",
+    },
+}
+
+
+def verify_credentials(role_type: str, code: str, pin: str) -> tuple[bool, str]:
+    """Verify employee code / identifier and security PIN / password.
+    Returns (True, account_key) on success, or (False, error_message) on failure.
+    """
+    if not code or not str(code).strip():
+        return False, "Employee Code or Username is required."
+    if not pin or not str(pin).strip():
+        return False, "Security PIN / Password is required."
+
+    clean_code = str(code).strip().upper()
+    clean_pin = str(pin).strip()
+
+    role_cred = CREDENTIALS.get(role_type.lower())
+    if not role_cred:
+        return False, "Invalid role portal specified."
+
+    code_matches = any(clean_code == c.upper() for c in role_cred["valid_codes"])
+    pin_matches = any(clean_pin == p or clean_pin.lower() == p.lower() for p in role_cred["valid_pins"])
+
+    if not code_matches:
+        return False, f"Unauthorized employee code '{code}'. This identifier is not registered in the BMTC crew directory."
+
+    if not pin_matches:
+        return False, "Invalid Security PIN / Passkey. Access rejected."
+
+    return True, role_cred["account_key"]
+
+
+ALL_ROLES = ["Admin", "Driver", "Conductor", "Depot Manager", "Mechanic", "Supervisor", "Guest"]
 
 
 def init_session() -> dict:
@@ -114,8 +174,8 @@ def login_as(key_or_role: str) -> None:
 
 
 def logout() -> None:
-    """Reset session state to admin."""
-    st.session_state["user"] = dict(DEMO_ACCOUNTS["admin"])
+    """Reset session state to guest / unauthenticated."""
+    st.session_state["user"] = dict(DEMO_ACCOUNTS["guest"])
 
 
 def has_role(*allowed_roles: str) -> bool:
@@ -130,6 +190,11 @@ def has_role(*allowed_roles: str) -> bool:
 # Role-based page authorization matrix
 ROLE_PERMISSIONS = {
     "Admin": ["*"],
+    "Guest": [
+        "home.py",
+        "0_Login.py",
+        "1_Dashboard.py",
+    ],
     "Driver": [
         "home.py",
         "0_Login.py",
@@ -209,14 +274,7 @@ def enforce_role_access(page_name: str, *allowed_roles: str) -> None:
     </div>
     """, unsafe_allow_html=True)
 
-    c1, c2 = st.columns([1.5, 3])
-    if allowed_roles:
-        target_role = allowed_roles[0].lower().replace(" ", "").replace("depotmanager", "manager")
-        if target_role in DEMO_ACCOUNTS:
-            if c1.button(f"Sign In as {allowed_roles[0]}", key=f"switch_to_{target_role}", use_container_width=True):
-                login_as(target_role)
-                st.rerun()
-    if c2.button("Go to Crew Sign-In Portal", key=f"goto_login_{page_name.replace(' ', '_')}"):
+    if st.button("Authenticate at Crew Sign-In Portal (PIN Required)", key=f"goto_login_{page_name.replace(' ', '_')}", type="primary"):
         try:
             st.switch_page("app_pages/0_Login.py")
         except Exception:
@@ -244,7 +302,7 @@ def get_assigned_routes(employee_id: int, role: str = "Driver"):
 
 
 def render_role_switcher_banner() -> None:
-    """Compact, enterprise-grade identity and role switcher control."""
+    """Compact, enterprise-grade identity and role status toolbar."""
     curr = get_current_user()
     curr_role = curr.get("role", "Admin")
 
@@ -270,58 +328,42 @@ def render_role_switcher_banner() -> None:
             )
 
         with c_pop:
-            with st.popover(f"Role: {curr_role} ({curr.get('name', 'User')}) ▾", use_container_width=True):
-                st.markdown("""
-                <div style="margin-bottom:8px;">
-                  <div style="font-weight:700; font-size:0.9rem; color:#0f172a;">Operational Crew Authentication</div>
-                  <div style="font-size:0.75rem; color:#64748b;">Confidential field access for Driver and Conductor roles:</div>
+            is_unauth = (curr_role == "Guest")
+            badge_color = "#64748b" if is_unauth else ("#059669" if curr_role == "Driver" else ("#d97706" if curr_role == "Conductor" else "#1e3a8a"))
+            with st.popover(f"Session: {curr_role} ({curr.get('name', 'User').split()[0]}) ▾", use_container_width=True):
+                st.markdown(f"""
+                <div style="margin-bottom:10px;">
+                  <div style="font-weight:700; font-size:0.95rem; color:#0f172a;">Active Identity & Session</div>
+                  <div style="font-size:0.82rem; color:#334155; margin-top: 3px;">
+                    <b>{curr.get('name')}</b> ({curr.get('employee_code')})
+                  </div>
+                  <div style="font-size:0.75rem; color:#64748b; margin-top: 2px;">
+                    Depot: {curr.get('depot_name', 'BMTC Central')} &bull; Role: <span style="color:{badge_color}; font-weight:700;">{curr_role}</span>
+                  </div>
+                </div>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:8px; font-size:0.75rem; color:#475569; margin-bottom:12px;">
+                  🔒 <b>BMTC Access Control:</b> Switching roles or accessing confidential duty rosters requires valid employee code and security PIN.
                 </div>
                 """, unsafe_allow_html=True)
 
-                # Primary Role 1: Driver
-                acc_drv = DEMO_ACCOUNTS["driver"]
-                is_drv = (curr_role == "Driver")
-                if st.button(
-                    f"{'✓ ' if is_drv else ''}🚌 Driver &bull; {acc_drv['name']} ({acc_drv['employee_code']})",
-                    key="pop_role_driver",
-                    disabled=is_drv,
-                    help=acc_drv["description"],
-                    use_container_width=True,
-                ):
-                    login_as("driver")
-                    st.rerun()
-
-                # Primary Role 2: Conductor
-                acc_cd = DEMO_ACCOUNTS["conductor"]
-                is_cd = (curr_role == "Conductor")
-                if st.button(
-                    f"{'✓ ' if is_cd else ''}🎟️ Conductor &bull; {acc_cd['name']} ({acc_cd['employee_code']})",
-                    key="pop_role_conductor",
-                    disabled=is_cd,
-                    help=acc_cd["description"],
-                    use_container_width=True,
-                ):
-                    login_as("conductor")
-                    st.rerun()
-
-                st.markdown("<hr style='margin: 8px 0; border: none; border-top: 1px solid #e2e8f0;'>", unsafe_allow_html=True)
-
-                # Evaluator Mode: Admin
-                acc_admin = DEMO_ACCOUNTS["admin"]
-                is_admin = (curr_role == "Admin")
-                if st.button(
-                    f"{'✓ ' if is_admin else ''}⚙️ Admin (Faculty Evaluation Mode)",
-                    key="pop_role_admin",
-                    disabled=is_admin,
-                    help="Full data warehouse and multi-role administrative review",
-                    use_container_width=True,
-                ):
-                    login_as("admin")
-                    st.rerun()
+                c_p1, c_p2 = st.columns(2)
+                with c_p1:
+                    if st.button("🔒 Crew Login", key="pop_goto_login", use_container_width=True, type="primary"):
+                        try:
+                            st.switch_page("app_pages/0_Login.py")
+                        except Exception:
+                            st.rerun()
+                with c_p2:
+                    if st.button("🚪 Sign Out", key="pop_logout_btn", use_container_width=True):
+                        logout()
+                        try:
+                            st.switch_page("app_pages/0_Login.py")
+                        except Exception:
+                            st.rerun()
 
 
 def render_sidebar_user_profile() -> None:
-    """Render the active user profile card inside Streamlit sidebar with role selector."""
+    """Render the active user profile card inside Streamlit sidebar with role controls."""
     curr = get_current_user()
     curr_role = curr.get("role", "Admin")
 
@@ -350,33 +392,17 @@ def render_sidebar_user_profile() -> None:
         </div>
         """, unsafe_allow_html=True)
 
-        role_keys = {
-            "Driver (Rekha Reddy • EMP00001)": "driver",
-            "Conductor (Shwetha Kulkarni • EMP00013)": "conductor",
-            "Admin (Evaluation Mode)": "admin",
-        }
-        labels = list(role_keys.keys())
-        current_idx = 0
-        for i, l in enumerate(labels):
-            if DEMO_ACCOUNTS[role_keys[l]]["role"] == curr_role:
-                current_idx = i
-                break
-
-        selected_role_label = st.selectbox(
-            "Simulate Role",
-            labels,
-            index=current_idx,
-            key="sidebar_role_selector",
-            help="Switch role simulation to test permissions and tailored workflows",
-        )
-
-        selected_key = role_keys[selected_role_label]
-        if DEMO_ACCOUNTS[selected_key]["role"] != curr_role:
-            login_as(selected_key)
-            st.rerun()
-
-        if st.button("Crew Sign-In Portal", key="sidebar_goto_login_btn", use_container_width=True):
-            try:
-                st.switch_page("app_pages/0_Login.py")
-            except Exception:
-                st.rerun()
+        c_sb1, c_sb2 = st.columns(2)
+        with c_sb1:
+            if st.button("Crew Sign-In", key="sidebar_goto_login_btn", use_container_width=True):
+                try:
+                    st.switch_page("app_pages/0_Login.py")
+                except Exception:
+                    st.rerun()
+        with c_sb2:
+            if st.button("Sign Out", key="sidebar_logout_btn", use_container_width=True):
+                logout()
+                try:
+                    st.switch_page("app_pages/0_Login.py")
+                except Exception:
+                    st.rerun()

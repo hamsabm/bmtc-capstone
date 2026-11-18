@@ -37,12 +37,20 @@ with cp1:
         </div>
         """, unsafe_allow_html=True)
         user_role = get_current_user().get("role")
-        if st.button("Open Driver Portal", key="home_go_driver", use_container_width=True, type="primary" if user_role == "Driver" else "secondary"):
-            login_as("driver")
-            try:
-                st.switch_page("app_pages/9_Driver_Portal.py")
-            except Exception:
-                st.rerun()
+        is_driver = (user_role == "Driver")
+        btn_label = "Enter Driver Workspace →" if is_driver else "🔒 Sign In to Driver Portal (PIN Required)"
+        if st.button(btn_label, key="home_go_driver", use_container_width=True, type="primary" if is_driver else "secondary"):
+            if is_driver:
+                try:
+                    st.switch_page("app_pages/9_Driver_Portal.py")
+                except Exception:
+                    st.rerun()
+            else:
+                st.session_state["login_target_role"] = "driver"
+                try:
+                    st.switch_page("app_pages/0_Login.py")
+                except Exception:
+                    st.rerun()
 
 with cp2:
     with st.container(border=True):
@@ -59,12 +67,20 @@ with cp2:
         </div>
         """, unsafe_allow_html=True)
         user_role = get_current_user().get("role")
-        if st.button("Open Conductor ETM", key="home_go_conductor", use_container_width=True, type="primary" if user_role == "Conductor" else "secondary"):
-            login_as("conductor")
-            try:
-                st.switch_page("app_pages/10_Conductor_ETM.py")
-            except Exception:
-                st.rerun()
+        is_conductor = (user_role == "Conductor")
+        btn_label = "Enter Conductor ETM Terminal →" if is_conductor else "🔒 Sign In to Conductor ETM (PIN Required)"
+        if st.button(btn_label, key="home_go_conductor", use_container_width=True, type="primary" if is_conductor else "secondary"):
+            if is_conductor:
+                try:
+                    st.switch_page("app_pages/10_Conductor_ETM.py")
+                except Exception:
+                    st.rerun()
+            else:
+                st.session_state["login_target_role"] = "conductor"
+                try:
+                    st.switch_page("app_pages/0_Login.py")
+                except Exception:
+                    st.rerun()
 
 st.divider()
 
